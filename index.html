@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Likewise — Canada's Financial Mirror · joinlikewise.ca</title>
+<meta name="description" content="Find out where you really stand financially. Likewise gives Canadians honest peer comparisons, weekly prize draws, and ownership of their own financial data.">
+<link rel="icon" type="image/svg+xml" href="likewise-icon-placeholder.svg">
+<link rel="apple-touch-icon" href="likewise-icon-placeholder.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400;1,9..144,600&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ── Reset & base ─────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --charcoal: #2B2420;
+  --taupe:   #6B5D52;
+  --terracotta: #BD5A34;
+  --sage:    #8A9A7E;
+  --crimson: #C4132E;
+  --cream:   #F2F0E8;
+  --card:    #F2F0E8;
+  --border:  rgba(43,36,32,0.14);
+  --white:   #FFFFFF;
+  --amber:   #92400E;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--terracotta);
+  color: var(--cream);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── Grain overlay ────────────────────────────────────────────────────── */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+  opacity: 0.6;
+}
+
+/* Soft corner gradient, per the confirmed §11 motif treatment */
+body::after {
+  content: '';
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background: linear-gradient(135deg, transparent 55%, rgba(43,36,32,0.10) 100%);
+}
+
+/* Bars motif, emerging from the page edges like a graph axis */
+.bars-edge {
+  position: absolute; top: 50%; width: 260px; height: auto;
+  opacity: 0.1; pointer-events: none; z-index: 0;
+}
+.bars-edge-left { left: -70px; transform: translateY(-50%) scaleX(-1); }
+.bars-edge-right { right: -70px; transform: translateY(-50%); }
+
+/* ── Nav ─────────────────────────────────────────────────────────────── */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 48px;
+  background: rgba(242,240,232,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(43,36,32,0.08);
+}
+.logo {
+  display: flex; align-items: center;
+  text-decoration: none;
+}
+.logo-img { height: 38px; width: auto; display: block; }
+.nav-right {
+  display: flex; align-items: center; gap: 20px;
+}
+.nav-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--charcoal); background: rgba(138,154,126,0.45);
+  border: 1px solid rgba(43,36,32,0.18);
+  padding: 5px 12px; border-radius: 20px;
+}
+.nav-cta {
+  font-size: 13px; font-weight: 500;
+  color: var(--terracotta); background: transparent;
+  border: 1.5px solid var(--terracotta); padding: 8px 19px; border-radius: 8px;
+  cursor: pointer; text-decoration: none; transition: all 0.15s;
+}
+.nav-cta:hover { background: var(--terracotta); color: var(--white); }
+
+/* ── Hero ─────────────────────────────────────────────────────────────── */
+.hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 140px 48px 80px;
+  position: relative; overflow: hidden;
+}
+
+/* Radial glow */
+.hero::after {
+  content: '';
+  position: absolute; bottom: -200px; left: -200px;
+  width: 700px; height: 700px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(242,240,232,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-inner { max-width: 980px; margin: 0 auto; position: relative; z-index: 1; }
+
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--cream); margin-bottom: 28px;
+  opacity: 0; animation: fadeUp 0.7s 0.1s ease forwards;
+}
+
+.hero-headline {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(52px, 7vw, 88px);
+  font-weight: 600; line-height: 1.0;
+  color: var(--cream); letter-spacing: -0.03em;
+  margin-bottom: 0;
+  opacity: 0; animation: fadeUp 0.8s 0.25s ease forwards;
+}
+.hero-headline em {
+  color: var(--cream); font-style: italic; font-weight: 300;
+}
+.hero-headline .line2 {
+  display: block; color: var(--cream); opacity: 0.75; font-weight: 300; font-style: italic;
+}
+
+.hero-sub {
+  font-size: clamp(16px, 1.8vw, 19px); line-height: 1.7;
+  color: rgba(242,240,232,0.82); max-width: 620px;
+  margin-top: 32px; text-wrap: pretty;
+  opacity: 0; animation: fadeUp 0.8s 0.4s ease forwards;
+}
+.hero-sub strong { color: var(--cream); font-weight: 500; }
+
+/* ── Form ─────────────────────────────────────────────────────────────── */
+.form-wrap {
+  margin-top: 44px;
+  opacity: 0; animation: fadeUp 0.8s 0.55s ease forwards;
+}
+.form-row {
+  display: flex; gap: 10px; max-width: 480px;
+}
+.email-input {
+  flex: 1; height: 52px;
+  background: #FFFFFF;
+  border: 1px solid var(--border);
+  border-radius: 12px; padding: 0 18px;
+  font-family: 'DM Sans', sans-serif; font-size: 15px;
+  color: var(--charcoal); outline: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+.email-input::placeholder { color: var(--taupe); }
+.email-input:focus {
+  border-color: var(--terracotta);
+  background: rgba(189,90,52,0.06);
+}
+.submit-btn {
+  height: 52px; padding: 0 26px;
+  background: transparent; color: var(--cream);
+  font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600;
+  border: 1.5px solid var(--cream); border-radius: 12px; cursor: pointer;
+  white-space: nowrap; transition: all 0.2s;
+  position: relative; overflow: hidden;
+}
+.submit-btn:hover { background: var(--cream); color: var(--terracotta); transform: translateY(-1px); }
+.submit-btn:active { transform: translateY(0); }
+
+.form-note {
+  margin-top: 12px; font-size: 12px; color: rgba(242,240,232,0.75);
+}
+
+/* Success state */
+.success-msg {
+  display: none; align-items: center; gap: 12px;
+  padding: 16px 20px; max-width: 480px;
+  background: var(--card);
+  border-radius: 12px;
+}
+.success-msg.show { display: flex; }
+.success-text { font-size: 14px; color: var(--charcoal); line-height: 1.5; }
+.success-text strong { color: var(--terracotta); }
+
+/* ── Stats strip ──────────────────────────────────────────────────────── */
+.stats-strip {
+  display: flex; gap: 0;
+  margin-top: 64px;
+  border-top: 1px solid rgba(242,240,232,0.2);
+  padding-top: 36px; max-width: 560px;
+  opacity: 0; animation: fadeUp 0.8s 0.7s ease forwards;
+}
+.stat { flex: 1; }
+.stat + .stat { border-left: 1px solid rgba(242,240,232,0.2); padding-left: 28px; }
+.stat-val {
+  font-family: 'Fraunces', serif;
+  font-size: 26px; font-weight: 600; color: var(--cream);
+  line-height: 1; margin-bottom: 5px;
+}
+.stat-val span { color: var(--cream); font-weight: 700; }
+.stat-lbl { font-size: 11px; color: rgba(242,240,232,0.7); line-height: 1.4; }
+
+/* ── How it works ────────────────────────────────────────────────────── */
+.section {
+  padding: 100px 48px;
+  position: relative; z-index: 1;
+}
+
+.section-inner { max-width: 980px; margin: 0 auto; }
+
+.section-kicker {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--cream); margin-bottom: 16px;
+}
+
+.section-title {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(32px, 4vw, 48px); font-weight: 600;
+  color: var(--cream); letter-spacing: -0.025em;
+  line-height: 1.1; margin-bottom: 12px; max-width: 760px;
+}
+.section-title em { color: var(--cream); font-style: italic; font-weight: 300; }
+
+.section-sub {
+  font-size: 16px; color: rgba(242,240,232,0.8); max-width: 640px;
+  line-height: 1.75; margin-bottom: 56px; text-wrap: pretty;
+}
+
+/* ── Nav dropdown items ──────────────────────────────────────────────── */
+.nav-items { display: flex; gap: 4px; }
+.nav-item {
+  font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500;
+  color: var(--taupe); background: transparent; border: none;
+  padding: 8px 12px; border-radius: 8px; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 5px;
+  transition: color 0.15s, background 0.15s;
+}
+.nav-item:hover { color: var(--charcoal); background: rgba(43,36,32,0.04); }
+.nav-item.active { color: var(--terracotta); background: rgba(189,90,52,0.08); }
+.nav-item-chevron { font-size: 9px; transition: transform 0.15s; }
+.nav-item.active .nav-item-chevron { transform: rotate(180deg); }
+.nav-item-cta-mobile { display: none; }
+
+.hamburger-btn {
+  display: none; align-items: center; justify-content: center;
+  width: 36px; height: 36px; border-radius: 8px;
+  background: transparent; border: none; cursor: pointer; padding: 0;
+}
+.hamburger-btn:hover { background: rgba(43,36,32,0.05); }
+.hamburger-btn img { height: 20px; width: auto; display: block; }
+
+.nav-dropdown {
+  display: none;
+  position: absolute; top: 100%; left: 0; right: 0;
+  background: rgba(242,240,232,0.98);
+  border-bottom: 1px solid var(--border);
+  padding: 32px 48px;
+}
+.nav-dropdown.open { display: block; }
+.nav-dropdown-panel { display: none; max-width: 640px; margin: 0 auto; }
+.nav-dropdown-panel.active { display: block; }
+.nav-dropdown-title {
+  font-family: 'Fraunces', serif; font-size: 22px; font-weight: 600;
+  color: var(--charcoal); margin-bottom: 8px;
+}
+.nav-dropdown-body { font-size: 14px; color: var(--taupe); line-height: 1.7; }
+
+/* Steps */
+.steps { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; max-width: 980px; margin: 0 auto; }
+
+.step {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 16px; padding: 28px;
+  position: relative; overflow: hidden;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.step:hover { border-color: rgba(189,90,52,0.3); transform: translateY(-2px); }
+.step::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: var(--terracotta); opacity: 0;
+  transition: opacity 0.2s;
+}
+.step:hover::before { opacity: 1; }
+
+.step-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: 0.12em; color: var(--terracotta);
+  margin-bottom: 18px;
+}
+.step-num-row { display: flex; align-items: center; gap: 8px; margin-bottom: 18px; }
+.step-title {
+  font-family: 'Fraunces', serif;
+  font-size: 20px; font-weight: 600; color: var(--charcoal);
+  margin-bottom: 10px;
+}
+.step-body { font-size: 13px; color: var(--taupe); line-height: 1.65; }
+.prize-badge {
+  display: inline-block; margin-bottom: 10px;
+  font-size: 10px; font-weight: 600; letter-spacing: 0.04em;
+  color: var(--crimson); background: rgba(196,19,46,0.08);
+  border: 1px solid rgba(196,19,46,0.25);
+  padding: 3px 9px; border-radius: 10px;
+}
+
+/* ── The question ─────────────────────────────────────────────────────── */
+.question-demo {
+  position: relative;
+}
+.demo-slide { display: none; }
+.demo-slide.active {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+  align-items: stretch;
+}
+.demo-nav {
+  display: flex; align-items: center; justify-content: center; gap: 20px;
+  margin-top: 28px;
+}
+.demo-arrow {
+  width: 32px; height: 32px; border-radius: 50%;
+  border: 1.5px solid rgba(242,240,232,0.4); background: transparent;
+  color: var(--cream); font-size: 16px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: border-color 0.15s;
+}
+.demo-arrow:hover { border-color: var(--cream); }
+.demo-dots { display: flex; gap: 8px; }
+.demo-dot {
+  width: 8px; height: 8px; border-radius: 4px; padding: 0;
+  border: none; background: rgba(242,240,232,0.35); cursor: pointer;
+  transition: all 0.15s;
+}
+.demo-dot.active { background: var(--cream); width: 20px; }
+
+.q-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 20px; overflow: hidden;
+}
+.q-header {
+  background: var(--cream); padding: 18px 24px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.q-day { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--taupe); }
+.q-sponsor-chip {
+  font-size: 9px; font-weight: 600; letter-spacing: 0.06em;
+  background: rgba(146,64,14,0.12); color: var(--amber);
+  border: 1px solid rgba(146,64,14,0.25);
+  padding: 3px 8px; border-radius: 6px;
+}
+.q-body { padding: 24px; }
+.q-text {
+  font-family: 'Fraunces', serif;
+  font-size: 20px; font-weight: 600; color: var(--charcoal);
+  line-height: 1.3; margin-bottom: 20px;
+}
+.q-options { display: flex; flex-direction: column; gap: 8px; }
+.q-opt {
+  display: flex; align-items: center; gap: 10px;
+  padding: 11px 14px; border-radius: 10px;
+  background: rgba(43,36,32,0.03); border: 1px solid var(--border);
+  cursor: pointer; transition: all 0.15s; font-size: 13px; color: var(--charcoal);
+}
+.q-opt:hover { border-color: rgba(189,90,52,0.4); background: rgba(189,90,52,0.06); }
+.q-opt.selected { border-color: var(--terracotta); background: rgba(189,90,52,0.1); color: var(--charcoal); }
+.q-opt-dot {
+  width: 16px; height: 16px; border-radius: 50%;
+  border: 1.5px solid var(--border); flex-shrink: 0;
+  transition: all 0.15s;
+}
+.q-opt.selected .q-opt-dot {
+  background: var(--terracotta); border-color: var(--terracotta);
+}
+
+/* Result card */
+.result-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 20px; padding: 28px;
+}
+.result-header {
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--terracotta); margin-bottom: 20px;
+}
+.result-stat {
+  display: flex; align-items: baseline; gap: 8px; margin-bottom: 6px;
+}
+.result-num {
+  font-family: 'Fraunces', serif;
+  font-size: 52px; font-weight: 700; color: var(--charcoal); line-height: 1;
+}
+.result-unit { font-size: 18px; color: var(--taupe); }
+.result-context { font-size: 13px; color: var(--taupe); margin-bottom: 24px; line-height: 1.55; }
+.result-context strong { color: var(--charcoal); }
+
+.pct-bar-wrap { margin-bottom: 20px; }
+.pct-bar-label {
+  display: flex; justify-content: space-between;
+  font-size: 11px; color: var(--taupe); margin-bottom: 7px;
+}
+.pct-bar-track {
+  height: 8px; background: rgba(43,36,32,0.08);
+  border-radius: 4px; position: relative; overflow: visible;
+}
+.pct-bar-fill {
+  height: 100%; border-radius: 4px; background: var(--terracotta);
+  position: relative;
+  width: 0; transition: width 1.2s 0.3s cubic-bezier(.4,0,.2,1);
+}
+.pct-marker {
+  position: absolute; right: -5px; top: -4px;
+  width: 16px; height: 16px; border-radius: 50%;
+  background: var(--terracotta); border: 3px solid var(--cream);
+}
+.result-peer {
+  background: rgba(189,90,52,0.06); border: 1px solid rgba(189,90,52,0.15);
+  border-radius: 10px; padding: 12px 14px;
+  font-size: 12px; color: var(--taupe); line-height: 1.6;
+}
+.result-peer strong { color: var(--terracotta); }
+
+/* ── Why section ─────────────────────────────────────────────────────── */
+.why-grid {
+  display: grid; grid-template-columns: repeat(2,1fr); gap: 16px;
+  max-width: 980px; margin: 0 auto;
+}
+.why-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 16px; padding: 28px;
+}
+.why-title {
+  font-family: 'Fraunces', serif; font-size: 20px; font-weight: 600;
+  color: var(--charcoal); margin-bottom: 10px;
+}
+.why-body { font-size: 13px; color: var(--taupe); line-height: 1.7; }
+.why-body .prize-amount { color: var(--crimson); font-weight: 600; }
+
+/* ── Founding partner banner ──────────────────────────────────────────── */
+.fp-banner {
+  max-width: 980px; margin: 0 auto;
+  background: var(--card);
+  border-radius: 20px; padding: 40px 48px;
+  display: grid; grid-template-columns: 1fr auto;
+  gap: 32px; align-items: center;
+  position: relative; overflow: hidden;
+}
+.fp-tag {
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--terracotta); margin-bottom: 10px;
+}
+.fp-title {
+  font-family: 'Fraunces', serif; font-size: 26px; font-weight: 600;
+  color: var(--charcoal); margin-bottom: 10px; letter-spacing: -0.02em;
+}
+.fp-body { font-size: 14px; color: var(--taupe); line-height: 1.7; max-width: 500px; }
+.fp-body strong { color: var(--charcoal); }
+.fp-cta {
+  display: flex; flex-direction: column; gap: 10px; align-items: flex-end; flex-shrink: 0;
+}
+.fp-btn {
+  white-space: nowrap; padding: 13px 27px;
+  background: transparent; color: var(--terracotta);
+  font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600;
+  border: 1.5px solid var(--terracotta); border-radius: 12px; cursor: pointer;
+  text-decoration: none; transition: all 0.15s; display: inline-block;
+}
+.fp-btn:hover { background: var(--terracotta); color: var(--white); transform: translateY(-1px); }
+.fp-note { font-size: 11px; color: var(--taupe); text-align: right; }
+
+/* ── Footer ──────────────────────────────────────────────────────────── */
+.footer {
+  border-top: 1px solid rgba(242,240,232,0.2);
+  padding: 36px 48px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: relative; z-index: 1;
+}
+.footer-logo { display: flex; align-items: center; }
+.footer-logo-img { height: 32px; width: auto; display: block; }
+.footer-links { display: flex; gap: 24px; }
+.footer-link {
+  font-size: 12px; color: rgba(242,240,232,0.75); text-decoration: none;
+  transition: color 0.15s;
+}
+.footer-link:hover { color: var(--cream); }
+.footer-copy { font-size: 12px; color: rgba(242,240,232,0.6); }
+
+/* ── Divider ─────────────────────────────────────────────────────────── */
+.divider {
+  border: none; border-top: 1px solid rgba(242,240,232,0.18);
+  max-width: calc(100% - 96px); margin: 0 48px;
+}
+
+/* ── Animations ──────────────────────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.reveal {
+  opacity: 0; transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible { opacity: 1; transform: none; }
+
+/* ── Responsive ───────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .nav { padding: 16px 24px; }
+  .nav-right .nav-badge { display: none; }
+  .hero, .section { padding-left: 24px; padding-right: 24px; }
+  .nav-items { display: none; }
+  .nav-items.mobile-open {
+    display: flex; flex-direction: column; gap: 2px;
+    position: absolute; top: 100%; left: 0; right: 0;
+    background: rgba(242,240,232,0.98);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 24px 20px;
+  }
+  .nav-items.mobile-open .nav-item { width: 100%; justify-content: space-between; padding: 12px; }
+  .nav-item-cta-mobile {
+    display: block; text-align: center; margin-top: 10px;
+    color: var(--white); background: var(--terracotta);
+    padding: 12px; border-radius: 8px; text-decoration: none; font-weight: 600;
+  }
+  .bars-edge { display: none; }
+  .email-input { height: 64px; }
+  .hamburger-btn { display: flex; }
+  .nav-cta { display: none; }
+  .hero-headline { font-size: 44px; }
+  .form-row { flex-direction: column; }
+  .stats-strip { gap: 20px; flex-wrap: wrap; border-top: none; padding-top: 0; }
+  .stat { border-top: 1px solid rgba(242,240,232,0.2); padding-top: 20px; }
+  .stat + .stat { border-left: none; padding-left: 0; }
+  .steps { grid-template-columns: 1fr; }
+  .demo-slide.active { grid-template-columns: 1fr; }
+  .why-grid { grid-template-columns: 1fr; }
+  .fp-banner { grid-template-columns: 1fr; padding: 28px 24px; }
+  .fp-cta { align-items: flex-start; }
+  .footer { flex-direction: column; gap: 16px; padding: 28px 24px; text-align: center; }
+  .footer-links { justify-content: center; }
+  .divider { max-width: calc(100% - 48px); margin: 0 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav">
+  <a href="#" class="logo"><img src="likewise-logo-2row-terracotta.png" alt="Likewise" class="logo-img"></a>
+  <div class="nav-items" id="navItems">
+    <button class="nav-item" onclick="toggleNavDropdown(this, 0)">Benchmarks <span class="nav-item-chevron">▾</span></button>
+    <button class="nav-item" onclick="toggleNavDropdown(this, 1)">Prizes <span class="nav-item-chevron">▾</span></button>
+    <button class="nav-item" onclick="toggleNavDropdown(this, 2)">Your data <span class="nav-item-chevron">▾</span></button>
+    <button class="nav-item" onclick="toggleNavDropdown(this, 3)">Independence <span class="nav-item-chevron">▾</span></button>
+    <a href="#waitlist" class="nav-item nav-item-cta-mobile">Join waitlist</a>
+  </div>
+  <div class="nav-right">
+    <span class="nav-badge">Founding partners open</span>
+    <a href="#waitlist" class="nav-cta">Join waitlist</a>
+    <button class="hamburger-btn" onclick="toggleMobileMenu()" aria-label="Menu">
+      <img src="likewise-bars-hamburger-charcoal.png" alt="">
+    </button>
+  </div>
+  <div class="nav-dropdown" id="navDropdown">
+    <div class="nav-dropdown-panel" data-dropdown-panel="0">
+      <div class="nav-dropdown-title">See exactly where you stand</div>
+      <div class="nav-dropdown-body">Not a national average. Real answers from Canadians matched to your age, city, income range, and household type — so the comparison actually means something.</div>
+    </div>
+    <div class="nav-dropdown-panel" data-dropdown-panel="1">
+      <div class="nav-dropdown-title">Get rewarded for showing up</div>
+      <div class="nav-dropdown-body">Every answer earns entries in a weekly prize draw, funded by Canadian sponsors. Answer consistently and multiply your chances up to 10×.</div>
+    </div>
+    <div class="nav-dropdown-panel" data-dropdown-panel="2">
+      <div class="nav-dropdown-title">Build a financial identity you actually own</div>
+      <div class="nav-dropdown-body">Over time, your answers become a Financial Health Profile — richer than a credit score, and yours to share, keep, or delete whenever you want.</div>
+    </div>
+    <div class="nav-dropdown-panel" data-dropdown-panel="3">
+      <div class="nav-dropdown-title">No bank telling you what to think</div>
+      <div class="nav-dropdown-body">Likewise isn't owned by a bank or broker. We only recommend something when you ask, and we always tell you when it's sponsored.</div>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="top">
+  <img src="likewise-bars-rotated-cream.png" alt="" class="bars-edge bars-edge-left">
+  <img src="likewise-bars-rotated-cream.png" alt="" class="bars-edge bars-edge-right">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Canada's financial mirror</div>
+    <h1 class="hero-headline">
+      Where do you<br>
+      <em>actually stand</em>
+      <span class="line2">financially?</span>
+    </h1>
+    <p class="hero-sub">
+      A daily scenario. Real decisions from real Canadians like you. 
+      <strong>Find out how your savings rate, spending habits, and financial decisions 
+      compare to your actual peers</strong> — not a generic average.
+    </p>
+
+    <div class="form-wrap" id="waitlist">
+      <div class="form-row">
+        <input
+          type="email"
+          class="email-input"
+          id="emailInput"
+          placeholder="your@email.com"
+          autocomplete="email"
+          aria-label="Email address"
+        />
+        <button class="submit-btn" onclick="handleSignup()">
+          Join the waitlist
+        </button>
+      </div>
+      <div class="success-msg" id="successMsg">
+        <span class="success-text">
+          <strong>You're on the list.</strong> We'll reach out before launch with your founding member access.
+        </span>
+      </div>
+      <p class="form-note">No spam. No data sold. Unsubscribe anytime.</p>
+    </div>
+
+    <div class="stats-strip">
+      <div class="stat">
+        <div class="stat-val"><span>43%</span></div>
+        <div class="stat-lbl">of Canadians say money is<br>their #1 source of stress</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val"><span>65%</span></div>
+        <div class="stat-lbl">of Canadians<br>hold a TFSA</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val"><span>4.4%</span></div>
+        <div class="stat-lbl">Household<br>savings rate, Q4 2025</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- How it works -->
+<section class="section">
+  <div class="section-inner">
+  <div class="section-kicker">How it works</div>
+  <h2 class="section-title reveal">One question.<br><em>Your honest answer.</em> Real peers.</h2>
+  <p class="section-sub reveal">No financial advisor jargon. No generic calculators. Just you, one question a day, and a clear picture of where you stand compared to Canadians in your situation.</p>
+
+  <div class="steps">
+    <div class="step reveal">
+      <div class="step-num">01</div>
+      <div class="step-title">Answer today's question</div>
+      <div class="step-body">One financial or lifestyle question every morning. Takes 10 seconds. No right or wrong answer — just yours.</div>
+    </div>
+    <div class="step reveal" style="transition-delay:0.1s">
+      <div class="step-num">02</div>
+      <div class="step-title">See how you compare</div>
+      <div class="step-body">Instantly see how your answer compares to verified peers — matched by age, city, income range, and household type. Not a national average. Your actual peers.</div>
+    </div>
+    <div class="step reveal" style="transition-delay:0.2s">
+      <div class="step-num-row">
+        <div class="step-num" style="margin-bottom:0">03</div>
+        <span class="prize-badge" style="margin-bottom:0">Weekly draw</span>
+      </div>
+      <div class="step-title">Win prizes for showing up</div>
+      <div class="step-body">Every answer earns entries in a weekly prize draw. Participate more, earn more entries. Multiply your chances up to 10×. Sponsored by Canadian brands.</div>
+    </div>
+  </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- Question demo -->
+<section class="section">
+  <div class="section-inner">
+  <div class="section-kicker">The experience</div>
+  <h2 class="section-title reveal">What it looks like<br><em>in practice.</em></h2>
+  <p class="section-sub reveal">A real question. A real result. And peer context no financial platform in Canada currently offers.</p>
+
+  <div class="question-demo">
+    <div class="demo-slide active" data-slide="0">
+      <div class="q-card">
+        <div class="q-header">
+          <span class="q-day">Monday · Money & Spending</span>
+          <span class="q-sponsor-chip">Sponsored · EQ Bank</span>
+        </div>
+        <div class="q-body">
+          <div class="q-text">What percentage of your take-home income do you save each month?</div>
+          <div class="q-options">
+            <div class="q-opt" onclick="selectOpt(this)"><div class="q-opt-dot"></div>Less than 5%</div>
+            <div class="q-opt" onclick="selectOpt(this)"><div class="q-opt-dot"></div>5–10%</div>
+            <div class="q-opt selected" onclick="selectOpt(this)"><div class="q-opt-dot"></div>10–20%</div>
+            <div class="q-opt" onclick="selectOpt(this)"><div class="q-opt-dot"></div>More than 20%</div>
+            <div class="q-opt" onclick="selectOpt(this)"><div class="q-opt-dot"></div>It varies too much to say</div>
+          </div>
+        </div>
+      </div>
+      <div class="result-card">
+        <div class="result-header">Your result — Torontonians aged 30–35</div>
+        <div class="result-stat">
+          <div class="result-num">Top</div>
+          <div class="result-unit">29%</div>
+        </div>
+        <div class="result-context">You save 10–20% monthly — <strong>above average for your peer group.</strong> The national average is 6%. Among Torontonians your age, it's 9%.</div>
+        <div class="pct-bar-wrap">
+          <div class="pct-bar-label"><span>Bottom 0%</span><span>Average</span><span>Top 0%</span></div>
+          <div class="pct-bar-track"><div class="pct-bar-fill" style="width:71%"><div class="pct-marker"></div></div></div>
+        </div>
+        <div class="result-peer"><strong>Peer insight:</strong> Among your matched peers who save 10–20%, 68% use automatic pre-authorized contributions — compared to 31% of those who save less consistently.</div>
+      </div>
+    </div>
+
+    <div class="demo-slide" data-slide="1">
+      <div class="q-card">
+        <div class="q-header">
+          <span class="q-day">Tuesday · Work & Career</span>
+          <span class="q-sponsor-chip">Sponsored · Questrade</span>
+        </div>
+        <div class="q-body">
+          <div class="q-text">Would you take a pay cut for a 4-day work week?</div>
+          <div class="q-options">
+            <div class="q-opt" onclick="selectOpt(this)"><div class="q-opt-dot"></div>No, not worth it</div>
+            <div class="q-opt selected" onclick="selectOpt(this)"><div class="q-opt-dot"></div>Yes, up to 10% less</div>
+            <div class="q-opt" onclick="selectOpt(this)"><div class="q-opt-dot"></div>Yes, up to 20% less</div>
+            <div class="q-opt" onclick="selectOpt(this)"><div class="q-opt-dot"></div>I already have one</div>
+          </div>
+        </div>
+      </div>
+      <div class="result-card">
+        <div class="result-header">Your result — Vancouverites aged 25–30</div>
+        <div class="result-stat">
+          <div class="result-num">Top</div>
+          <div class="result-unit">38%</div>
+        </div>
+        <div class="result-context">You'd trade some pay for time back — <strong>a growing preference among your peers.</strong> Nationally, 45% would take some pay cut. Among Vancouverites your age, it's 58%.</div>
+        <div class="pct-bar-wrap">
+          <div class="pct-bar-label"><span>Bottom 0%</span><span>Average</span><span>Top 0%</span></div>
+          <div class="pct-bar-track"><div class="pct-bar-fill" style="width:62%"><div class="pct-marker"></div></div></div>
+        </div>
+        <div class="result-peer"><strong>Peer insight:</strong> Among peers who'd take a 4-day week, 74% cite burnout as the main reason — compared to 40% of all respondents.</div>
+      </div>
+    </div>
+
+    <div class="demo-slide" data-slide="2">
+      <div class="q-card">
+        <div class="q-header">
+          <span class="q-day">Wednesday · Everyday Life</span>
+        </div>
+        <div class="q-body">
+          <div class="q-text">How many days a week do you buy lunch instead of packing it?</div>
+          <div class="q-options">
+            <div class="q-opt" onclick="selectOpt(this)"><div class="q-opt-dot"></div>0 days</div>
+            <div class="q-opt" onclick="selectOpt(this)"><div class="q-opt-dot"></div>1–2 days</div>
+            <div class="q-opt selected" onclick="selectOpt(this)"><div class="q-opt-dot"></div>3–4 days</div>
+            <div class="q-opt" onclick="selectOpt(this)"><div class="q-opt-dot"></div>5+ days</div>
+          </div>
+        </div>
+      </div>
+      <div class="result-card">
+        <div class="result-header">Your result — Canadians aged 25–35</div>
+        <div class="result-stat">
+          <div class="result-num">Top</div>
+          <div class="result-unit">45%</div>
+        </div>
+        <div class="result-context">Buying lunch 3–4 days a week puts you <strong>right around the median</strong> for your age group. The national average spend on bought lunches is $61/week.</div>
+        <div class="pct-bar-wrap">
+          <div class="pct-bar-label"><span>Bottom 0%</span><span>Average</span><span>Top 0%</span></div>
+          <div class="pct-bar-track"><div class="pct-bar-fill" style="width:52%"><div class="pct-marker"></div></div></div>
+        </div>
+        <div class="result-peer"><strong>Peer insight:</strong> Peers who pack lunch 3+ days a week report saving an average of $140/month — most put it toward debt or savings goals.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="demo-nav">
+    <button class="demo-arrow" onclick="shiftDemoSlide(-1)" aria-label="Previous example">‹</button>
+    <div class="demo-dots">
+      <button class="demo-dot active" onclick="goToDemoSlide(0)"></button>
+      <button class="demo-dot" onclick="goToDemoSlide(1)"></button>
+      <button class="demo-dot" onclick="goToDemoSlide(2)"></button>
+    </div>
+    <button class="demo-arrow" onclick="shiftDemoSlide(1)" aria-label="Next example">›</button>
+  </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- Why section -->
+<section class="section">
+  <div class="section-inner">
+  <div class="section-kicker">Why Likewise</div>
+  <h2 class="section-title reveal">Your data should<br><em>work for you.</em></h2>
+  <p class="section-sub reveal">Every company you interact with uses your financial behaviour to make decisions. Likewise gives you something back.</p>
+
+  <div class="why-grid">
+    <div class="why-card reveal">
+      <div class="why-title">Honest peer benchmarks</div>
+      <div class="why-body">Not national averages. Not editorial estimates. Real answers from verified Canadians matched to your actual demographic situation — by age, city, income range, and household type.</div>
+    </div>
+    <div class="why-card reveal" style="transition-delay:0.1s">
+      <div class="why-title">You get paid for your data</div>
+      <div class="why-body">Weekly prize draws funded by Canadian sponsors. Complete daily sessions, earn more entries. Multiply your chances up to 10× by linking an account, referring friends, and answering consistently. Market as "Win up to <span class="prize-amount">$1,000</span>."</div>
+    </div>
+    <div class="why-card reveal" style="transition-delay:0.05s">
+      <div class="why-title">Your financial identity, owned by you</div>
+      <div class="why-body">Over time, Likewise builds you a Financial Health Profile — a verified record of your financial behaviour that you own, control, and can share with lenders on your own terms. Richer than a credit score. Yours to keep or delete.</div>
+    </div>
+    <div class="why-card reveal" style="transition-delay:0.15s">
+      <div class="why-title">Independent. No bank behind this.</div>
+      <div class="why-body">Likewise is not owned by a bank, a broker, or a financial product company. We don't recommend products unless you ask for help — and when we do, we tell you it's sponsored. No hidden agenda. No algorithmic nudges.</div>
+    </div>
+  </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- Founding partner -->
+<section class="section">
+  <div class="fp-banner reveal">
+    <div>
+      <div class="fp-tag">For organisations</div>
+      <div class="fp-title">Founding Partner Program</div>
+      <div class="fp-body">
+        Likewise is offering a limited number of <strong>founding sponsor relationships</strong> to Canadian organisations that want to reach a financially-engaged audience with real benchmark data. 
+        One complimentary question slot. Rate protection for three years. Direct relationship with the Likewise founder.
+      </div>
+    </div>
+    <div class="fp-cta">
+      <a href="mailto:hello@joinlikewise.ca?subject=Founding Partner enquiry" class="fp-btn">
+        Get in touch
+      </a>
+      <div class="fp-note">hello@joinlikewise.ca</div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-logo"><img src="likewise-logo-2row-cream.png" alt="Likewise" class="footer-logo-img"></div>
+  <div class="footer-links">
+    <a href="mailto:hello@joinlikewise.ca" class="footer-link">hello@joinlikewise.ca</a>
+    <a href="#" class="footer-link">Privacy</a>
+    <a href="#waitlist" class="footer-link">Join waitlist</a>
+  </div>
+  <div class="footer-copy">© 2025 Likewise · joinlikewise.ca · Canada</div>
+</footer>
+
+<script>
+// ── Scroll reveal ─────────────────────────────────────────────────────
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+// ── Question demo carousel ──────────────────────────────────────────
+let demoIndex = 0;
+const demoSlideCount = document.querySelectorAll('.demo-slide').length;
+
+function goToDemoSlide(index) {
+  demoIndex = index;
+  document.querySelectorAll('.demo-slide').forEach(s => s.classList.remove('active'));
+  document.querySelector('.demo-slide[data-slide="' + index + '"]').classList.add('active');
+  document.querySelectorAll('.demo-dot').forEach((d, i) => d.classList.toggle('active', i === index));
+}
+function shiftDemoSlide(direction) {
+  goToDemoSlide((demoIndex + direction + demoSlideCount) % demoSlideCount);
+}
+
+// ── Option selection ───────────────────────────────────────────────────
+function selectOpt(el) {
+  el.closest('.q-options').querySelectorAll('.q-opt').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+// ── Value pillar tabs ────────────────────────────────────────────────
+function toggleNavDropdown(el, index) {
+  const dropdown = document.getElementById('navDropdown');
+  const wasActiveIndex = el.classList.contains('active');
+
+  document.querySelectorAll('.nav-item').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.nav-dropdown-panel').forEach(p => p.classList.remove('active'));
+
+  if (wasActiveIndex) {
+    dropdown.classList.remove('open');
+    return;
+  }
+
+  el.classList.add('active');
+  document.querySelector('.nav-dropdown-panel[data-dropdown-panel="' + index + '"]').classList.add('active');
+  dropdown.classList.add('open');
+}
+
+function toggleMobileMenu() {
+  document.getElementById('navItems').classList.toggle('mobile-open');
+}
+
+document.addEventListener('click', e => {
+  const dropdown = document.getElementById('navDropdown');
+  const navItems = document.getElementById('navItems');
+  if (navItems.classList.contains('mobile-open') && !e.target.closest('.nav-items') && !e.target.closest('.hamburger-btn')) {
+    navItems.classList.remove('mobile-open');
+  }
+  if (!dropdown.classList.contains('open')) return;
+  if (e.target.closest('.nav-dropdown') || e.target.closest('.nav-items')) return;
+  dropdown.classList.remove('open');
+  document.querySelectorAll('.nav-item').forEach(t => t.classList.remove('active'));
+});
+
+// ── Waitlist form ─────────────────────────────────────────────────────
+function handleSignup() {
+  const input = document.getElementById('emailInput');
+  const email = input.value.trim();
+  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  if (!re.test(email)) {
+    input.style.borderColor = '#F43F5E';
+    input.focus();
+    setTimeout(() => input.style.borderColor = '', 2000);
+    return;
+  }
+
+  // Hide form, show success
+  document.querySelector('.form-row').style.display = 'none';
+  document.querySelector('.form-note').style.display = 'none';
+  document.getElementById('successMsg').classList.add('show');
+
+  // In production: POST to your email service here
+  // fetch('/api/waitlist', { method:'POST', body: JSON.stringify({email}), headers:{'Content-Type':'application/json'} })
+  console.log('Waitlist signup:', email);
+}
+
+// Enter key on input
+document.getElementById('emailInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') handleSignup();
+});
+</script>
+
+</body>
+</html>
