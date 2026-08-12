@@ -551,6 +551,7 @@ body::after {
 </style>
 </head>
 <body>
+<iframe name="mc-hidden-iframe" style="display:none;" title="mailchimp-submit" aria-hidden="true"></iframe>
 
 <!-- Nav -->
 <nav class="nav">
@@ -607,19 +608,23 @@ body::after {
     </p>
 
     <div class="form-wrap" id="waitlist">
-      <div class="form-row">
+      <form class="form-row" id="mcForm" action="https://joinlikewise.us7.list-manage.com/subscribe/post?u=7b458c7dca6cbe9e9f56b8133&amp;id=058aea9e0f&amp;f_id=00a7bde4f0" method="post" target="mc-hidden-iframe">
         <input
           type="email"
           class="email-input"
           id="emailInput"
+          name="EMAIL"
           placeholder="your@email.com"
           autocomplete="email"
           aria-label="Email address"
         />
-        <button class="submit-btn" onclick="handleSignup()">
+        <div style="position: absolute; left: -5000px;" aria-hidden="true">
+          <input type="text" name="b_7b458c7dca6cbe9e9f56b8133_058aea9e0f" tabindex="-1" value="">
+        </div>
+        <button type="button" class="submit-btn" onclick="handleSignup()">
           Join the waitlist
         </button>
-      </div>
+      </form>
       <div class="success-msg" id="successMsg">
         <span class="success-text">
           <strong>You're on the list.</strong> We'll reach out before launch with your founding member access.
@@ -627,6 +632,7 @@ body::after {
       </div>
       <p class="form-note">No spam. No data sold. Unsubscribe anytime.</p>
     </div>
+    <iframe name="mc-hidden-iframe" style="display:none;" title="signup"></iframe>
 
     <div class="stats-strip">
       <div class="stat">
@@ -935,9 +941,33 @@ function handleSignup() {
   document.querySelector('.form-note').style.display = 'none';
   document.getElementById('successMsg').classList.add('show');
 
-  // In production: POST to your email service here
-  // fetch('/api/waitlist', { method:'POST', body: JSON.stringify({email}), headers:{'Content-Type':'application/json'} })
-  console.log('Waitlist signup:', email);
+  submitToMailchimp(email);
+}
+
+// ── Mailchimp signup (submits via hidden iframe, page never navigates away) ──
+function submitToMailchimp(email) {
+  const form = document.createElement('form');
+  form.action = 'https://joinlikewise.us7.list-manage.com/subscribe/post?u=7b458c7dca6cbe9e9f56b8133&id=058aea9e0f&f_id=00a7bde4f0';
+  form.method = 'POST';
+  form.target = 'mc-hidden-iframe';
+  form.style.display = 'none';
+
+  const emailField = document.createElement('input');
+  emailField.type = 'email';
+  emailField.name = 'EMAIL';
+  emailField.value = email;
+  form.appendChild(emailField);
+
+  // Honeypot field — must be present and stay empty, or Mailchimp flags the signup as spam
+  const honeypot = document.createElement('input');
+  honeypot.type = 'text';
+  honeypot.name = 'b_7b458c7dca6cbe9e9f56b8133_058aea9e0f';
+  honeypot.value = '';
+  form.appendChild(honeypot);
+
+  document.body.appendChild(form);
+  form.submit();
+  document.body.removeChild(form);
 }
 
 // Enter key on input
