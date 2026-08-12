@@ -9,7 +9,7 @@
 <link rel="icon" type="image/svg+xml" href="likewise-icon-placeholder.svg">
 <link rel="apple-touch-icon" href="likewise-icon-placeholder.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400;1,9..144,600&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400;1,9..144,600&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Mono:wght@400;500&family=Permanent+Marker&display=swap" rel="stylesheet">
 <style>
 /* ── Reset & base ─────────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -208,9 +208,41 @@ body::after {
 .stat-val span { color: var(--cream); font-weight: 700; }
 .stat-lbl { font-size: 11px; color: rgba(242,240,232,0.7); line-height: 1.4; }
 
+/* ── Hand-drawn annotation ───────────────────────────────────────────── */
+.annotated-stat { position: relative; display: inline-block; }
+.hand-circle {
+  position: absolute; top: -38px; left: -50px; right: -50px; bottom: -52px;
+  width: calc(100% + 100px); height: calc(100% + 90px);
+  overflow: visible; pointer-events: none;
+}
+.hand-circle path {
+  fill: none; stroke: #C4132E; stroke-width: 3.5;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+.hand-annotation {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 2px;
+  margin-top: 22px; margin-left: 56%;
+}
+.hand-arrow { width: 50px; height: 50px; flex-shrink: 0; overflow: visible; }
+.hand-arrow path {
+  fill: none; stroke: #C4132E; stroke-width: 6;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+.hand-text {
+  font-family: 'Permanent Marker', cursive; font-size: 18px;
+  color: #C4132E;
+  padding-bottom: 6px; white-space: nowrap;
+  transform: translateX(calc(-100% + 10px)) rotate(-3deg);
+  transform-origin: right bottom;
+}
+.stats-footnote {
+  font-size: 10px; color: rgba(242,240,232,0.5);
+  margin-top: 18px;
+}
+
 /* ── How it works ────────────────────────────────────────────────────── */
 .section {
-  padding: 100px 48px;
+  padding: 60px 48px;
   position: relative; z-index: 1;
 }
 
@@ -531,6 +563,7 @@ body::after {
     padding: 12px; border-radius: 8px; text-decoration: none; font-weight: 600;
   }
   .bars-edge { display: none; }
+  .hand-circle, .hand-annotation { display: none; }
   .email-input { height: auto; padding: 10px 18px; line-height: normal; font-size: 15px; }
   .hamburger-btn { display: flex; }
   .nav-cta { display: none; }
@@ -644,10 +677,24 @@ body::after {
         <div class="stat-lbl">of Canadians<br>hold a TFSA</div>
       </div>
       <div class="stat">
-        <div class="stat-val"><span>4.4%</span></div>
-        <div class="stat-lbl">Household<br>savings rate, Q4 2025</div>
+        <div class="annotated-stat">
+          <div class="stat-val"><span>4.4%</span></div>
+          <div class="stat-lbl">Household<br>savings rate*</div>
+          <svg class="hand-circle" viewBox="0 0 200 120" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M 22,58 C 18,28 55,10 100,9 C 148,8 185,24 182,55 C 179,86 138,105 98,104 C 58,103 24,88 23,60 C 22,52 30,46 42,44" />
+          </svg>
+        </div>
       </div>
     </div>
+
+    <div class="hand-annotation">
+      <svg class="hand-arrow" viewBox="0 0 90 90" aria-hidden="true">
+        <path d="M 6,85 C 12,58 20,32 35,10 M 35,10 L 19,15 M 35,10 L 30,27" />
+      </svg>
+      <span class="hand-text">Is this good?</span>
+    </div>
+
+    <div class="stats-footnote">* Q4 2025, Statistics Canada</div>
   </div>
 </section>
 
@@ -669,7 +716,7 @@ body::after {
     <div class="step reveal" style="transition-delay:0.1s">
       <div class="step-num">02</div>
       <div class="step-title">See how you compare</div>
-      <div class="step-body">Instantly see how your answer compares to verified peers — matched by age, city, income range, and household type. Not a national average. Your actual peers.</div>
+      <div class="step-body">Instantly see how your answer compares to real peers — matched by age, city, income range, and household type. Not a national average. Your actual peers.</div>
     </div>
     <div class="step reveal" style="transition-delay:0.2s">
       <div class="step-num-row">
@@ -811,15 +858,15 @@ body::after {
   <div class="why-grid">
     <div class="why-card reveal">
       <div class="why-title">Honest peer benchmarks</div>
-      <div class="why-body">Not national averages. Not editorial estimates. Real answers from verified Canadians matched to your actual demographic situation — by age, city, income range, and household type.</div>
+      <div class="why-body">Not national averages. Not editorial estimates. Real answers from Canadians matched to your actual demographic situation — by age, city, income range, and household type. The more people who join, the sharper that comparison gets.</div>
     </div>
     <div class="why-card reveal" style="transition-delay:0.1s">
-      <div class="why-title">You get paid for your data</div>
-      <div class="why-body">Weekly prize draws funded by Canadian sponsors. Complete daily sessions, earn more entries. Multiply your chances up to 10× by linking an account, referring friends, and answering consistently. Market as "Win up to <span class="prize-amount">$1,000</span>."</div>
+      <div class="why-title">Earn prizes for your attention</div>
+      <div class="why-body">Win up to <span class="prize-amount">$1,000</span> in weekly prize draws funded by Canadian sponsors that want to get in front of people like you. Complete daily sessions, earn more entries. Multiply your chances up to 10× by linking an account, referring friends, and answering consistently.</div>
     </div>
     <div class="why-card reveal" style="transition-delay:0.05s">
       <div class="why-title">Your financial identity, owned by you</div>
-      <div class="why-body">Over time, Likewise builds you a Financial Health Profile — a verified record of your financial behaviour that you own, control, and can share with lenders on your own terms. Richer than a credit score. Yours to keep or delete.</div>
+      <div class="why-body">Over time, Likewise builds you a Financial Health Profile — a real record of your financial behaviour that you own, control, and can share with lenders on your own terms. Richer than a credit score. Yours to keep or delete.</div>
     </div>
     <div class="why-card reveal" style="transition-delay:0.15s">
       <div class="why-title">Independent. No bank behind this.</div>
