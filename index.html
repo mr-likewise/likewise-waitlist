@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#F2F0E8">
 <title>Likewise — Canada's Financial Mirror · joinlikewise.ca</title>
-<meta name="description" content="Find out where you really stand financially. Likewise gives Canadians honest peer comparisons, weekly prize draws, and ownership of their own financial data.">
+<meta name="description" content="Find out where you really stand financially. Likewise gives Canadians honest peer comparisons, weekly reward draws, and ownership of their own financial data.">
 <link rel="icon" type="image/svg+xml" href="likewise-icon-placeholder.svg">
 <link rel="apple-touch-icon" href="likewise-icon-placeholder.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,6 +19,7 @@
   --taupe:   #6B5D52;
   --terracotta: #BD5A34;
   --sage:    #8A9A7E;
+  --honey:   #F0D18F;
   --crimson: #C4132E;
   --cream:   #F2F0E8;
   --card:    #F2F0E8;
@@ -344,6 +345,9 @@ body::after {
 }
 
 /* ── The question ─────────────────────────────────────────────────────── */
+.demo-stage {
+  background: var(--charcoal); border-radius: 20px; padding: 32px;
+}
 .question-demo {
   position: relative;
 }
@@ -351,6 +355,12 @@ body::after {
 .demo-slide.active {
   display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
   align-items: stretch;
+}
+.demo-col { display: flex; flex-direction: column; }
+.demo-col .q-card, .demo-col .result-card { flex: 1; }
+.demo-label {
+  font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--honey); margin-bottom: 10px;
 }
 .demo-nav {
   display: flex; align-items: center; justify-content: center; gap: 20px;
@@ -375,6 +385,7 @@ body::after {
 .q-card {
   background: var(--card); border: 1px solid var(--border);
   border-radius: 20px; overflow: hidden;
+  box-shadow: 0 10px 28px rgba(0,0,0,0.28);
 }
 .q-header {
   background: var(--cream); padding: 18px 24px;
@@ -416,6 +427,7 @@ body::after {
 .result-card {
   background: var(--card); border: 1px solid var(--border);
   border-radius: 20px; padding: 28px;
+  box-shadow: 0 10px 28px rgba(0,0,0,0.28);
 }
 .result-header {
   font-family: 'DM Mono', monospace; font-size: 10px;
@@ -574,6 +586,7 @@ body::after {
   .stat + .stat { border-left: none; padding-left: 0; }
   .steps { grid-template-columns: 1fr; }
   .demo-slide.active { grid-template-columns: 1fr; }
+  .demo-stage { padding: 20px; }
   .why-grid { grid-template-columns: 1fr; }
   .fp-banner { grid-template-columns: 1fr; padding: 28px 24px; }
   .fp-cta { align-items: flex-start; }
@@ -591,7 +604,7 @@ body::after {
   <a href="#" class="logo"><img src="likewise-logo-2row-terracotta.png" alt="Likewise" class="logo-img"></a>
   <div class="nav-items" id="navItems">
     <button class="nav-item" onclick="toggleNavDropdown(this, 0)">Benchmarks <span class="nav-item-chevron">▾</span></button>
-    <button class="nav-item" onclick="toggleNavDropdown(this, 1)">Prizes <span class="nav-item-chevron">▾</span></button>
+    <button class="nav-item" onclick="toggleNavDropdown(this, 1)">Rewards <span class="nav-item-chevron">▾</span></button>
     <button class="nav-item" onclick="toggleNavDropdown(this, 2)">Your data <span class="nav-item-chevron">▾</span></button>
     <button class="nav-item" onclick="toggleNavDropdown(this, 3)">Independence <span class="nav-item-chevron">▾</span></button>
     <a href="#waitlist" class="nav-item nav-item-cta-mobile">Join waitlist</a>
@@ -610,7 +623,7 @@ body::after {
     </div>
     <div class="nav-dropdown-panel" data-dropdown-panel="1">
       <div class="nav-dropdown-title">Get rewarded for showing up</div>
-      <div class="nav-dropdown-body">Every answer earns entries in a weekly prize draw, funded by Canadian sponsors. Answer consistently and multiply your chances up to 10×.</div>
+      <div class="nav-dropdown-body">Every answer earns entries in a weekly reward draw, funded by Canadian sponsors. Answer consistently and multiply your chances up to 10×.</div>
     </div>
     <div class="nav-dropdown-panel" data-dropdown-panel="2">
       <div class="nav-dropdown-title">Build a financial identity you actually own</div>
@@ -709,22 +722,22 @@ body::after {
 
   <div class="steps">
     <div class="step reveal">
-      <div class="step-num">01</div>
+      <div class="step-num">Step 01</div>
       <div class="step-title">Answer today's question</div>
       <div class="step-body">One financial or lifestyle question every morning. Takes 10 seconds. No right or wrong answer — just yours.</div>
     </div>
     <div class="step reveal" style="transition-delay:0.1s">
-      <div class="step-num">02</div>
+      <div class="step-num">Step 02</div>
       <div class="step-title">See how you compare</div>
       <div class="step-body">Instantly see how your answer compares to real peers — matched by age, city, income range, and household type. Not a national average. Your actual peers.</div>
     </div>
     <div class="step reveal" style="transition-delay:0.2s">
       <div class="step-num-row">
-        <div class="step-num" style="margin-bottom:0">03</div>
+        <div class="step-num" style="margin-bottom:0">Step 03</div>
         <span class="prize-badge" style="margin-bottom:0">Weekly draw</span>
       </div>
-      <div class="step-title">Win prizes for showing up</div>
-      <div class="step-body">Every answer earns entries in a weekly prize draw. Participate more, earn more entries. Multiply your chances up to 10×. Sponsored by Canadian brands.</div>
+      <div class="step-title">Win rewards for showing up</div>
+      <div class="step-body">Every answer earns entries in a weekly reward draw. Participate more, earn more entries. Multiply your chances up to 10×. Sponsored by Canadian brands.</div>
     </div>
   </div>
   </div>
@@ -739,9 +752,12 @@ body::after {
   <h2 class="section-title reveal">What it looks like<br><em>in practice.</em></h2>
   <p class="section-sub reveal">A real question. A real result. And peer context no financial platform in Canada currently offers.</p>
 
+  <div class="demo-stage">
   <div class="question-demo">
     <div class="demo-slide active" data-slide="0">
-      <div class="q-card">
+      <div class="demo-col">
+        <div class="demo-label">You answer</div>
+        <div class="q-card">
         <div class="q-header">
           <span class="q-day">Monday · Money & Spending</span>
           <span class="q-sponsor-chip">Sponsored · EQ Bank</span>
@@ -756,8 +772,11 @@ body::after {
             <div class="q-opt" onclick="selectOpt(this)"><div class="q-opt-dot"></div>It varies too much to say</div>
           </div>
         </div>
+        </div>
       </div>
-      <div class="result-card">
+      <div class="demo-col">
+        <div class="demo-label">You see</div>
+        <div class="result-card">
         <div class="result-header">Your result — Torontonians aged 30–35</div>
         <div class="result-stat">
           <div class="result-num">Top</div>
@@ -769,11 +788,14 @@ body::after {
           <div class="pct-bar-track"><div class="pct-bar-fill" style="width:71%"><div class="pct-marker"></div></div></div>
         </div>
         <div class="result-peer"><strong>Peer insight:</strong> Among your matched peers who save 10–20%, 68% use automatic pre-authorized contributions — compared to 31% of those who save less consistently.</div>
+        </div>
       </div>
     </div>
 
     <div class="demo-slide" data-slide="1">
-      <div class="q-card">
+      <div class="demo-col">
+        <div class="demo-label">You answer</div>
+        <div class="q-card">
         <div class="q-header">
           <span class="q-day">Tuesday · Work & Career</span>
           <span class="q-sponsor-chip">Sponsored · Questrade</span>
@@ -787,8 +809,11 @@ body::after {
             <div class="q-opt" onclick="selectOpt(this)"><div class="q-opt-dot"></div>I already have one</div>
           </div>
         </div>
+        </div>
       </div>
-      <div class="result-card">
+      <div class="demo-col">
+        <div class="demo-label">You see</div>
+        <div class="result-card">
         <div class="result-header">Your result — Vancouverites aged 25–30</div>
         <div class="result-stat">
           <div class="result-num">Top</div>
@@ -800,11 +825,14 @@ body::after {
           <div class="pct-bar-track"><div class="pct-bar-fill" style="width:62%"><div class="pct-marker"></div></div></div>
         </div>
         <div class="result-peer"><strong>Peer insight:</strong> Among peers who'd take a 4-day week, 74% cite burnout as the main reason — compared to 40% of all respondents.</div>
+        </div>
       </div>
     </div>
 
     <div class="demo-slide" data-slide="2">
-      <div class="q-card">
+      <div class="demo-col">
+        <div class="demo-label">You answer</div>
+        <div class="q-card">
         <div class="q-header">
           <span class="q-day">Wednesday · Everyday Life</span>
         </div>
@@ -817,8 +845,11 @@ body::after {
             <div class="q-opt" onclick="selectOpt(this)"><div class="q-opt-dot"></div>5+ days</div>
           </div>
         </div>
+        </div>
       </div>
-      <div class="result-card">
+      <div class="demo-col">
+        <div class="demo-label">You see</div>
+        <div class="result-card">
         <div class="result-header">Your result — Canadians aged 25–35</div>
         <div class="result-stat">
           <div class="result-num">Top</div>
@@ -830,6 +861,7 @@ body::after {
           <div class="pct-bar-track"><div class="pct-bar-fill" style="width:52%"><div class="pct-marker"></div></div></div>
         </div>
         <div class="result-peer"><strong>Peer insight:</strong> Peers who pack lunch 3+ days a week report saving an average of $140/month — most put it toward debt or savings goals.</div>
+        </div>
       </div>
     </div>
   </div>
@@ -842,6 +874,7 @@ body::after {
       <button class="demo-dot" onclick="goToDemoSlide(2)"></button>
     </div>
     <button class="demo-arrow" onclick="shiftDemoSlide(1)" aria-label="Next example">›</button>
+  </div>
   </div>
   </div>
 </section>
@@ -861,8 +894,8 @@ body::after {
       <div class="why-body">Not national averages. Not editorial estimates. Real answers from Canadians matched to your actual demographic situation — by age, city, income range, and household type. The more people who join, the sharper that comparison gets.</div>
     </div>
     <div class="why-card reveal" style="transition-delay:0.1s">
-      <div class="why-title">Earn prizes for your attention</div>
-      <div class="why-body">Win up to <span class="prize-amount">$1,000</span> in weekly prize draws funded by Canadian sponsors that want to get in front of people like you. Complete daily sessions, earn more entries. Multiply your chances up to 10× by linking an account, referring friends, and answering consistently.</div>
+      <div class="why-title">Earn rewards for your attention</div>
+      <div class="why-body">Win up to <span class="prize-amount">$1,000</span> in weekly reward draws funded by Canadian sponsors that want to get in front of people like you. Complete daily sessions, earn more entries. Multiply your chances up to 10× by linking an account, referring friends, and answering consistently.</div>
     </div>
     <div class="why-card reveal" style="transition-delay:0.05s">
       <div class="why-title">Your financial identity, owned by you</div>
