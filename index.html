@@ -97,7 +97,7 @@ body::after {
 .hero {
   min-height: 100vh;
   display: flex; flex-direction: column; justify-content: center;
-  padding: 100px 48px 80px;
+  padding: 100px 48px 160px;
   position: relative; overflow: hidden;
 }
 
@@ -194,7 +194,7 @@ body::after {
 /* ── Stats strip ──────────────────────────────────────────────────────── */
 .stats-strip {
   display: flex; gap: 0;
-  margin-top: 64px;
+  margin: 64px auto 0; max-width: 800px;
   border-top: 1px solid rgba(242,240,232,0.2);
   padding-top: 36px;
   opacity: 0; animation: fadeUp 0.8s 0.7s ease forwards;
@@ -659,7 +659,7 @@ body::after {
 
 <!-- Hero -->
 <section class="hero" id="top">
-  <img src="likewise-bars-mark-cream.png" alt="" class="hero-bars-mark">
+  <img src="likewise-bars-rotated-cream.png" alt="" class="hero-bars-mark">
   <div class="hero-inner">
     <div class="hero-eyebrow">Canada's financial mirror</div>
     <h1 class="hero-headline">
