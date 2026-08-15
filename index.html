@@ -56,7 +56,7 @@ body::after {
 /* Bars motif, large mark bleeding off the right edge */
 .hero-bars-mark {
   position: absolute; right: -60px; top: 140px;
-  height: 420px; width: auto;
+  height: 520px; width: auto;
   opacity: 0.16; pointer-events: none; z-index: 0;
 }
 
@@ -94,9 +94,9 @@ body::after {
 
 /* ── Hero ─────────────────────────────────────────────────────────────── */
 .hero {
-  min-height: 100vh;
+  min-height: 90vh;
   display: flex; flex-direction: column; justify-content: center;
-  padding: 100px 48px 160px;
+  padding: 100px 48px 120px;
   position: relative; overflow: hidden;
 }
 
@@ -198,8 +198,8 @@ body::after {
   padding-top: 36px;
   opacity: 0; animation: fadeUp 0.8s 0.7s ease forwards;
 }
-.stat { flex: 1; }
-.stat + .stat { border-left: 1px solid rgba(242,240,232,0.2); padding-left: 28px; }
+.stat { flex: 0 0 auto; }
+.stat + .stat { border-left: 1px solid rgba(242,240,232,0.2); padding-left: 56px; margin-left: 56px; }
 .stat-val {
   font-family: 'Fraunces', serif;
   font-size: 26px; font-weight: 600; color: var(--cream);
@@ -601,7 +601,7 @@ body::after {
   .form-row { flex-direction: column; }
   .stats-strip { gap: 20px; flex-wrap: wrap; border-top: none; padding-top: 0; }
   .stat { border-top: 1px solid rgba(242,240,232,0.2); padding-top: 20px; }
-  .stat + .stat { border-left: none; padding-left: 0; }
+  .stat + .stat { border-left: none; padding-left: 0; margin-left: 0; }
   .steps { grid-template-columns: 1fr; }
   .demo-slide.active { grid-template-columns: 1fr; }
   .topics-page.active { grid-template-columns: 1fr; }
