@@ -141,27 +141,11 @@ body::after {
 }
 .hero-shape {
   position: absolute; z-index: 0;
-  top: -6%; left: 50%; transform: translateX(-50%);
+  top: -13%; left: 50%; transform: translateX(-50%);
   width: 560px; height: 560px; max-width: 90%;
   background: var(--sage); opacity: 0.55;
   border-radius: 50%;
   clip-path: inset(0 0 34% 0);
-  pointer-events: none;
-}
-.hero-visual::after {
-  content: '';
-  position: absolute; z-index: 0;
-  bottom: 2%; left: 50%; transform: translateX(-50%);
-  width: 62%; height: 28px;
-  background: radial-gradient(ellipse, rgba(43,36,32,0.28), transparent 72%);
-  filter: blur(7px);
-  pointer-events: none;
-}
-.hero-sunmark {
-  position: absolute; z-index: 0;
-  top: -14%; right: -18%;
-  width: 420px; height: auto; max-width: 60%;
-  color: var(--terracotta); opacity: 0.3;
   pointer-events: none;
 }
 .hero-phones {
@@ -169,6 +153,15 @@ body::after {
   width: 100%; max-width: 540px; height: auto; display: block;
   filter: drop-shadow(0 26px 46px rgba(43,36,32,0.16));
   opacity: 0; animation: fadeUp 0.9s 0.35s ease forwards;
+}
+.hero-phones::after {
+  content: '';
+  position: absolute;
+  bottom: -14px; left: 47.5%; transform: translateX(-50%);
+  width: 58%; height: 26px;
+  background: radial-gradient(ellipse, rgba(43,36,32,0.3), transparent 72%);
+  filter: blur(7px);
+  pointer-events: none;
 }
 
 /* ── Form ─────────────────────────────────────────────────────────────── */
@@ -229,11 +222,11 @@ body::after {
 
 /* ── Hero feature bullets ─────────────────────────────────────────────── */
 .hero-features {
-  display: flex; flex-wrap: wrap; gap: 28px 36px;
+  display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 24px 32px;
   margin-top: 40px;
   opacity: 0; animation: fadeUp 0.8s 0.7s ease forwards;
 }
-.hero-feature { display: flex; align-items: flex-start; gap: 10px; }
+.hero-feature { display: flex; align-items: flex-start; gap: 10px; min-width: 0; }
 .hero-feature-icon {
   width: 18px; height: 18px; margin-top: 2px; flex-shrink: 0; color: var(--taupe);
 }
@@ -274,22 +267,25 @@ body::after {
   align-items: start; margin-bottom: 48px;
 }
 .section-header .section-sub { max-width: 420px; padding-top: 4px; margin-bottom: 0; }
+.section-header--align-end { align-items: end; }
+.section-header--align-end .section-sub { padding-top: 0; }
 
-/* -- Section break: a small mark centered on the divider line -- */
+/* -- Section break: a trapezoid tab hanging down from the line -- */
 .section-break {
   position: relative;
   max-width: calc(100% - 96px); margin: 0 48px;
-  border-top: 1px solid rgba(43,36,32,0.12);
+  border-top: 1px solid rgba(43,36,32,0.16);
 }
 .section-break-mark {
-  position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
-  width: 52px; height: 52px; border-radius: 50%;
-  background: var(--cream);
-  border: 1px solid rgba(189,90,52,0.35);
-  display: flex; align-items: center; justify-content: center;
-  color: var(--terracotta);
+  position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  width: 46px; height: 26px;
+  background: rgba(43,36,32,0.06);
+  clip-path: polygon(0% 0%, 100% 0%, 76% 100%, 24% 100%);
+  display: flex; align-items: flex-start; justify-content: center;
+  padding-top: 5px;
+  color: rgba(43,36,32,0.45);
 }
-.section-break-mark svg { width: 20px; height: 20px; }
+.section-break-mark svg { width: 18px; height: 13px; }
 
 /* -- Step icons -- */
 .step-icon {
@@ -617,7 +613,7 @@ body::after {
   .nav-cta { display: none; }
   .hero-headline { font-size: 40px; }
   .form-row { flex-direction: column; }
-  .hero-features { gap: 20px 28px; margin-top: 32px; }
+  .hero-features { gap: 18px 20px; margin-top: 32px; }
   .section { padding-top: 64px; padding-bottom: 64px; }
   .steps { grid-template-columns: 1fr; gap: 28px; }
   .experience-grid { grid-template-columns: 1fr; gap: 20px; }
@@ -768,16 +764,22 @@ body::after {
           <div class="hero-feature-sub">For every decision, big or small</div>
         </div>
       </div>
+      <div class="hero-feature">
+        <span class="hero-feature-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <div class="hero-feature-text">
+          <div class="hero-feature-title">Independent</div>
+          <div class="hero-feature-sub">No bank behind this</div>
+        </div>
+      </div>
     </div>
     </div>
 
     <div class="hero-visual">
       <div class="hero-shape" aria-hidden="true"></div>
-      <svg class="hero-sunmark" viewBox="0 0 400 300" aria-hidden="true">
-        <circle cx="320" cy="78" r="42" stroke="currentColor" stroke-width="1.2" fill="none"/>
-        <path d="M320 14v-12 M320 152v10 M256 78h-12 M396 78h12 M276 34l-9-9 M373 122l-9-9 M276 122l-9 9 M373 34l-9 9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
-        <path d="M0 224 L70 152 L130 198 L214 104 L292 186 L400 132" fill="none" stroke="currentColor" stroke-width="1.2"/>
-      </svg>
       <img src="3-Phone-MockUp.png" alt="The Likewise app showing a daily comparison question, a peer benchmark result, and a decision profile screen" class="hero-phones">
     </div>
   </div>
@@ -785,10 +787,10 @@ body::after {
 
 <div class="section-break">
   <span class="section-break-mark" aria-hidden="true">
-    <svg viewBox="0 0 24 24" fill="none">
-      <path d="M12 21V10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-      <path d="M12 14C12 14 6 13 6 7C11 7 12 12 12 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M12 11C12 11 13 6 18 6C18 11 13 11.5 12 11.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <svg viewBox="0 0 24 16" fill="none">
+      <rect x="1" y="7" width="4" height="9" rx="1" fill="currentColor"/>
+      <rect x="10" y="3" width="4" height="13" rx="1" fill="currentColor"/>
+      <rect x="19" y="0" width="4" height="16" rx="1" fill="currentColor"/>
     </svg>
   </span>
 </div>
@@ -796,7 +798,7 @@ body::after {
 <!-- How it works -->
 <section class="section">
   <div class="section-inner">
-  <div class="section-header">
+  <div class="section-header section-header--align-end">
     <div>
       <div class="section-kicker">How it works</div>
       <h2 class="section-title reveal">One scenario.<br>A clearer picture of you.</h2>
@@ -842,10 +844,10 @@ body::after {
 
 <div class="section-break">
   <span class="section-break-mark" aria-hidden="true">
-    <svg viewBox="0 0 24 24" fill="none">
-      <path d="M12 21V10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-      <path d="M12 14C12 14 6 13 6 7C11 7 12 12 12 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M12 11C12 11 13 6 18 6C18 11 13 11.5 12 11.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <svg viewBox="0 0 24 16" fill="none">
+      <rect x="1" y="7" width="4" height="9" rx="1" fill="currentColor"/>
+      <rect x="10" y="3" width="4" height="13" rx="1" fill="currentColor"/>
+      <rect x="19" y="0" width="4" height="16" rx="1" fill="currentColor"/>
     </svg>
   </span>
 </div>
@@ -884,10 +886,10 @@ body::after {
 
 <div class="section-break">
   <span class="section-break-mark" aria-hidden="true">
-    <svg viewBox="0 0 24 24" fill="none">
-      <path d="M12 21V10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-      <path d="M12 14C12 14 6 13 6 7C11 7 12 12 12 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M12 11C12 11 13 6 18 6C18 11 13 11.5 12 11.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <svg viewBox="0 0 24 16" fill="none">
+      <rect x="1" y="7" width="4" height="9" rx="1" fill="currentColor"/>
+      <rect x="10" y="3" width="4" height="13" rx="1" fill="currentColor"/>
+      <rect x="19" y="0" width="4" height="16" rx="1" fill="currentColor"/>
     </svg>
   </span>
 </div>
@@ -962,10 +964,10 @@ body::after {
 
 <div class="section-break">
   <span class="section-break-mark" aria-hidden="true">
-    <svg viewBox="0 0 24 24" fill="none">
-      <path d="M12 21V10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-      <path d="M12 14C12 14 6 13 6 7C11 7 12 12 12 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M12 11C12 11 13 6 18 6C18 11 13 11.5 12 11.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <svg viewBox="0 0 24 16" fill="none">
+      <rect x="1" y="7" width="4" height="9" rx="1" fill="currentColor"/>
+      <rect x="10" y="3" width="4" height="13" rx="1" fill="currentColor"/>
+      <rect x="19" y="0" width="4" height="16" rx="1" fill="currentColor"/>
     </svg>
   </span>
 </div>
@@ -1024,10 +1026,10 @@ body::after {
 
 <div class="section-break">
   <span class="section-break-mark" aria-hidden="true">
-    <svg viewBox="0 0 24 24" fill="none">
-      <path d="M12 21V10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-      <path d="M12 14C12 14 6 13 6 7C11 7 12 12 12 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M12 11C12 11 13 6 18 6C18 11 13 11.5 12 11.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <svg viewBox="0 0 24 16" fill="none">
+      <rect x="1" y="7" width="4" height="9" rx="1" fill="currentColor"/>
+      <rect x="10" y="3" width="4" height="13" rx="1" fill="currentColor"/>
+      <rect x="19" y="0" width="4" height="16" rx="1" fill="currentColor"/>
     </svg>
   </span>
 </div>
@@ -1058,10 +1060,10 @@ body::after {
 
 <div class="section-break">
   <span class="section-break-mark" aria-hidden="true">
-    <svg viewBox="0 0 24 24" fill="none">
-      <path d="M12 21V10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-      <path d="M12 14C12 14 6 13 6 7C11 7 12 12 12 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M12 11C12 11 13 6 18 6C18 11 13 11.5 12 11.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <svg viewBox="0 0 24 16" fill="none">
+      <rect x="1" y="7" width="4" height="9" rx="1" fill="currentColor"/>
+      <rect x="10" y="3" width="4" height="13" rx="1" fill="currentColor"/>
+      <rect x="19" y="0" width="4" height="16" rx="1" fill="currentColor"/>
     </svg>
   </span>
 </div>
@@ -1225,3 +1227,4 @@ document.getElementById('emailInput').addEventListener('keydown', e => {
 
 </body>
 </html>
+
