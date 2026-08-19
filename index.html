@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#F2F0E8">
-<title>Likewise — Canada's Financial Mirror · joinlikewise.ca</title>
+<title>Likewise · Canada's Financial Mirror · joinlikewise.ca</title>
 <meta name="description" content="Find out where you really stand financially. Likewise gives Canadians honest peer comparisons, weekly reward draws, and ownership of their own financial data.">
 <link rel="icon" type="image/svg+xml" href="likewise-icon-placeholder.svg">
 <link rel="apple-touch-icon" href="likewise-icon-placeholder.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400;1,9..144,600&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Mono:wght@400;500&family=Permanent+Marker&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400;1,9..144,600&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 /* ── Reset & base ─────────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -18,6 +18,7 @@
   --charcoal: #2B2420;
   --taupe:   #6B5D52;
   --terracotta: #BD5A34;
+  --terracotta-dark: #A34A29;
   --sage:    #8A9A7E;
   --honey:   #F0D18F;
   --crimson: #C4132E;
@@ -32,8 +33,8 @@ html { scroll-behavior: smooth; }
 
 body {
   font-family: 'DM Sans', sans-serif;
-  background: var(--terracotta);
-  color: var(--cream);
+  background: var(--cream);
+  color: var(--charcoal);
   min-height: 100vh;
   overflow-x: hidden;
 }
@@ -43,21 +44,14 @@ body::before {
   content: '';
   position: fixed; inset: 0; z-index: 0; pointer-events: none;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
-  opacity: 0.6;
+  opacity: 0.5;
 }
 
-/* Soft corner gradient, per the confirmed §11 motif treatment */
+/* Soft corner gradient */
 body::after {
   content: '';
   position: fixed; inset: 0; z-index: 0; pointer-events: none;
-  background: linear-gradient(135deg, transparent 55%, rgba(43,36,32,0.10) 100%);
-}
-
-/* Bars motif, large mark bleeding off the right edge */
-.hero-bars-mark {
-  position: absolute; right: -60px; top: 140px;
-  height: 520px; width: auto;
-  opacity: 0.16; pointer-events: none; z-index: 0;
+  background: linear-gradient(135deg, transparent 60%, rgba(43,36,32,0.05) 100%);
 }
 
 /* ── Nav ─────────────────────────────────────────────────────────────── */
@@ -65,7 +59,7 @@ body::after {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   display: flex; align-items: center; justify-content: space-between;
   padding: 20px 48px;
-  background: rgba(242,240,232,0.85);
+  background: rgba(242,240,232,0.88);
   backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(43,36,32,0.08);
 }
@@ -94,56 +88,73 @@ body::after {
 
 /* ── Hero ─────────────────────────────────────────────────────────────── */
 .hero {
-  min-height: 90vh;
+  min-height: 88vh;
   display: flex; flex-direction: column; justify-content: center;
-  padding: 100px 48px 120px;
+  padding: 128px 48px 96px;
   position: relative; overflow: hidden;
 }
 
-/* Radial glow */
+/* Soft ambient glow behind the phones */
 .hero::after {
   content: '';
-  position: absolute; bottom: -200px; left: -200px;
-  width: 700px; height: 700px; border-radius: 50%;
-  background: transparent;
-  pointer-events: none;
+  position: absolute; top: 8%; right: 4%;
+  width: 640px; height: 640px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(138,154,126,0.16), transparent 70%);
+  pointer-events: none; z-index: 0;
 }
 
-.hero-inner { max-width: min(1800px, 85vw); width: 100%; margin: 0 auto; align-self: center; position: relative; z-index: 1; }
+.hero-inner {
+  max-width: min(1800px, 85vw); width: 100%; margin: 0 auto; align-self: center;
+  position: relative; z-index: 1;
+  display: grid; grid-template-columns: 1.05fr 1fr; gap: 40px; align-items: center;
+}
+
+.hero-copy { min-width: 0; }
 
 .hero-eyebrow {
   font-family: 'DM Mono', monospace;
   font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
-  color: var(--cream); margin-bottom: 28px;
+  color: var(--terracotta); margin-bottom: 16px;
   opacity: 0; animation: fadeUp 0.7s 0.1s ease forwards;
 }
 
 .hero-headline {
   font-family: 'Fraunces', serif;
-  font-size: clamp(52px, 7vw, 88px);
-  font-weight: 600; line-height: 1.0;
-  color: var(--cream); letter-spacing: -0.03em;
-  margin-bottom: 0;
+  font-size: clamp(44px, 5.2vw, 72px);
+  font-weight: 600; line-height: 1.04;
+  color: var(--charcoal); letter-spacing: -0.03em;
+  margin-bottom: 20px;
   opacity: 0; animation: fadeUp 0.8s 0.25s ease forwards;
 }
 .hero-headline em {
-  color: var(--cream); font-style: italic; font-weight: 300;
+  color: var(--terracotta); font-style: italic; font-weight: 400;
 }
 .hero-headline .line2 {
-  display: block; color: var(--cream); opacity: 0.75; font-weight: 300; font-style: italic;
+  display: block; color: var(--charcoal); opacity: 0.55; font-weight: 300; font-style: italic;
 }
 
 .hero-sub {
-  font-size: clamp(16px, 1.8vw, 19px); line-height: 1.7;
-  color: rgba(242,240,232,0.82); max-width: 620px;
-  margin-top: 32px; text-wrap: pretty;
+  font-size: clamp(15px, 1.4vw, 17px); line-height: 1.7;
+  color: var(--taupe); max-width: 520px;
+  margin-bottom: 0; text-wrap: pretty;
   opacity: 0; animation: fadeUp 0.8s 0.4s ease forwards;
 }
-.hero-sub strong { color: var(--cream); font-weight: 500; }
+.hero-sub strong { color: var(--charcoal); font-weight: 500; }
+
+/* ── Hero product visual ─────────────────────────────────────────────── */
+.hero-visual {
+  position: relative; z-index: 1;
+  display: flex; align-items: center; justify-content: center;
+}
+.hero-phones {
+  width: 100%; max-width: 540px; height: auto; display: block;
+  filter: drop-shadow(0 26px 46px rgba(43,36,32,0.16));
+  opacity: 0; animation: fadeUp 0.9s 0.35s ease forwards;
+}
 
 /* ── Form ─────────────────────────────────────────────────────────────── */
 .form-wrap {
-  margin-top: 44px;
+  margin-top: 36px;
   opacity: 0; animation: fadeUp 0.8s 0.55s ease forwards;
 }
 .form-row {
@@ -151,39 +162,37 @@ body::after {
 }
 .email-input {
   flex: 1; height: 52px;
-  background: #F2F0E8;
+  background: var(--white);
   border: 1px solid var(--border);
   border-radius: 12px; padding: 0 18px;
   font-family: 'DM Sans', sans-serif; font-size: 15px;
   color: var(--charcoal); outline: none;
   -webkit-appearance: none; appearance: none;
-  transition: border-color 0.2s, background 0.2s;
+  transition: border-color 0.2s;
 }
 .email-input::placeholder { color: var(--taupe); }
-.email-input:focus {
-  border-color: var(--border);
-  background: #F2F0E8;
-}
+.email-input:focus { border-color: rgba(189,90,52,0.5); }
 .submit-btn {
   height: 52px; padding: 0 26px;
-  background: transparent; color: var(--cream);
+  background: var(--terracotta); color: var(--cream);
   font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600;
-  border: 1.5px solid var(--cream); border-radius: 12px; cursor: pointer;
+  border: none; border-radius: 12px; cursor: pointer;
   white-space: nowrap; transition: all 0.2s;
   position: relative; overflow: hidden;
 }
-.submit-btn:hover { background: var(--cream); color: var(--terracotta); transform: translateY(-1px); }
+.submit-btn:hover { background: var(--terracotta-dark); transform: translateY(-1px); }
 .submit-btn:active { transform: translateY(0); }
 
 .form-note {
-  margin-top: 12px; font-size: 12px; color: rgba(242,240,232,0.75);
+  margin-top: 12px; font-size: 12px; color: var(--taupe);
 }
 
 /* Success state */
 .success-msg {
   display: none; align-items: center; gap: 12px;
   padding: 16px 20px; max-width: 480px;
-  background: var(--card);
+  background: var(--white);
+  border: 1px solid var(--border);
   border-radius: 12px;
 }
 .success-msg.show { display: flex; }
@@ -193,58 +202,29 @@ body::after {
 /* ── Stats strip ──────────────────────────────────────────────────────── */
 .stats-strip {
   display: flex; justify-content: space-between; gap: 0;
-  margin-top: 64px;
-  border-top: 1px solid rgba(242,240,232,0.2);
-  padding-top: 36px;
+  margin-top: 52px;
+  border-top: 1px solid rgba(43,36,32,0.14);
+  padding-top: 32px;
   opacity: 0; animation: fadeUp 0.8s 0.7s ease forwards;
 }
 .stat { flex: 1; text-align: center; }
 .stat-inner { display: inline-block; text-align: left; }
-.stat + .stat { border-left: 1px solid rgba(242,240,232,0.2); padding-left: 32px; }
+.stat + .stat { border-left: 1px solid rgba(43,36,32,0.14); padding-left: 32px; }
 .stat-val {
   font-family: 'Fraunces', serif;
-  font-size: 26px; font-weight: 600; color: var(--cream);
+  font-size: 26px; font-weight: 600; color: var(--charcoal);
   line-height: 1; margin-bottom: 5px;
 }
-.stat-val span { color: var(--cream); font-weight: 700; }
-.stat-lbl { font-size: 11px; color: rgba(242,240,232,0.7); line-height: 1.4; }
-
-/* ── Hand-drawn annotation ───────────────────────────────────────────── */
-.annotated-stat { position: relative; display: inline-block; text-align: left; }
-.hand-circle {
-  position: absolute; top: -38px; left: -50px; right: -50px; bottom: -52px;
-  width: calc(100% + 100px); height: calc(100% + 90px);
-  overflow: visible; pointer-events: none;
-}
-.hand-circle path {
-  fill: none; stroke: #C4132E; stroke-width: 3.5;
-  stroke-linecap: round; stroke-linejoin: round;
-}
-.hand-annotation {
-  position: absolute; top: calc(100% + 40px); left: -10px;
-  display: flex; flex-direction: column; align-items: flex-start; gap: 2px;
-  white-space: nowrap;
-}
-.hand-arrow { width: 50px; height: 50px; flex-shrink: 0; overflow: visible; }
-.hand-arrow path {
-  fill: none; stroke: #C4132E; stroke-width: 6;
-  stroke-linecap: round; stroke-linejoin: round;
-}
-.hand-text {
-  font-family: 'Permanent Marker', cursive; font-size: 18px;
-  color: #C4132E;
-  padding-bottom: 6px; white-space: nowrap;
-  transform: translateX(calc(-100% + 10px)) rotate(-3deg);
-  transform-origin: right bottom;
-}
+.stat-val span { color: var(--charcoal); font-weight: 700; }
+.stat-lbl { font-size: 11px; color: var(--taupe); line-height: 1.4; }
 .stats-footnote {
-  font-size: 10px; color: rgba(242,240,232,0.5);
+  font-size: 10px; color: rgba(43,36,32,0.42);
   margin-top: 18px;
 }
 
-/* ── How it works ────────────────────────────────────────────────────── */
+/* ── Sections (shared rhythm system) ─────────────────────────────────── */
 .section {
-  padding: 60px 48px;
+  padding: 96px 48px;
   position: relative; z-index: 1;
 }
 
@@ -253,20 +233,20 @@ body::after {
 .section-kicker {
   font-family: 'DM Mono', monospace;
   font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
-  color: var(--cream); margin-bottom: 16px;
+  color: var(--terracotta); margin-bottom: 16px;
 }
 
 .section-title {
   font-family: 'Fraunces', serif;
-  font-size: clamp(32px, 4vw, 48px); font-weight: 600;
-  color: var(--cream); letter-spacing: -0.025em;
-  line-height: 1.1; margin-bottom: 12px; max-width: 760px;
+  font-size: clamp(30px, 3.6vw, 44px); font-weight: 600;
+  color: var(--charcoal); letter-spacing: -0.025em;
+  line-height: 1.15; margin-bottom: 16px; max-width: 760px;
 }
-.section-title em { color: var(--cream); font-style: italic; font-weight: 300; }
+.section-title em { color: var(--terracotta); font-style: italic; font-weight: 400; }
 
 .section-sub {
-  font-size: 16px; color: rgba(242,240,232,0.8); max-width: 640px;
-  line-height: 1.75; margin-bottom: 56px; text-wrap: pretty;
+  font-size: 16px; color: var(--taupe); max-width: 620px;
+  line-height: 1.75; margin-bottom: 48px; text-wrap: pretty;
 }
 
 /* ── Nav dropdown items ──────────────────────────────────────────────── */
@@ -308,22 +288,15 @@ body::after {
 }
 .nav-dropdown-body { font-size: 14px; color: var(--taupe); line-height: 1.7; }
 
-/* Steps */
-.steps { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; max-width: min(1800px, 85vw); margin: 0 auto; }
+/* Steps: flattened, rule-led rather than boxed */
+.steps { display: grid; grid-template-columns: repeat(3,1fr); gap: 40px; max-width: min(1800px, 85vw); margin: 0 auto; }
 
 .step {
-  background: var(--card); border: 1px solid var(--border);
-  border-radius: 16px; padding: 28px;
-  position: relative; overflow: hidden;
-  transition: border-color 0.2s, transform 0.2s;
+  padding-top: 22px;
+  border-top: 1px solid var(--border);
+  transition: border-color 0.2s;
 }
-.step:hover { border-color: rgba(189,90,52,0.3); transform: translateY(-2px); }
-.step::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-  background: var(--terracotta); opacity: 0;
-  transition: opacity 0.2s;
-}
-.step:hover::before { opacity: 1; }
+.step:hover { border-top-color: var(--terracotta); }
 
 .step-num {
   font-family: 'DM Mono', monospace;
@@ -334,8 +307,9 @@ body::after {
 .step-title {
   font-family: 'Fraunces', serif;
   font-size: 20px; font-weight: 600; color: var(--charcoal);
-  margin-bottom: 10px;
+  margin-bottom: 10px; transition: color 0.15s;
 }
+.step:hover .step-title { color: var(--terracotta); }
 .step-body { font-size: 13px; color: var(--taupe); line-height: 1.65; }
 .prize-badge {
   display: inline-block; margin-bottom: 10px;
@@ -383,15 +357,20 @@ body::after {
 }
 .demo-dot.active { background: var(--cream); width: 20px; }
 
-/* ── Topic breadth section ───────────────────────────────────────────── */
+/* -- Topic breadth section: soft sage panel, white chips -- */
 .topics-stage {
-  background: var(--terracotta); border-radius: 20px; padding: 32px;
+  background: rgba(138,154,126,0.10);
+  border: 1px solid rgba(138,154,126,0.28);
+  border-radius: 20px; padding: 32px;
 }
 .topics-page { display: none; }
 .topics-page.active {
   display: grid; grid-template-columns: repeat(3,1fr); gap: 10px;
 }
-.topic-card { background: var(--card); border-radius: 10px; padding: 16px; }
+.topic-card {
+  background: var(--white); border: 1px solid rgba(43,36,32,0.06);
+  border-radius: 10px; padding: 16px;
+}
 .topic-cat {
   font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase;
   color: var(--taupe); margin-bottom: 6px;
@@ -400,6 +379,8 @@ body::after {
 .topics-nav {
   display: flex; justify-content: center; gap: 8px; margin-top: 20px;
 }
+.topics-nav .demo-dot { background: rgba(43,36,32,0.2); }
+.topics-nav .demo-dot.active { background: var(--terracotta); width: 20px; }
 
 .q-card {
   background: var(--card); border: 1px solid var(--border);
@@ -490,14 +471,14 @@ body::after {
 }
 .result-peer strong { color: var(--terracotta); }
 
-/* ── Why section ─────────────────────────────────────────────────────── */
+/* -- Why section: flattened, rule-led -- */
 .why-grid {
-  display: grid; grid-template-columns: repeat(2,1fr); gap: 16px;
+  display: grid; grid-template-columns: repeat(2,1fr); gap: 40px 56px;
   max-width: min(1800px, 85vw); margin: 0 auto;
 }
 .why-card {
-  background: var(--card); border: 1px solid var(--border);
-  border-radius: 16px; padding: 28px;
+  padding-top: 22px;
+  border-top: 1px solid var(--border);
 }
 .why-title {
   font-family: 'Fraunces', serif; font-size: 20px; font-weight: 600;
@@ -506,10 +487,11 @@ body::after {
 .why-body { font-size: 13px; color: var(--taupe); line-height: 1.7; }
 .why-body .prize-amount { color: var(--crimson); font-weight: 600; }
 
-/* ── Founding partner banner ──────────────────────────────────────────── */
+/* -- Founding partner banner: soft sage, still a deliberate card -- */
 .fp-banner {
   max-width: min(1800px, 85vw); margin: 0 auto;
-  background: var(--card);
+  background: rgba(138,154,126,0.12);
+  border: 1px solid rgba(138,154,126,0.3);
   border-radius: 20px; padding: 40px 48px;
   display: grid; grid-template-columns: 1fr auto;
   gap: 32px; align-items: center;
@@ -541,7 +523,7 @@ body::after {
 
 /* ── Footer ──────────────────────────────────────────────────────────── */
 .footer {
-  border-top: 1px solid rgba(242,240,232,0.2);
+  border-top: 1px solid rgba(43,36,32,0.14);
   padding: 36px 48px;
   display: flex; align-items: center; justify-content: space-between;
   position: relative; z-index: 1;
@@ -550,15 +532,15 @@ body::after {
 .footer-logo-img { height: 32px; width: auto; display: block; }
 .footer-links { display: flex; gap: 24px; }
 .footer-link {
-  font-size: 12px; color: rgba(242,240,232,0.75); text-decoration: none;
+  font-size: 12px; color: var(--taupe); text-decoration: none;
   transition: color 0.15s;
 }
-.footer-link:hover { color: var(--cream); }
-.footer-copy { font-size: 12px; color: rgba(242,240,232,0.6); }
+.footer-link:hover { color: var(--terracotta); }
+.footer-copy { font-size: 12px; color: rgba(43,36,32,0.5); }
 
 /* ── Divider ─────────────────────────────────────────────────────────── */
 .divider {
-  border: none; border-top: 1px solid rgba(242,240,232,0.18);
+  border: none; border-top: 1px solid rgba(43,36,32,0.12);
   max-width: calc(100% - 96px); margin: 0 48px;
 }
 
@@ -575,10 +557,18 @@ body::after {
 .reveal.visible { opacity: 1; transform: none; }
 
 /* ── Responsive ───────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .hero-inner { grid-template-columns: 1fr; gap: 0; }
+  .hero-visual { margin-top: 48px; }
+  .hero-phones { max-width: 380px; }
+  .hero::after { width: 420px; height: 420px; top: 4%; right: -10%; }
+}
+
 @media (max-width: 768px) {
   .nav { padding: 16px 24px; }
   .nav-right .nav-badge { display: none; }
   .hero, .section { padding-left: 24px; padding-right: 24px; }
+  .hero { padding-top: 108px; }
   .nav-items { display: none; }
   .nav-items.mobile-open {
     display: flex; flex-direction: column; gap: 2px;
@@ -593,28 +583,28 @@ body::after {
     color: var(--white); background: var(--terracotta);
     padding: 12px; border-radius: 8px; text-decoration: none; font-weight: 600;
   }
-  .hero-bars-mark { display: none; }
-  .hand-circle, .hand-annotation { display: none; }
   .email-input { height: auto; padding: 10px 18px; line-height: normal; font-size: 15px; }
   .hamburger-btn { display: flex; }
   .nav-cta { display: none; }
-  .hero-headline { font-size: 44px; }
+  .hero-headline { font-size: 40px; }
   .form-row { flex-direction: column; }
   .stats-strip { gap: 20px; flex-wrap: wrap; border-top: none; padding-top: 0; }
-  .stat { border-top: 1px solid rgba(242,240,232,0.2); padding-top: 20px; }
+  .stat { border-top: 1px solid rgba(43,36,32,0.14); padding-top: 20px; }
   .stat + .stat { border-left: none; padding-left: 0; margin-left: 0; }
-  .steps { grid-template-columns: 1fr; }
+  .section { padding-top: 64px; padding-bottom: 64px; }
+  .steps { grid-template-columns: 1fr; gap: 28px; }
   .demo-slide.active { grid-template-columns: 1fr; }
   .topics-page.active { grid-template-columns: 1fr; }
   .topics-stage { padding: 20px; }
   .demo-stage { padding: 20px; }
-  .why-grid { grid-template-columns: 1fr; }
+  .why-grid { grid-template-columns: 1fr; gap: 28px; }
   .fp-banner { grid-template-columns: 1fr; padding: 28px 24px; }
   .fp-cta { align-items: flex-start; }
   .footer { flex-direction: column; gap: 16px; padding: 28px 24px; text-align: center; }
   .footer-links { justify-content: center; }
   .divider { max-width: calc(100% - 48px); margin: 0 24px; }
 }
+
 </style>
 </head>
 <body>
@@ -640,7 +630,7 @@ body::after {
   <div class="nav-dropdown" id="navDropdown">
     <div class="nav-dropdown-panel" data-dropdown-panel="0">
       <div class="nav-dropdown-title">See exactly where you stand</div>
-      <div class="nav-dropdown-body">Not a national average. Real answers from Canadians matched to your age, city, income range, and household type — so the comparison actually means something.</div>
+      <div class="nav-dropdown-body">Not a national average. Real answers from Canadians matched to your age, city, income range, and household type, so the comparison actually means something.</div>
     </div>
     <div class="nav-dropdown-panel" data-dropdown-panel="1">
       <div class="nav-dropdown-title">Get rewarded for showing up</div>
@@ -648,7 +638,7 @@ body::after {
     </div>
     <div class="nav-dropdown-panel" data-dropdown-panel="2">
       <div class="nav-dropdown-title">Build a financial identity you actually own</div>
-      <div class="nav-dropdown-body">Over time, your answers become a Financial Health Profile — richer than a credit score, and yours to share, keep, or delete whenever you want.</div>
+      <div class="nav-dropdown-body">Over time, your answers become a Financial Health Profile, richer than a credit score, and yours to share, keep, or delete whenever you want.</div>
     </div>
     <div class="nav-dropdown-panel" data-dropdown-panel="3">
       <div class="nav-dropdown-title">No bank telling you what to think</div>
@@ -659,8 +649,8 @@ body::after {
 
 <!-- Hero -->
 <section class="hero" id="top">
-  <img src="likewise-bars-rotated-cream.png" alt="" class="hero-bars-mark">
   <div class="hero-inner">
+    <div class="hero-copy">
     <div class="hero-eyebrow">Canada's financial mirror</div>
     <h1 class="hero-headline">
       Where do you<br>
@@ -670,7 +660,7 @@ body::after {
     <p class="hero-sub">
       A daily scenario. Real decisions from real Canadians like you. 
       <strong>Find out how your savings rate, spending habits, and financial decisions 
-      compare to your actual peers</strong> — not a generic average.
+      compare to your actual peers</strong>, not a generic average.
     </p>
 
     <div class="form-wrap" id="waitlist">
@@ -714,23 +704,19 @@ body::after {
         </div>
       </div>
       <div class="stat">
-        <div class="annotated-stat">
-          <div class="stat-val"><span>4.4%</span></div>
-          <div class="stat-lbl">Household<br>savings rate*</div>
-          <svg class="hand-circle" viewBox="0 0 200 120" preserveAspectRatio="none" aria-hidden="true">
-            <path d="M 22,58 C 18,28 55,10 100,9 C 148,8 185,24 182,55 C 179,86 138,105 98,104 C 58,103 24,88 23,60 C 22,52 30,46 42,44" />
-          </svg>
-          <div class="hand-annotation">
-            <svg class="hand-arrow" viewBox="0 0 90 90" aria-hidden="true">
-              <path d="M 6,85 C 12,58 20,32 35,10 M 35,10 L 19,15 M 35,10 L 30,27" />
-            </svg>
-            <span class="hand-text">Is this good?</span>
-          </div>
+        <div class="stat-inner">
+        <div class="stat-val"><span>4.4%</span></div>
+        <div class="stat-lbl">Household<br>savings rate*</div>
         </div>
       </div>
     </div>
 
     <div class="stats-footnote">* Q4 2025, Statistics Canada</div>
+    </div>
+
+    <div class="hero-visual">
+      <img src="3-Phone-MockUp.png" alt="The Likewise app showing a daily comparison question, a peer benchmark result, and a decision profile screen" class="hero-phones">
+    </div>
   </div>
 </section>
 
@@ -747,12 +733,12 @@ body::after {
     <div class="step reveal">
       <div class="step-num">Step 01</div>
       <div class="step-title">Answer today's question</div>
-      <div class="step-body">One financial or lifestyle question every morning. Takes 10 seconds. No right or wrong answer — just yours.</div>
+      <div class="step-body">One financial or lifestyle question every morning. Takes 10 seconds. No right or wrong answer, just yours.</div>
     </div>
     <div class="step reveal" style="transition-delay:0.1s">
       <div class="step-num">Step 02</div>
       <div class="step-title">See how you compare</div>
-      <div class="step-body">Instantly see how your answer compares to real peers — matched by age, city, income range, and household type. Not a national average. Your actual peers.</div>
+      <div class="step-body">Instantly see how your answer compares to real peers, matched by age, city, income range, and household type. Not a national average. Your actual peers.</div>
     </div>
     <div class="step reveal" style="transition-delay:0.2s">
       <div class="step-num-row">
@@ -773,7 +759,7 @@ body::after {
   <div class="section-inner">
   <div class="section-kicker">What we ask</div>
   <h2 class="section-title reveal">Every part of your financial life<br><em>not just the obvious parts.</em></h2>
-  <p class="section-sub reveal">Six categories, one question a day — here's a small sample of what real Canadians weigh in on.</p>
+  <p class="section-sub reveal">Six categories, one question a day. Here's a small sample of what real Canadians weigh in on.</p>
 
   <div class="topics-stage">
     <div class="topics-page active" data-topic-page="0">
@@ -834,17 +820,17 @@ body::after {
       <div class="demo-col">
         <div class="demo-label">You see</div>
         <div class="result-card">
-        <div class="result-header">Your result — Torontonians aged 30–35</div>
+        <div class="result-header">Your result: Torontonians aged 30-35</div>
         <div class="result-stat">
           <div class="result-num">Top</div>
           <div class="result-unit">29%</div>
         </div>
-        <div class="result-context">You save 10–20% monthly — <strong>above average for your peer group.</strong> The national average is 6%. Among Torontonians your age, it's 9%.</div>
+        <div class="result-context">You save 10-20% monthly, <strong>above average for your peer group.</strong> The national average is 6%. Among Torontonians your age, it's 9%.</div>
         <div class="pct-bar-wrap">
           <div class="pct-bar-label"><span>Bottom 0%</span><span>Average</span><span>Top 0%</span></div>
           <div class="pct-bar-track"><div class="pct-bar-fill" style="width:71%"><div class="pct-marker"></div></div></div>
         </div>
-        <div class="result-peer"><strong>Peer insight:</strong> Among your matched peers who save 10–20%, 68% use automatic pre-authorized contributions — compared to 31% of those who save less consistently.</div>
+        <div class="result-peer"><strong>Peer insight:</strong> Among your matched peers who save 10–20%, 68% use automatic pre-authorized contributions, compared to 31% of those who save less consistently.</div>
         </div>
       </div>
     </div>
@@ -871,17 +857,17 @@ body::after {
       <div class="demo-col">
         <div class="demo-label">You see</div>
         <div class="result-card">
-        <div class="result-header">Your result — Vancouverites aged 25–30</div>
+        <div class="result-header">Your result: Vancouverites aged 25-30</div>
         <div class="result-stat">
           <div class="result-num">Top</div>
           <div class="result-unit">38%</div>
         </div>
-        <div class="result-context">You'd trade some pay for time back — <strong>a growing preference among your peers.</strong> Nationally, 45% would take some pay cut. Among Vancouverites your age, it's 58%.</div>
+        <div class="result-context">You'd trade some pay for time back, <strong>a growing preference among your peers.</strong> Nationally, 45% would take some pay cut. Among Vancouverites your age, it's 58%.</div>
         <div class="pct-bar-wrap">
           <div class="pct-bar-label"><span>Bottom 0%</span><span>Average</span><span>Top 0%</span></div>
           <div class="pct-bar-track"><div class="pct-bar-fill" style="width:62%"><div class="pct-marker"></div></div></div>
         </div>
-        <div class="result-peer"><strong>Peer insight:</strong> Among peers who'd take a 4-day week, 74% cite burnout as the main reason — compared to 40% of all respondents.</div>
+        <div class="result-peer"><strong>Peer insight:</strong> Among peers who'd take a 4-day week, 74% cite burnout as the main reason, compared to 40% of all respondents.</div>
         </div>
       </div>
     </div>
@@ -907,7 +893,7 @@ body::after {
       <div class="demo-col">
         <div class="demo-label">You see</div>
         <div class="result-card">
-        <div class="result-header">Your result — Canadians aged 25–35</div>
+        <div class="result-header">Your result: Canadians aged 25-35</div>
         <div class="result-stat">
           <div class="result-num">Top</div>
           <div class="result-unit">45%</div>
@@ -917,7 +903,7 @@ body::after {
           <div class="pct-bar-label"><span>Bottom 0%</span><span>Average</span><span>Top 0%</span></div>
           <div class="pct-bar-track"><div class="pct-bar-fill" style="width:52%"><div class="pct-marker"></div></div></div>
         </div>
-        <div class="result-peer"><strong>Peer insight:</strong> Peers who pack lunch 3+ days a week report saving an average of $140/month — most put it toward debt or savings goals.</div>
+        <div class="result-peer"><strong>Peer insight:</strong> Peers who pack lunch 3+ days a week report saving an average of $140/month. Most put it toward debt or savings goals.</div>
         </div>
       </div>
     </div>
@@ -948,7 +934,7 @@ body::after {
   <div class="why-grid">
     <div class="why-card reveal">
       <div class="why-title">Honest peer benchmarks</div>
-      <div class="why-body">Not national averages. Not editorial estimates. Real answers from Canadians matched to your actual demographic situation — by age, city, income range, and household type. The more people who join, the sharper that comparison gets.</div>
+      <div class="why-body">Not national averages. Not editorial estimates. Real answers from Canadians matched to your actual demographic situation, by age, city, income range, and household type. The more people who join, the sharper that comparison gets.</div>
     </div>
     <div class="why-card reveal" style="transition-delay:0.1s">
       <div class="why-title">Earn rewards for your attention</div>
@@ -956,11 +942,11 @@ body::after {
     </div>
     <div class="why-card reveal" style="transition-delay:0.05s">
       <div class="why-title">Your financial identity, owned by you</div>
-      <div class="why-body">Over time, Likewise builds you a Financial Health Profile — a real record of your financial behaviour that you own, control, and can share with lenders on your own terms. Richer than a credit score. Yours to keep or delete.</div>
+      <div class="why-body">Over time, Likewise builds you a Financial Health Profile, a real record of your financial behaviour that you own, control, and can share with lenders on your own terms. Richer than a credit score. Yours to keep or delete.</div>
     </div>
     <div class="why-card reveal" style="transition-delay:0.15s">
       <div class="why-title">Independent. No bank behind this.</div>
-      <div class="why-body">Likewise is not owned by a bank, a broker, or a financial product company. We don't recommend products unless you ask for help — and when we do, we tell you it's sponsored. No hidden agenda. No algorithmic nudges.</div>
+      <div class="why-body">Likewise is not owned by a bank, a broker, or a financial product company. We don't recommend products unless you ask for help, and when we do, we tell you it's sponsored. No hidden agenda. No algorithmic nudges.</div>
     </div>
   </div>
   </div>
@@ -990,7 +976,7 @@ body::after {
 
 <!-- Footer -->
 <footer class="footer">
-  <div class="footer-logo"><img src="likewise-logo-2row-cream.png" alt="Likewise" class="footer-logo-img"></div>
+  <div class="footer-logo"><img src="likewise-logo-2row-terracotta.png" alt="Likewise" class="footer-logo-img"></div>
   <div class="footer-links">
     <a href="mailto:hello@joinlikewise.ca" class="footer-link">hello@joinlikewise.ca</a>
     <a href="#" class="footer-link">Privacy</a>
@@ -1100,7 +1086,7 @@ function submitToMailchimp(email) {
   emailField.value = email;
   form.appendChild(emailField);
 
-  // Honeypot field — must be present and stay empty, or Mailchimp flags the signup as spam
+  // Honeypot field: must be present and stay empty, or Mailchimp flags the signup as spam
   const honeypot = document.createElement('input');
   honeypot.type = 'text';
   honeypot.name = 'b_7b458c7dca6cbe9e9f56b8133_058aea9e0f';
