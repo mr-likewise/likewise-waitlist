@@ -853,15 +853,15 @@ body::after {
     <div class="topics-page active" data-topic-page="0">
       <div class="topic-card"><div class="topic-cat">Everyday Life</div><div class="topic-q">Do you rent or own your home?</div></div>
       <div class="topic-card"><div class="topic-cat">Money & Spending</div><div class="topic-q">Do you live paycheque to paycheque?</div></div>
-      <div class="topic-card"><div class="topic-cat">Investing & Wealth</div><div class="topic-q">Have you ever bought a stock, ETF, or crypto?</div></div>
+      <div class="topic-card"><div class="topic-cat">Investing & Wealth</div><div class="topic-q">Have you maxed your TFSA this year?</div></div>
       <div class="topic-card"><div class="topic-cat">Health & Wellbeing</div><div class="topic-q">Do you have critical illness coverage?</div></div>
-      <div class="topic-card"><div class="topic-cat">Relationships & Family</div><div class="topic-q">Have you hidden a purchase from your partner?</div></div>
+      <div class="topic-card"><div class="topic-cat">Everyday Life</div><div class="topic-q">Fixed or variable mortgage rate?</div></div>
       <div class="topic-card"><div class="topic-cat">Work & Career</div><div class="topic-q">Are you on track to retire when you want?</div></div>
     </div>
     <div class="topics-page" data-topic-page="1">
-      <div class="topic-card"><div class="topic-cat">Everyday Life</div><div class="topic-q">Fixed or variable mortgage rate?</div></div>
+      <div class="topic-card"><div class="topic-cat">Investing & Wealth</div><div class="topic-q">Have you ever bought a stock, ETF, or crypto?</div></div>
       <div class="topic-card"><div class="topic-cat">Money & Spending</div><div class="topic-q">How much credit card debt are you carrying?</div></div>
-      <div class="topic-card"><div class="topic-cat">Investing & Wealth</div><div class="topic-q">Have you maxed your TFSA this year?</div></div>
+      <div class="topic-card"><div class="topic-cat">Relationships & Family</div><div class="topic-q">Have you hidden a purchase from your partner?</div></div>
       <div class="topic-card"><div class="topic-cat">Health & Wellbeing</div><div class="topic-q">What do you pay for dental work out of pocket?</div></div>
       <div class="topic-card"><div class="topic-cat">Relationships & Family</div><div class="topic-q">What do people spend on rings and weddings?</div></div>
       <div class="topic-card"><div class="topic-cat">Work & Career</div><div class="topic-q">Do you have a side hustle or secondary income?</div></div>
@@ -887,7 +887,7 @@ body::after {
 <!-- Question demo -->
 <section class="section">
   <div class="section-inner">
-  <div class="section-header">
+  <div class="section-header section-header--align-end">
     <div>
       <div class="section-kicker">The experience</div>
       <h2 class="section-title reveal">Answer. Compare.<br>Discover yourself.</h2>
@@ -925,10 +925,15 @@ body::after {
       <div class="experience-title">Compare</div>
       <div class="experience-desc">See how you stack up with Canadians like you.</div>
       <div class="experience-preview">
-        <div class="preview-compare-text">You're more future-focused than <strong>78%</strong> of peers.</div>
+        <div class="preview-compare-text"><span>You're more future-focused than <strong>78%</strong> of peers.</span></div>
         <svg class="preview-chart" viewBox="0 0 200 70" preserveAspectRatio="none" aria-hidden="true">
-          <path d="M0,65 C40,65 55,5 100,5 C145,5 160,65 200,65" fill="rgba(138,154,126,0.4)" stroke="none"/>
-          <path d="M150,65 L150,20 C170,30 185,50 200,65 Z" fill="rgba(189,90,52,0.55)" stroke="none"/>
+          <defs>
+            <clipPath id="compareTailClip">
+              <rect x="148" y="0" width="52" height="70"/>
+            </clipPath>
+          </defs>
+          <path d="M0,65 C40,65 55,5 100,5 C145,5 160,65 200,65 Z" fill="rgba(138,154,126,0.4)" stroke="none"/>
+          <path d="M0,65 C40,65 55,5 100,5 C145,5 160,65 200,65 Z" fill="rgba(189,90,52,0.6)" stroke="none" clip-path="url(#compareTailClip)"/>
         </svg>
       </div>
     </div>
