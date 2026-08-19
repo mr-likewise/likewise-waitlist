@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#F2F0E8">
-<title>Likewise · Canada's Financial Mirror · joinlikewise.ca</title>
+<title>Likewise · See where you really stand</title>
 <meta name="description" content="Find out where you really stand financially. Likewise gives Canadians honest peer comparisons, weekly reward draws, and ownership of their own financial data.">
 <link rel="icon" type="image/svg+xml" href="likewise-icon-placeholder.svg">
 <link rel="apple-touch-icon" href="likewise-icon-placeholder.svg">
@@ -95,7 +95,7 @@ body::after {
 .hero-inner {
   max-width: min(1800px, 85vw); width: 100%; margin: 0 auto; align-self: center;
   position: relative; z-index: 1;
-  display: grid; grid-template-columns: 1.05fr 1fr; gap: 40px; align-items: center;
+  display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 40px; align-items: center;
 }
 
 .hero-copy { min-width: 0; }
@@ -139,28 +139,19 @@ body::after {
   position: relative; z-index: 1;
   display: flex; align-items: center; justify-content: center;
 }
-.hero-shape {
-  position: absolute; z-index: 0;
-  top: -13%; left: 50%; transform: translateX(-50%);
-  width: 560px; height: 560px; max-width: 90%;
-  background: var(--sage); opacity: 0.55;
-  border-radius: 50%;
-  clip-path: inset(0 0 34% 0);
-  pointer-events: none;
-}
 .hero-phones {
   position: relative; z-index: 1;
-  width: 100%; max-width: 540px; height: auto; display: block;
+  width: 100%; max-width: 1020px; height: auto; display: block;
   filter: drop-shadow(0 26px 46px rgba(43,36,32,0.16));
   opacity: 0; animation: fadeUp 0.9s 0.35s ease forwards;
 }
 .hero-phones::after {
   content: '';
   position: absolute;
-  bottom: -14px; left: 47.5%; transform: translateX(-50%);
-  width: 58%; height: 26px;
+  bottom: -19px; left: 47.5%; transform: translateX(-50%);
+  width: 58%; height: 35px;
   background: radial-gradient(ellipse, rgba(43,36,32,0.3), transparent 72%);
-  filter: blur(7px);
+  filter: blur(10px);
   pointer-events: none;
 }
 
@@ -333,7 +324,7 @@ body::after {
 }
 .reward-banner-icon {
   width: 56px; height: 56px; border-radius: 50%; flex-shrink: 0;
-  background: var(--white); color: var(--terracotta);
+  background: var(--cream); color: var(--terracotta);
   display: flex; align-items: center; justify-content: center;
 }
 .reward-banner-icon svg { width: 24px; height: 24px; }
@@ -342,7 +333,7 @@ body::after {
   font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.16em;
   text-transform: uppercase; color: var(--terracotta-dark); margin-bottom: 6px;
 }
-.reward-banner-body { font-size: 15px; color: var(--charcoal); line-height: 1.5; max-width: 460px; }
+.reward-banner-body { font-size: 15px; color: var(--cream); line-height: 1.5; max-width: 460px; }
 .reward-banner-cta { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
 .reward-banner-btn {
   background: var(--terracotta); color: var(--white);
@@ -585,8 +576,8 @@ body::after {
 @media (max-width: 900px) {
   .hero-inner { grid-template-columns: 1fr; gap: 0; }
   .hero-visual { margin-top: 48px; }
-  .hero-phones { max-width: 380px; }
-  .hero::after { width: 420px; height: 420px; top: 4%; right: -10%; }
+  .hero-phones { max-width: 460px; }
+  .hero-phones::after { bottom: -10px; height: 18px; filter: blur(6px); }
 }
 
 @media (max-width: 768px) {
@@ -779,7 +770,6 @@ body::after {
     </div>
 
     <div class="hero-visual">
-      <div class="hero-shape" aria-hidden="true"></div>
       <img src="3-Phone-MockUp.png" alt="The Likewise app showing a daily comparison question, a peer benchmark result, and a decision profile screen" class="hero-phones">
     </div>
   </div>
@@ -1227,4 +1217,3 @@ document.getElementById('emailInput').addEventListener('keydown', e => {
 
 </body>
 </html>
-
