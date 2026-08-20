@@ -1352,17 +1352,14 @@ async function handleSignup() {
   document.getElementById('successMsg').classList.add('show');
 
   const refCode = new URLSearchParams(window.location.search).get('ref');
-  let referralCode = null;
+  const referralCode = Math.random().toString(36).slice(2, 8);
 
   try {
-    const { data, error } = await supabaseClient
+    const { error } = await supabaseClient
       .from('subscribers')
-      .insert({ email, referred_by: refCode || null, bonus_votes: refCode ? 5 : 0 })
-      .select()
-      .single();
+      .insert({ email, referral_code: referralCode, referred_by: refCode || null, bonus_votes: refCode ? 5 : 0 });
     if (error) throw error;
 
-    referralCode = data.referral_code;
     currentSubscriberEmail = email;
 
     if (refCode) {
