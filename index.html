@@ -584,14 +584,14 @@ body::after {
 }
 .vote-modal-overlay.show { display: flex; }
 .vote-modal {
-  position: relative;
-  width: 100%; max-width: 480px; max-height: 90vh; overflow-y: auto;
+  position: relative; flex-shrink: 0;
+  width: 100%; max-width: 640px; max-height: 90vh; overflow-y: auto;
   background: var(--cream); border-radius: 20px;
-  padding: 40px;
+  padding: 32px 36px;
   box-shadow: 0 30px 60px rgba(43,36,32,0.3);
 }
 .vote-modal-x {
-  position: absolute; top: 16px; right: 16px;
+  position: absolute; top: 14px; right: 14px;
   width: 32px; height: 32px; border-radius: 50%;
   background: transparent; border: none; cursor: pointer;
   font-size: 22px; line-height: 1; color: var(--taupe);
@@ -601,19 +601,20 @@ body::after {
 .vote-modal-x:hover { background: rgba(43,36,32,0.06); }
 .vote-modal-kicker {
   font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.18em;
-  text-transform: uppercase; color: var(--terracotta); margin-bottom: 12px;
+  text-transform: uppercase; color: var(--terracotta); margin-bottom: 10px;
 }
 .vote-modal-title {
-  font-family: 'Fraunces', serif; font-size: 24px; font-weight: 600;
-  color: var(--charcoal); line-height: 1.25; letter-spacing: -0.02em; margin-bottom: 10px;
+  font-family: 'Fraunces', serif; font-size: 22px; font-weight: 600;
+  color: var(--charcoal); line-height: 1.25; letter-spacing: -0.02em; margin-bottom: 8px;
 }
-.vote-modal-sub { font-size: 14px; color: var(--taupe); line-height: 1.6; margin-bottom: 24px; }
-.vote-opt-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+.vote-modal-sub { font-size: 13px; color: var(--taupe); line-height: 1.5; margin-bottom: 18px; }
+.vote-opt-list { display: flex; flex-direction: column; gap: 7px; margin-bottom: 16px; }
 .vote-opt {
   display: flex; align-items: center; gap: 12px;
-  padding: 13px 16px; border-radius: 12px;
+  padding: 11px 16px; border-radius: 12px;
   background: rgba(43,36,32,0.03); border: 1px solid var(--border);
   cursor: pointer; transition: all 0.15s; font-size: 14px; color: var(--charcoal); line-height: 1.4;
+  white-space: nowrap;
 }
 .vote-opt:hover { border-color: rgba(189,90,52,0.4); background: rgba(189,90,52,0.06); }
 .vote-opt.selected { border-color: var(--terracotta); background: rgba(189,90,52,0.1); }
@@ -683,7 +684,8 @@ body::after {
 }
 
 @media (max-width: 768px) {
-  .vote-modal { padding: 28px; }
+  .vote-modal { padding: 24px; }
+  .vote-opt { white-space: normal; }
   .nav { padding: 16px 24px; }
   .nav-right .nav-signin { display: none; }
   .hero, .section { padding-left: 24px; padding-right: 24px; }
