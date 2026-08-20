@@ -1285,7 +1285,7 @@ body::after {
 const SUPABASE_URL = 'https://lzruzawxicemxoapsvkk.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_BjODn9YikMaJ4nxYbcWZYA_dXg8oG7z';
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-let currentSubscriberEmail = null;
+let currentSubscriberEmail = sessionStorage.getItem('likewiseSubscriberEmail');
 
 // ── Scroll reveal ─────────────────────────────────────────────────────
 const obs = new IntersectionObserver(entries => {
@@ -1361,6 +1361,7 @@ async function handleSignup() {
     if (error) throw error;
 
     currentSubscriberEmail = email;
+    sessionStorage.setItem('likewiseSubscriberEmail', email);
 
     if (refCode) {
       // Reward the referrer. A failure here is a missed bonus, not a broken signup, so it's not awaited or blocking.
