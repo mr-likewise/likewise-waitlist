@@ -1405,9 +1405,7 @@ async function submitVote() {
     if (!currentSubscriberEmail) return;
     try {
       const { error } = await supabaseClient
-        .from('subscribers')
-        .update({ vote_choice: voteText })
-        .eq('email', currentSubscriberEmail);
+        .rpc('submit_vote', { p_email: currentSubscriberEmail, p_choice: voteText });
       if (error) throw error;
     } catch (err) {
       console.error('Supabase vote error:', err);
