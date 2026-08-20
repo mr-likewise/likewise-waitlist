@@ -6,8 +6,8 @@
 <meta name="theme-color" content="#F2F0E8">
 <title>Likewise · See where you really stand</title>
 <meta name="description" content="Find out where you really stand financially. Likewise gives Canadians honest peer comparisons, weekly reward draws, and ownership of their own financial data.">
-<link rel="icon" type="image/svg+xml" href="likewise-icon-placeholder.svg">
-<link rel="apple-touch-icon" href="likewise-icon-placeholder.svg">
+<link rel="icon" type="image/png" href="likewise-favicon.png">
+<link rel="apple-touch-icon" href="likewise-favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400;1,9..144,600&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -574,6 +574,95 @@ body::after {
 }
 .reveal.visible { opacity: 1; transform: none; }
 
+/* ── Vote modal ──────────────────────────────────────────────────────── */
+.vote-modal-overlay {
+  display: none;
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(43,36,32,0.45);
+  align-items: center; justify-content: center;
+  padding: 24px;
+}
+.vote-modal-overlay.show { display: flex; }
+.vote-modal {
+  position: relative;
+  width: 100%; max-width: 480px; max-height: 90vh; overflow-y: auto;
+  background: var(--cream); border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 30px 60px rgba(43,36,32,0.3);
+}
+.vote-modal-x {
+  position: absolute; top: 16px; right: 16px;
+  width: 32px; height: 32px; border-radius: 50%;
+  background: transparent; border: none; cursor: pointer;
+  font-size: 22px; line-height: 1; color: var(--taupe);
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s;
+}
+.vote-modal-x:hover { background: rgba(43,36,32,0.06); }
+.vote-modal-kicker {
+  font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--terracotta); margin-bottom: 12px;
+}
+.vote-modal-title {
+  font-family: 'Fraunces', serif; font-size: 24px; font-weight: 600;
+  color: var(--charcoal); line-height: 1.25; letter-spacing: -0.02em; margin-bottom: 10px;
+}
+.vote-modal-sub { font-size: 14px; color: var(--taupe); line-height: 1.6; margin-bottom: 24px; }
+.vote-opt-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+.vote-opt {
+  display: flex; align-items: center; gap: 12px;
+  padding: 13px 16px; border-radius: 12px;
+  background: rgba(43,36,32,0.03); border: 1px solid var(--border);
+  cursor: pointer; transition: all 0.15s; font-size: 14px; color: var(--charcoal); line-height: 1.4;
+}
+.vote-opt:hover { border-color: rgba(189,90,52,0.4); background: rgba(189,90,52,0.06); }
+.vote-opt.selected { border-color: var(--terracotta); background: rgba(189,90,52,0.1); }
+.vote-opt-dot {
+  width: 17px; height: 17px; border-radius: 50%; flex-shrink: 0;
+  border: 1.5px solid var(--border); transition: all 0.15s;
+}
+.vote-opt.selected .vote-opt-dot { background: var(--terracotta); border-color: var(--terracotta); }
+.vote-modal-submit {
+  width: 100%; height: 52px;
+  background: var(--terracotta); color: var(--cream);
+  font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600;
+  border: none; border-radius: 12px; cursor: pointer; transition: all 0.2s;
+}
+.vote-modal-submit:hover { background: var(--terracotta-dark); }
+.vote-modal-error {
+  display: none; font-size: 12px; color: var(--crimson); margin-top: 10px; text-align: center;
+}
+.vote-modal-error.show { display: block; }
+
+.vote-loading, .vote-confirm { display: none; text-align: center; padding: 24px 0; }
+.vote-loading.show, .vote-confirm.show { display: block; }
+
+.vote-loading-bars, .vote-confirm-bars {
+  display: flex; align-items: flex-end; justify-content: center;
+  gap: 7px; height: 44px; margin: 0 auto 20px;
+}
+.vote-loading-bars span, .vote-confirm-bars span {
+  width: 11px; border-radius: 6px; background: var(--terracotta);
+  transform-origin: bottom;
+}
+.vote-loading-bars span:nth-child(1) { height: 45%; animation: barPulse 0.9s ease-in-out infinite; }
+.vote-loading-bars span:nth-child(2) { height: 100%; animation: barPulse 0.9s ease-in-out infinite 0.15s; }
+.vote-loading-bars span:nth-child(3) { height: 65%; animation: barPulse 0.9s ease-in-out infinite 0.3s; }
+@keyframes barPulse {
+  0%, 100% { transform: scaleY(0.55); }
+  50% { transform: scaleY(1); }
+}
+.vote-loading-text { font-size: 13px; color: var(--taupe); }
+
+.vote-confirm-bars span:nth-child(1) { height: 45%; }
+.vote-confirm-bars span:nth-child(2) { height: 100%; }
+.vote-confirm-bars span:nth-child(3) { height: 65%; }
+.vote-confirm-title {
+  font-family: 'Fraunces', serif; font-size: 22px; font-weight: 600;
+  color: var(--charcoal); margin-bottom: 8px;
+}
+.vote-confirm-sub { font-size: 14px; color: var(--taupe); line-height: 1.6; margin-bottom: 24px; }
+
 /* ── Responsive ───────────────────────────────────────────────────────── */
 @media (max-width: 900px) {
   .hero-inner { grid-template-columns: 1fr; gap: 0; }
@@ -589,11 +678,12 @@ body::after {
     font-family: 'DM Mono', monospace;
     font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
     color: var(--terracotta); text-align: center;
-    margin-top: 32px;
+    margin-top: 52px;
   }
 }
 
 @media (max-width: 768px) {
+  .vote-modal { padding: 28px; }
   .nav { padding: 16px 24px; }
   .nav-right .nav-signin { display: none; }
   .hero, .section { padding-left: 24px; padding-right: 24px; }
@@ -619,7 +709,7 @@ body::after {
   .email-input { height: auto; padding: 14px 18px 14px 42px; line-height: normal; font-size: 15px; }
   .hamburger-btn { display: flex; }
   .nav-cta { display: none; }
-  .section { padding-top: 64px; padding-bottom: 64px; }
+  .section { padding-top: 52px; padding-bottom: 64px; }
   .steps { grid-template-columns: 1fr; gap: 28px; }
   .experience-grid { grid-template-columns: 1fr; gap: 20px; }
   .topics-page.active { grid-template-columns: 1fr; }
@@ -628,7 +718,8 @@ body::after {
   .section-header { grid-template-columns: 1fr; gap: 16px; margin-bottom: 32px; }
   .section-header .section-sub { max-width: none; padding-top: 0; }
   .profile-showcase { grid-template-columns: 1fr; gap: 32px; }
-  .profile-panel { grid-template-columns: 1fr; gap: 24px; padding: 24px; }
+  .profile-text { order: 1; }
+  .profile-panel { order: 2; grid-template-columns: 1fr; gap: 24px; padding: 24px; }
   .profile-card { width: auto; }
   .reward-banner { padding: 32px 24px; }
   .reward-banner-inner { gap: 20px; }
@@ -1144,7 +1235,56 @@ body::after {
   <div class="footer-copy">© 2025 Likewise · joinlikewise.ca · Canada</div>
 </footer>
 
+<!-- Vote modal -->
+<div class="vote-modal-overlay" id="voteModalOverlay">
+  <div class="vote-modal">
+    <button type="button" class="vote-modal-x" onclick="closeVoteModal()" aria-label="Close">&times;</button>
+
+    <div id="voteModalForm">
+      <div class="vote-modal-kicker">You're in</div>
+      <h3 class="vote-modal-title">Which question should Likewise ask first?</h3>
+      <p class="vote-modal-sub">Help pick the very first question we ask at launch.</p>
+
+      <div class="vote-opt-list" id="voteOptList">
+        <div class="vote-opt" onclick="selectVoteOption(this)"><span class="vote-opt-dot"></span>Have you saved enough for your age?</div>
+        <div class="vote-opt" onclick="selectVoteOption(this)"><span class="vote-opt-dot"></span>Do you carry credit card debt?</div>
+        <div class="vote-opt" onclick="selectVoteOption(this)"><span class="vote-opt-dot"></span>Will your next mortgage be fixed or variable?</div>
+        <div class="vote-opt" onclick="selectVoteOption(this)"><span class="vote-opt-dot"></span>How often do you buy lunch?</div>
+        <div class="vote-opt" onclick="selectVoteOption(this)"><span class="vote-opt-dot"></span>Do you regularly invest or contribute to a TFSA, RRSP, or FHSA?</div>
+        <div class="vote-opt" onclick="selectVoteOption(this)"><span class="vote-opt-dot"></span>How much should you give for a standard wedding gift?</div>
+      </div>
+
+      <button type="button" class="vote-modal-submit" id="voteModalSubmit" onclick="submitVote()">Cast your vote</button>
+      <p class="vote-modal-error" id="voteModalError">Pick a question first.</p>
+    </div>
+
+    <div class="vote-loading" id="voteLoading">
+      <div class="vote-loading-bars" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </div>
+      <div class="vote-loading-text">Casting your vote&hellip;</div>
+    </div>
+
+    <div class="vote-confirm" id="voteConfirm">
+      <div class="vote-confirm-bars" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </div>
+      <div class="vote-confirm-title">Thanks, your vote's in.</div>
+      <p class="vote-confirm-sub">We'll let you know which question wins when Likewise launches.</p>
+      <button type="button" class="vote-modal-submit" onclick="closeVoteModal()">Done</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+// ── Supabase config ─────────────────────────────────────────────────
+// Replace these two values once your Supabase project exists (see waitlist-implementation-guide.md).
+const SUPABASE_URL = 'https://lzruzawxicemxoapsvkk.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx6cnV6YXd4aWNlbXhvYXBzdmtrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcyMzYzNzUsImV4cCI6MjEwMjgxMjM3NX0.ZhOQrXWJWKr9rdKdKsql5H3d6z6_9prOj_56r3VZJyQ';
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+let currentSubscriberEmail = null;
+
 // ── Scroll reveal ─────────────────────────────────────────────────────
 const obs = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
@@ -1192,7 +1332,7 @@ document.addEventListener('click', e => {
 });
 
 // ── Waitlist form ─────────────────────────────────────────────────────
-function handleSignup() {
+async function handleSignup() {
   const input = document.getElementById('emailInput');
   const email = input.value.trim();
   const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -1209,11 +1349,80 @@ function handleSignup() {
   document.querySelector('.form-note').style.display = 'none';
   document.getElementById('successMsg').classList.add('show');
 
-  submitToMailchimp(email);
+  const refCode = new URLSearchParams(window.location.search).get('ref');
+  let referralCode = null;
+
+  try {
+    const { data, error } = await supabaseClient
+      .from('subscribers')
+      .insert({ email, referred_by: refCode || null, bonus_votes: refCode ? 5 : 0 })
+      .select()
+      .single();
+    if (error) throw error;
+
+    referralCode = data.referral_code;
+    currentSubscriberEmail = email;
+
+    if (refCode) {
+      // Reward the referrer. A failure here is a missed bonus, not a broken signup, so it's not awaited or blocking.
+      supabaseClient.rpc('increment_bonus_votes', { p_code: refCode, p_amount: 10 });
+    }
+  } catch (err) {
+    console.error('Supabase signup error:', err);
+    // Data storage didn't save, the Mailchimp email capture below still goes through regardless.
+  }
+
+  submitToMailchimp(email, referralCode);
+  openVoteModal();
+}
+
+// ── Vote modal ────────────────────────────────────────────────────────
+function openVoteModal() {
+  document.getElementById('voteModalOverlay').classList.add('show');
+}
+function closeVoteModal() {
+  document.getElementById('voteModalOverlay').classList.remove('show');
+}
+function selectVoteOption(el) {
+  document.querySelectorAll('#voteOptList .vote-opt').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('voteModalError').classList.remove('show');
+}
+async function submitVote() {
+  const selected = document.querySelector('#voteOptList .vote-opt.selected');
+  if (!selected) {
+    document.getElementById('voteModalError').classList.add('show');
+    return;
+  }
+
+  document.getElementById('voteModalForm').style.display = 'none';
+  document.getElementById('voteLoading').classList.add('show');
+
+  const voteText = selected.textContent.trim();
+  const minDelay = new Promise(resolve => setTimeout(resolve, 700));
+
+  const writeVote = (async () => {
+    if (!currentSubscriberEmail) return;
+    try {
+      const { error } = await supabaseClient
+        .from('subscribers')
+        .update({ vote_choice: voteText })
+        .eq('email', currentSubscriberEmail);
+      if (error) throw error;
+    } catch (err) {
+      console.error('Supabase vote error:', err);
+      // Fall through to the confirmation screen regardless, don't strand the user on a failed write.
+    }
+  })();
+
+  await Promise.all([writeVote, minDelay]);
+
+  document.getElementById('voteLoading').classList.remove('show');
+  document.getElementById('voteConfirm').classList.add('show');
 }
 
 // ── Mailchimp signup (submits via hidden iframe, page never navigates away) ──
-function submitToMailchimp(email) {
+function submitToMailchimp(email, referralCode) {
   const form = document.createElement('form');
   form.action = 'https://joinlikewise.us7.list-manage.com/subscribe/post?u=7b458c7dca6cbe9e9f56b8133&id=058aea9e0f&f_id=00a7bde4f0';
   form.method = 'POST';
@@ -1225,6 +1434,15 @@ function submitToMailchimp(email) {
   emailField.name = 'EMAIL';
   emailField.value = email;
   form.appendChild(emailField);
+
+  if (referralCode) {
+    // Requires a custom merge field named REFCODE in your Mailchimp audience, see the implementation guide.
+    const refField = document.createElement('input');
+    refField.type = 'text';
+    refField.name = 'REFCODE';
+    refField.value = referralCode;
+    form.appendChild(refField);
+  }
 
   // Honeypot field: must be present and stay empty, or Mailchimp flags the signup as spam
   const honeypot = document.createElement('input');
