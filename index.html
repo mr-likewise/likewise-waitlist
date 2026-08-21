@@ -224,6 +224,10 @@ body::after {
 .form-note {
   margin-top: 12px; font-size: 12px; color: var(--taupe);
 }
+.turnstile-error {
+  display: none; margin-top: 8px; font-size: 12px; color: #C4132E;
+}
+.turnstile-error.show { display: block; }
 
 /* Success state */
 .success-msg {
@@ -792,6 +796,8 @@ body::after {
             </svg>
             <input type="email" class="email-input" id="navEmailInput" placeholder="Enter your email" autocomplete="email" aria-label="Email address">
           </div>
+          <div class="cf-turnstile" data-sitekey="0x4AAAAAAEX7F-FOoX8LFTfc" data-size="compact" data-callback="onNavTurnstileSuccess"></div>
+          <p class="turnstile-error" id="navTurnstileError">Please complete the verification check above.</p>
           <button type="button" class="nav-popover-submit" onclick="handleNavSignup()">Join waitlist</button>
           <p class="nav-popover-note">Free to start. No credit card required.</p>
         </div>
@@ -862,6 +868,8 @@ body::after {
           Join waitlist
         </button>
       </form>
+      <div class="cf-turnstile" data-sitekey="0x4AAAAAAEX7F-FOoX8LFTfc" data-size="compact" data-callback="onHeroTurnstileSuccess" style="margin-top:12px;"></div>
+      <p class="turnstile-error" id="heroTurnstileError">Please complete the verification check above.</p>
       <div class="success-msg" id="successMsg">
         <span class="success-text">
           <strong>You're on the list.</strong> We'll reach out before launch with your founding member access.
@@ -1324,6 +1332,7 @@ body::after {
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 <script>
 // ── Supabase config ─────────────────────────────────────────────────
 // Replace these two values once your Supabase project exists (see waitlist-implementation-guide.md).
@@ -1331,6 +1340,18 @@ const SUPABASE_URL = 'https://lzruzawxicemxoapsvkk.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_BjODn9YikMaJ4nxYbcWZYA_dXg8oG7z';
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 let currentSubscriberEmail = sessionStorage.getItem('likewiseSubscriberEmail');
+
+// ── Turnstile (bot check) ────────────────────────────────────────────
+let heroTurnstileToken = null;
+let navTurnstileToken = null;
+function onHeroTurnstileSuccess(token) {
+  heroTurnstileToken = token;
+  document.getElementById('heroTurnstileError').classList.remove('show');
+}
+function onNavTurnstileSuccess(token) {
+  navTurnstileToken = token;
+  document.getElementById('navTurnstileError').classList.remove('show');
+}
 
 // ── Scroll reveal ─────────────────────────────────────────────────────
 const obs = new IntersectionObserver(entries => {
@@ -1389,9 +1410,15 @@ async function handleSignup() {
     return;
   }
 
+  if (!heroTurnstileToken) {
+    document.getElementById('heroTurnstileError').classList.add('show');
+    return;
+  }
+
   // Hide form, show success
   document.querySelector('.form-row').style.display = 'none';
   document.querySelector('.form-note').style.display = 'none';
+  document.querySelector('#waitlist .cf-turnstile').style.display = 'none';
   document.getElementById('successMsg').classList.add('show');
 
   await performSignup(email);
@@ -1450,6 +1477,11 @@ async function handleNavSignup() {
     input.style.borderColor = '#F43F5E';
     input.focus();
     setTimeout(() => input.style.borderColor = '', 2000);
+    return;
+  }
+
+  if (!navTurnstileToken) {
+    document.getElementById('navTurnstileError').classList.add('show');
     return;
   }
 
