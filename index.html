@@ -103,7 +103,8 @@ body::after {
   border: none; border-radius: 10px; cursor: pointer; transition: all 0.2s;
 }
 .nav-popover-submit:hover { background: var(--terracotta-dark); }
-.nav-popover-note { font-size: 11px; color: var(--taupe); text-align: center; }
+.nav-popover-perk { font-size: 12px; color: var(--terracotta); font-weight: 500; text-align: center; margin-top: 10px; }
+.nav-popover-note { font-size: 11px; color: var(--taupe); text-align: center; margin-top: 6px; }
 .nav-popover-success { display: none; font-size: 13px; color: var(--charcoal); line-height: 1.55; }
 .nav-popover-success.show { display: block; }
 .nav-popover-success strong { color: var(--terracotta); }
@@ -221,8 +222,11 @@ body::after {
 .submit-btn:hover { background: var(--terracotta-dark); transform: translateY(-1px); }
 .submit-btn:active { transform: translateY(0); }
 
+.form-perk {
+  margin-top: 20px; font-size: 13px; color: var(--terracotta); font-weight: 500;
+}
 .form-note {
-  margin-top: 12px; font-size: 12px; color: var(--taupe);
+  margin-top: 8px; font-size: 12px; color: var(--taupe);
 }
 .turnstile-error {
   display: none; margin-top: 8px; font-size: 12px; color: #C4132E;
@@ -815,6 +819,7 @@ body::after {
           <div class="cf-turnstile" data-sitekey="0x4AAAAAAEX7F-FOoX8LFTfc" data-size="compact" data-callback="onNavTurnstileSuccess"></div>
           <p class="turnstile-error" id="navTurnstileError">Please complete the verification check above.</p>
           <button type="button" class="nav-popover-submit" onclick="handleNavSignup()">Join waitlist</button>
+          <p class="nav-popover-perk">Help pick our first question, plus tell us what else you want to know.</p>
           <p class="nav-popover-note">Free to start. No credit card required.</p>
         </div>
         <div class="nav-popover-success" id="navPopoverSuccess">
@@ -891,6 +896,7 @@ body::after {
           <strong>You're on the list.</strong> We'll reach out before launch with your founding member access.
         </span>
       </div>
+      <p class="form-perk">Help pick our first question, plus tell us what else you want to know.</p>
       <p class="form-note">Free to start. No credit card required.</p>
     </div>
     <iframe name="mc-hidden-iframe" style="display:none;" title="signup"></iframe>
