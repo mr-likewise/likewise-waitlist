@@ -669,6 +669,22 @@ body::after {
   display: none; font-size: 12px; color: var(--crimson); margin-top: 10px; text-align: center;
 }
 .vote-modal-error.show { display: block; }
+.suggest-textarea {
+  width: 100%; min-height: 110px; resize: vertical;
+  padding: 14px 16px; border-radius: 12px;
+  background: rgba(43,36,32,0.03); border: 1px solid var(--border);
+  font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--charcoal);
+  line-height: 1.5; margin-bottom: 16px; outline: none;
+}
+.suggest-textarea:focus { border-color: rgba(189,90,52,0.5); background: var(--white); }
+.suggest-textarea::placeholder { color: var(--taupe); }
+.suggest-skip {
+  display: block; width: 100%; text-align: center;
+  margin-top: 10px; padding: 8px; background: none; border: none;
+  font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--taupe);
+  cursor: pointer; text-decoration: underline; text-underline-offset: 2px;
+}
+.suggest-skip:hover { color: var(--charcoal); }
 
 .vote-loading, .vote-confirm { display: none; text-align: center; padding: 24px 0; }
 .vote-loading.show, .vote-confirm.show { display: block; }
@@ -1331,6 +1347,32 @@ body::after {
   </div>
 </div>
 
+<div class="vote-modal-overlay" id="suggestModalOverlay">
+  <div class="vote-modal">
+    <button type="button" class="vote-modal-x" onclick="closeSuggestModal()" aria-label="Close">&times;</button>
+
+    <div id="suggestModalForm">
+      <div class="vote-modal-kicker">One more thing</div>
+      <h3 class="vote-modal-title">Got a question you wish we'd ask?</h3>
+      <p class="vote-modal-sub">Tell us about any financial or lifestyle question you've always wondered how you compare on.</p>
+
+      <textarea class="suggest-textarea" id="suggestInput" placeholder="Type your idea here&hellip;" maxlength="500"></textarea>
+
+      <button type="button" class="vote-modal-submit" id="suggestModalSubmit" onclick="submitSuggestion()">Send it in</button>
+      <button type="button" class="suggest-skip" onclick="closeSuggestModal()">Skip for now</button>
+    </div>
+
+    <div class="vote-confirm" id="suggestConfirm">
+      <div class="vote-confirm-bars" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </div>
+      <div class="vote-confirm-title">Thanks for sharing.</div>
+      <p class="vote-confirm-sub">We read every idea that comes in.</p>
+      <button type="button" class="vote-modal-submit" onclick="closeSuggestModal()">Done</button>
+    </div>
+  </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 <script>
@@ -1421,21 +1463,28 @@ async function handleSignup() {
   document.querySelector('#waitlist .cf-turnstile').style.display = 'none';
   document.getElementById('successMsg').classList.add('show');
 
-  await performSignup(email);
+  await performSignup(email, heroTurnstileToken);
   openVoteModal();
 }
 
 // Shared signup logic: saves to Supabase, forwards to Mailchimp. Used by both the
 // hero form and the nav popover, each of which handles its own validation/UI first.
-async function performSignup(email) {
+async function performSignup(email, turnstileToken) {
   const refCode = new URLSearchParams(window.location.search).get('ref');
   const referralCode = Math.random().toString(36).slice(2, 8);
 
   try {
-    const { error } = await supabaseClient
-      .from('subscribers')
-      .insert({ email, referral_code: referralCode, referred_by: refCode || null, bonus_votes: refCode ? 5 : 0 });
+    const { data, error } = await supabaseClient.functions.invoke('verify-signup', {
+      body: {
+        email,
+        referral_code: referralCode,
+        referred_by: refCode || null,
+        bonus_votes: refCode ? 5 : 0,
+        turnstile_token: turnstileToken,
+      },
+    });
     if (error) throw error;
+    if (data && data.error) throw new Error(data.error);
 
     currentSubscriberEmail = email;
     sessionStorage.setItem('likewiseSubscriberEmail', email);
@@ -1445,7 +1494,7 @@ async function performSignup(email) {
       supabaseClient.rpc('increment_bonus_votes', { p_code: refCode, p_amount: 10 });
     }
   } catch (err) {
-    console.error('Supabase signup error:', err);
+    console.error('Signup verification error:', err);
     // Data storage didn't save, the Mailchimp email capture below still goes through regardless.
   }
 
@@ -1488,7 +1537,7 @@ async function handleNavSignup() {
   document.getElementById('navPopoverForm').style.display = 'none';
   document.getElementById('navPopoverSuccess').classList.add('show');
 
-  await performSignup(email);
+  await performSignup(email, navTurnstileToken);
   openVoteModal();
 }
 
@@ -1498,7 +1547,40 @@ function openVoteModal() {
 }
 function closeVoteModal() {
   document.getElementById('voteModalOverlay').classList.remove('show');
+  openSuggestModal();
 }
+
+// ── Suggestion modal ─────────────────────────────────────────────────
+function openSuggestModal() {
+  document.getElementById('suggestModalOverlay').classList.add('show');
+}
+function closeSuggestModal() {
+  document.getElementById('suggestModalOverlay').classList.remove('show');
+}
+async function submitSuggestion() {
+  const input = document.getElementById('suggestInput');
+  const suggestion = input.value.trim();
+  if (!suggestion) {
+    closeSuggestModal();
+    return;
+  }
+
+  document.getElementById('suggestModalForm').style.display = 'none';
+
+  try {
+    if (currentSubscriberEmail) {
+      const { error } = await supabaseClient
+        .rpc('submit_suggestion', { p_email: currentSubscriberEmail, p_suggestion: suggestion });
+      if (error) throw error;
+    }
+  } catch (err) {
+    console.error('Supabase suggestion error:', err);
+    // Fall through to the confirmation screen regardless, don't strand the user on a failed write.
+  }
+
+  document.getElementById('suggestConfirm').classList.add('show');
+}
+
 function selectVoteOption(el) {
   document.querySelectorAll('#voteOptList .vote-opt').forEach(o => o.classList.remove('selected'));
   el.classList.add('selected');
