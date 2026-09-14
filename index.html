@@ -1551,6 +1551,7 @@ async function performSignup(email, turnstileToken) {
   }
 
   submitToMailchimp(email, referralCode);
+  window.plausible?.('Waitlist Signup');
   // Guarded: if the Pixel snippet is blocked outright, fbq is undefined and an
   // unguarded call would throw past this function, stopping the vote modal from opening.
   if (typeof fbq === 'function') fbq('track', 'Lead', {}, { eventID: metaEventId });
@@ -1633,6 +1634,7 @@ async function submitSuggestion() {
     // Fall through to the confirmation screen regardless, don't strand the user on a failed write.
   }
 
+  window.plausible?.('Idea Submitted');
   document.getElementById('suggestConfirm').classList.add('show');
 }
 
@@ -1684,6 +1686,7 @@ async function submitVote() {
 
   await Promise.all([writeVote, minDelay]);
 
+  window.plausible?.('Question Vote', { props: { question: voteText } });
   document.getElementById('voteLoading').classList.remove('show');
   document.getElementById('voteConfirm').classList.add('show');
 }
