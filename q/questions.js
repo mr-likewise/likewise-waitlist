@@ -11,6 +11,8 @@
 // To fill in a stat:    replace the [STAT NEEDED: ...] text with the real sentence,
 //                       e.g. 'Most Canadians tip 15%.' Placeholders show up highlighted
 //                       in yellow on the page so you can't miss one.
+// source:               who published the stat and when, shown in small text under it,
+//                       e.g. 'Narrative Research, August 2024'. Delete the line to hide it.
 // compareTo:            which question's answer appears under the stat as
 //                       "You said: ...". 1 = first question, 2 = second, and so on.
 //
@@ -40,6 +42,7 @@ window.LIKEWISE_QUIZZES = {
     ],
     result: {
       stat: 'Most Canadians tip 15% for good service at a sit-down restaurant.',
+      source: 'Narrative Research, August 2024',
       compareTo: 1,
     },
   },
@@ -60,6 +63,7 @@ window.LIKEWISE_QUIZZES = {
     ],
     result: {
       stat: 'Canadians guess they have about 4 subscriptions. When they actually count, it’s 8.',
+      source: 'Hardbacon survey, March 2024',
       compareTo: 1,
     },
   },
@@ -80,6 +84,7 @@ window.LIKEWISE_QUIZZES = {
     ],
     result: {
       stat: 'About 1 in 3 Canadian renters spend more than half their income on rent.',
+      source: 'Rentals.ca survey, August 2025',
       compareTo: 1,
     },
   },
@@ -100,6 +105,7 @@ window.LIKEWISE_QUIZZES = {
     ],
     result: {
       stat: 'Only 38% of Canadians are comfortable talking about pay with their friends.',
+      source: 'Leger for Talent.com, January 2023',
       compareTo: 2,
     },
   },
