@@ -803,11 +803,13 @@ body::after {
 
 </style>
 
-<!-- Privacy-friendly analytics by Plausible -->
-<script async src="https://plausible.io/js/pa-kvunH0W_L4ldasgaKuoza.js"></script>
+<!-- Google Analytics (GA4) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-PPEVNFY9DC"></script>
 <script>
-  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
-  plausible.init()
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-PPEVNFY9DC');
 </script>
 
 <!-- Meta Pixel Code -->
@@ -1558,7 +1560,7 @@ async function performSignup(email, turnstileToken) {
   }
 
   submitToMailchimp(email, referralCode);
-  window.plausible?.('Waitlist Signup');
+  window.gtag?.('event', 'sign_up', { method: 'waitlist' });
   // Guarded: if the Pixel snippet is blocked outright, fbq is undefined and an
   // unguarded call would throw past this function, stopping the vote modal from opening.
   if (typeof fbq === 'function') fbq('track', 'Lead', {}, { eventID: metaEventId });
@@ -1644,7 +1646,7 @@ async function submitSuggestion() {
     // Fall through to the confirmation screen regardless, don't strand the user on a failed write.
   }
 
-  window.plausible?.('Idea Submitted');
+  window.gtag?.('event', 'idea_submitted');
   document.getElementById('suggestConfirm').classList.add('show');
 }
 
@@ -1696,7 +1698,7 @@ async function submitVote() {
 
   await Promise.all([writeVote, minDelay]);
 
-  window.plausible?.('Question Vote', { props: { question: voteText } });
+  window.gtag?.('event', 'question_vote', { question: voteText });
   document.getElementById('voteLoading').classList.remove('show');
   document.getElementById('voteConfirm').classList.add('show');
 }
