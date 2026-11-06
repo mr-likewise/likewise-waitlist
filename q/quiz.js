@@ -1,7 +1,7 @@
 // Likewise quiz landing pages: the shared engine behind every page under /q/.
 // Questions, answers and stats live in questions.js, so wording changes never need this file.
 // The signup half mirrors index.html (same Supabase edge function, Turnstile key, Mailchimp
-// list, Plausible/Meta events and vote + suggestion modals) so a quiz signup is identical
+// list, GA4/Meta/Reddit events and vote + suggestion modals) so a quiz signup is identical
 // to a homepage signup.
 
 // ── Config (same values as index.html) ───────────────────────────────
@@ -37,8 +37,10 @@ function db() {
   return supabaseClient;
 }
 
-function track(event, props) {
-  window.plausible?.(event, { props: Object.assign({ quiz: quizKey }, props) });
+// Google Analytics event, tagged with which quiz page it came from. GA4 event names
+// can't contain spaces, so these are quiz_started, quiz_answered and quiz_signup.
+function track(event, params) {
+  window.gtag?.('event', event, Object.assign({ quiz: quizKey }, params));
 }
 
 function esc(text) {
@@ -113,7 +115,7 @@ function chooseAnswer(btn) {
 
   if (!state.started) {
     state.started = true;
-    track('Quiz Started');
+    track('quiz_started');
   }
 
   // A short beat so the tap visibly registers before the next screen slides in.
@@ -163,7 +165,7 @@ function showResult() {
 
   const answerProps = {};
   state.answers.forEach(a => { answerProps[a.question_id] = a.answer; });
-  track('Quiz Answered', answerProps);
+  track('quiz_answered', answerProps);
 
   saveResponse();
   renderTurnstile();
@@ -275,7 +277,7 @@ async function handleSignup(e) {
   document.getElementById('quizSuccess').classList.add('show');
 
   await performSignup(email, turnstileToken);
-  track('Quiz Signup');
+  track('quiz_signup');
   openVoteModal();
 }
 
@@ -311,6 +313,9 @@ async function performSignup(email, token) {
       // Reward the referrer. A failure here is a missed bonus, not a broken signup, so it's not awaited.
       client.rpc('increment_bonus_votes', { p_code: refCode, p_amount: 10 });
     }
+    // Reddit SignUp fires only here, once Supabase has confirmed the save; a failed save
+    // falls through to the catch below and sends nothing. Guarded so a blocked pixel can't throw.
+    if (typeof rdt === 'function') rdt('track', 'SignUp', { conversionId: metaEventId });
     linkQuizResponse(email);
   } catch (err) {
     console.error('Signup verification error:', err);
@@ -318,7 +323,7 @@ async function performSignup(email, token) {
   }
 
   submitToMailchimp(email, referralCode);
-  window.plausible?.('Waitlist Signup');
+  window.gtag?.('event', 'sign_up', { method: 'quiz', quiz: quizKey });
   if (typeof fbq === 'function') fbq('track', 'Lead', {}, { eventID: metaEventId });
 }
 
@@ -475,7 +480,7 @@ async function submitVote() {
 
   await Promise.all([writeVote, minDelay]);
 
-  window.plausible?.('Question Vote', { props: { question: voteText } });
+  window.gtag?.('event', 'question_vote', { question: voteText });
   document.getElementById('voteLoading').classList.remove('show');
   document.getElementById('voteConfirm').classList.add('show');
 }
@@ -499,7 +504,7 @@ async function submitSuggestion() {
     // Fall through to the confirmation screen regardless, don't strand the user on a failed write.
   }
 
-  window.plausible?.('Idea Submitted');
+  window.gtag?.('event', 'idea_submitted');
   document.getElementById('suggestConfirm').classList.add('show');
 }
 
