@@ -1550,6 +1550,11 @@ async function performSignup(email, turnstileToken) {
     currentSubscriberEmail = email;
     sessionStorage.setItem('likewiseSubscriberEmail', email);
 
+    // Reddit SignUp fires only here, once Supabase has confirmed the save; a failed save
+    // falls through to the catch below and sends nothing. Guarded like fbq so a blocked
+    // pixel can't throw. conversionId reuses the Meta event ID for future dedup.
+    if (typeof rdt === 'function') rdt('track', 'SignUp', { conversionId: metaEventId });
+
     if (refCode) {
       // Reward the referrer. A failure here is a missed bonus, not a broken signup, so it's not awaited or blocking.
       supabaseClient.rpc('increment_bonus_votes', { p_code: refCode, p_amount: 10 });
@@ -1564,9 +1569,6 @@ async function performSignup(email, turnstileToken) {
   // Guarded: if the Pixel snippet is blocked outright, fbq is undefined and an
   // unguarded call would throw past this function, stopping the vote modal from opening.
   if (typeof fbq === 'function') fbq('track', 'Lead', {}, { eventID: metaEventId });
-  // Same guard as fbq. conversionId reuses the Meta event ID so a later Reddit
-  // Conversions API call for the same signup can be deduplicated against this one.
-  if (typeof rdt === 'function') rdt('track', 'SignUp', { conversionId: metaEventId });
 }
 
 // ── Nav email popover ────────────────────────────────────────────────
