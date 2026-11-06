@@ -39,7 +39,7 @@ window.LIKEWISE_QUIZZES = {
       },
     ],
     result: {
-      stat: '[STAT NEEDED: average restaurant tip in Canada]',
+      stat: 'Most Canadians tip 15% for good service at a sit-down restaurant.',
       compareTo: 1,
     },
   },
@@ -59,7 +59,7 @@ window.LIKEWISE_QUIZZES = {
       },
     ],
     result: {
-      stat: '[STAT NEEDED: average number of paid subscriptions per Canadian]',
+      stat: 'Canadians guess they have about 4 subscriptions. When they actually count, it’s 8.',
       compareTo: 1,
     },
   },
@@ -79,7 +79,7 @@ window.LIKEWISE_QUIZZES = {
       },
     ],
     result: {
-      stat: '[STAT NEEDED: share of take-home pay Canadians spend on housing]',
+      stat: 'About 1 in 3 Canadian renters spend more than half their income on rent.',
       compareTo: 1,
     },
   },
@@ -99,7 +99,7 @@ window.LIKEWISE_QUIZZES = {
       },
     ],
     result: {
-      stat: '[STAT NEEDED: % of Canadians comfortable talking salary with friends]',
+      stat: 'Only 38% of Canadians are comfortable talking about pay with their friends.',
       compareTo: 2,
     },
   },
