@@ -829,6 +829,13 @@ fbq('track', 'PageView');
 src="https://www.facebook.com/tr?id=1103380252642053&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
+<!-- Reddit Pixel -->
+<script>
+!function(w,d){if(!w.rdt){var p=w.rdt=function(){p.sendEvent?p.sendEvent.apply(p,arguments):p.callQueue.push(arguments)};p.callQueue=[];var t=d.createElement("script");t.src="https://www.redditstatic.com/ads/pixel.js",t.async=!0;var s=d.getElementsByTagName("script")[0];s.parentNode.insertBefore(t,s)}}(window,document);
+rdt('init','a2_jz5iaa0txuon');
+rdt('track', 'PageVisit');
+</script>
+<!-- End Reddit Pixel -->
 </head>
 <body>
 <iframe name="mc-hidden-iframe" style="display:none;" title="mailchimp-submit" aria-hidden="true"></iframe>
@@ -1557,6 +1564,9 @@ async function performSignup(email, turnstileToken) {
   // Guarded: if the Pixel snippet is blocked outright, fbq is undefined and an
   // unguarded call would throw past this function, stopping the vote modal from opening.
   if (typeof fbq === 'function') fbq('track', 'Lead', {}, { eventID: metaEventId });
+  // Same guard as fbq. conversionId reuses the Meta event ID so a later Reddit
+  // Conversions API call for the same signup can be deduplicated against this one.
+  if (typeof rdt === 'function') rdt('track', 'SignUp', { conversionId: metaEventId });
 }
 
 // ── Nav email popover ────────────────────────────────────────────────
