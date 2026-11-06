@@ -138,6 +138,7 @@ function showResult() {
     <p class="quiz-kicker">How you compare</p>
     <div class="quiz-result">
       <p class="quiz-stat${isPlaceholder ? ' is-placeholder' : ''}">${esc(result.stat)}</p>
+      ${result.source && !isPlaceholder ? `<p class="quiz-source">Source: ${esc(result.source)}</p>` : ''}
       <p class="quiz-you">You said <strong>${esc(yours)}</strong></p>
     </div>
 

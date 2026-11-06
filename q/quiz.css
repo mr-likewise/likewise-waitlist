@@ -121,6 +121,11 @@ body::after {
   letter-spacing: -0.02em; color: var(--charcoal);
   margin-bottom: 18px; text-wrap: pretty;
 }
+/* Small attribution under the stat; pulls the stat's bottom gap in so the two read as a pair. */
+.quiz-source {
+  margin: -10px 0 18px;
+  font-size: 12px; line-height: 1.4; color: var(--taupe);
+}
 /* Unfilled [STAT NEEDED: ...] placeholders are deliberately loud so they never ship unnoticed. */
 .quiz-stat.is-placeholder {
   font-family: 'DM Mono', monospace; font-size: 15px; font-weight: 500; letter-spacing: 0;
