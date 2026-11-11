@@ -4,24 +4,28 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#F2F0E8">
-<title>Likewise · See where you really stand</title>
-<meta name="description" content="Find out where you really stand financially. Likewise gives Canadians honest peer comparisons, weekly reward draws, and ownership of their own financial data.">
+<title>Likewise · How do you compare to people like you?</title>
+<meta name="description" content="Discover how Canadians like you think, feel and live, one question at a time. Join the Likewise waitlist and help choose our first questions.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Likewise">
 <meta property="og:url" content="https://joinlikewise.ca">
-<meta property="og:title" content="Likewise · See where you really stand">
-<meta property="og:description" content="Find out where you really stand financially. Likewise gives Canadians honest peer comparisons and ownership of their own financial data.">
-<meta property="og:image" content="https://joinlikewise.ca/og-image.png">
+<meta property="og:title" content="Likewise · How do you compare to people like you?">
+<meta property="og:description" content="Discover how Canadians like you think, feel and live, one question at a time. Join the waitlist and help choose our first questions.">
+<meta property="og:image" content="https://joinlikewise.ca/og-image-likewise.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The Likewise logo beside concept screens showing a life satisfaction question, a comparison preview and topics to explore.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Likewise · See where you really stand">
-<meta name="twitter:description" content="Find out where you really stand financially. Likewise gives Canadians honest peer comparisons and ownership of their own financial data.">
-<meta name="twitter:image" content="https://joinlikewise.ca/og-image.png">
+<meta name="twitter:title" content="Likewise · How do you compare to people like you?">
+<meta name="twitter:description" content="Discover how Canadians like you think, feel and live, one question at a time. Join the waitlist and help choose our first questions.">
+<meta name="twitter:image" content="https://joinlikewise.ca/og-image-likewise.png">
 <link rel="icon" type="image/png" href="likewise-favicon.png">
 <link rel="apple-touch-icon" href="likewise-favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400;1,9..144,600&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<!-- Marks the page as scripted so reveal effects and the mobile question toggle only
+     hide content when JavaScript is actually running. -->
+<script>document.documentElement.classList.add('js');</script>
 <style>
 /* ── Reset & base ─────────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -42,6 +46,7 @@
 }
 
 html { scroll-behavior: smooth; }
+[id] { scroll-margin-top: 96px; }
 
 body {
   font-family: 'DM Sans', sans-serif;
@@ -50,6 +55,20 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
 }
+
+/* Visible keyboard focus everywhere */
+:focus-visible { outline: 2px solid var(--terracotta); outline-offset: 3px; border-radius: 6px; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+.skip-link {
+  position: absolute; left: 16px; top: -60px; z-index: 300;
+  background: var(--charcoal); color: var(--cream);
+  padding: 10px 16px; border-radius: 8px; font-size: 14px; text-decoration: none;
+}
+.skip-link:focus { top: 12px; }
 
 /* ── Grain overlay ────────────────────────────────────────────────────── */
 body::before {
@@ -84,11 +103,6 @@ body::after {
   display: flex; align-items: center; gap: 20px;
   margin-left: auto;
 }
-.nav-signin {
-  font-size: 13px; font-weight: 500; color: var(--taupe);
-  text-decoration: none; transition: color 0.15s;
-}
-.nav-signin:hover { color: var(--charcoal); }
 .nav-cta {
   font-size: 13px; font-weight: 600;
   color: var(--white); background: var(--terracotta);
@@ -121,11 +135,33 @@ body::after {
 .nav-popover-success.show { display: block; }
 .nav-popover-success strong { color: var(--terracotta); }
 
+/* Section links */
+.nav-items { display: flex; gap: 4px; }
+.nav-item {
+  font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500;
+  color: var(--taupe); background: transparent; border: none;
+  padding: 8px 12px; border-radius: 8px; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 5px;
+  text-decoration: none;
+  transition: color 0.15s, background 0.15s;
+}
+.nav-item:hover { color: var(--charcoal); background: rgba(43,36,32,0.04); }
+.nav-item-cta-mobile { display: none; }
+
+/* Hamburger: the brand's three right-aligned bars, no enclosing shape */
+.hamburger-btn {
+  display: none; align-items: center; justify-content: center;
+  width: 44px; height: 44px; border-radius: 10px; margin-right: -8px;
+  background: transparent; border: none; cursor: pointer; padding: 0;
+}
+.hamburger-btn:hover { background: rgba(43,36,32,0.05); }
+.hamburger-btn img { height: 22px; width: auto; display: block; }
+
 /* ── Hero ─────────────────────────────────────────────────────────────── */
 .hero {
-  min-height: 88vh;
+  min-height: 80vh;
   display: flex; flex-direction: column; justify-content: center;
-  padding: 128px 48px 96px;
+  padding: 120px 48px 56px;
   position: relative; overflow: hidden;
 }
 
@@ -141,7 +177,6 @@ body::after {
   font-family: 'DM Mono', monospace;
   font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
   color: var(--terracotta); margin-bottom: 16px;
-  opacity: 0; animation: fadeUp 0.7s 0.1s ease forwards;
 }
 
 .hero-headline {
@@ -150,7 +185,6 @@ body::after {
   font-weight: 600; line-height: 1.04;
   color: var(--charcoal); letter-spacing: -0.03em;
   margin-bottom: 40px;
-  opacity: 0; animation: fadeUp 0.8s 0.25s ease forwards;
 }
 .hero-headline em {
   position: relative; display: inline-block;
@@ -167,37 +201,28 @@ body::after {
   font-size: clamp(15px, 1.4vw, 17px); line-height: 1.7;
   color: var(--taupe); max-width: 520px;
   margin-bottom: 0; text-wrap: pretty;
-  opacity: 0; animation: fadeUp 0.8s 0.4s ease forwards;
 }
 .hero-sub strong { color: var(--charcoal); font-weight: 500; }
 
 /* ── Hero product visual ─────────────────────────────────────────────── */
 .hero-visual {
-  position: relative; z-index: 1;
-  display: flex; align-items: center; justify-content: center;
+  position: relative; z-index: 1; min-width: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
 }
 /* Mobile-only divider + label between the hero copy and the phone image. Hidden on desktop. */
-.hero-mobile-break, .hero-mobile-kicker { display: none; }
+.hero-mobile-break, .hero-mobile-kicker, .hero-swipe-hint { display: none; }
+.hero-scroller { width: 100%; max-width: 1020px; }
+.hero-track { position: relative; }
 .hero-phones {
   position: relative; z-index: 1;
-  width: 100%; max-width: 1020px; height: auto; display: block;
-  filter: drop-shadow(0 26px 46px rgba(43,36,32,0.16));
-  opacity: 0; animation: fadeUp 0.9s 0.35s ease forwards;
+  width: 100%; height: auto; display: block;
+  filter: drop-shadow(0 22px 36px rgba(43,36,32,0.12));
 }
-.hero-phones::after {
-  content: '';
-  position: absolute;
-  bottom: -19px; left: 47.5%; transform: translateX(-50%);
-  width: 58%; height: 35px;
-  background: radial-gradient(ellipse, rgba(43,36,32,0.3), transparent 72%);
-  filter: blur(10px);
-  pointer-events: none;
-}
+.hero-snap { position: absolute; top: 0; bottom: 0; width: 1px; pointer-events: none; }
 
 /* ── Form ─────────────────────────────────────────────────────────────── */
 .form-wrap {
   margin-top: 24px;
-  opacity: 0; animation: fadeUp 0.8s 0.55s ease forwards;
 }
 .form-row {
   display: flex; gap: 10px; max-width: 480px;
@@ -207,9 +232,9 @@ body::after {
   background: var(--white);
   border: 1px solid var(--border);
   border-radius: 12px;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
-.email-field:focus-within { border-color: rgba(189,90,52,0.5); }
+.email-field:focus-within { border-color: var(--terracotta); box-shadow: 0 0 0 3px rgba(189,90,52,0.22); }
 .email-field-icon {
   position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
   width: 17px; height: 17px; color: var(--taupe); pointer-events: none;
@@ -257,11 +282,13 @@ body::after {
 .success-text { font-size: 14px; color: var(--charcoal); line-height: 1.5; }
 .success-text strong { color: var(--terracotta); }
 
-/* ── Hero feature bullets ─────────────────────────────────────────────── */
+/* ── Hero trust indicators ────────────────────────────────────────────── */
+/* Full-width row under the copy and the phones */
 .hero-features {
-  display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 24px 32px;
-  margin-top: 40px;
-  opacity: 0; animation: fadeUp 0.8s 0.7s ease forwards;
+  grid-column: 1 / -1;
+  display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 24px 40px;
+  margin-top: 48px; padding-top: 28px; list-style: none;
+  border-top: 1px solid rgba(43,36,32,0.1);
 }
 .hero-feature { display: flex; align-items: flex-start; gap: 10px; min-width: 0; }
 .hero-feature-icon {
@@ -306,6 +333,7 @@ body::after {
 .section-header .section-sub { max-width: 420px; padding-top: 4px; margin-bottom: 0; }
 .section-header--align-end { align-items: end; }
 .section-header--align-end .section-sub { padding-top: 0; }
+.section-sub--tight { margin-bottom: 40px; }
 
 /* -- Section break: a trapezoid tab hanging down from the line -- */
 .section-break {
@@ -333,116 +361,23 @@ body::after {
 }
 .step-icon svg { width: 20px; height: 20px; }
 
-/* -- Decision Profile showcase -- */
-.profile-showcase {
-  display: grid; grid-template-columns: 1.15fr 1fr; gap: 48px; align-items: center;
-}
-.profile-panel {
-  display: grid; grid-template-columns: auto 1fr; gap: 36px;
-  background: rgba(138,154,126,0.12); border: 1px solid rgba(138,154,126,0.3);
-  border-radius: 20px; padding: 32px;
-}
-.profile-card { width: 200px; }
-.profile-avatar { width: 52px; height: 52px; display: block; margin-bottom: 14px; }
-.profile-kicker {
-  font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.14em;
-  text-transform: uppercase; color: var(--terracotta); margin-bottom: 6px;
-}
-.profile-name {
-  font-family: 'Fraunces', serif; font-size: 24px; font-weight: 600;
-  color: var(--charcoal); letter-spacing: -0.02em; margin-bottom: 10px;
-}
-.profile-desc { font-size: 13px; color: var(--taupe); line-height: 1.6; margin-bottom: 16px; }
-.profile-illustrative { font-size: 11px; font-style: italic; color: rgba(43,36,32,0.4); }
-.profile-dimensions { display: flex; flex-direction: column; justify-content: center; gap: 15px; }
-.dimension-row { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 6px; }
-.dimension-label { color: var(--charcoal); font-weight: 500; }
-.dimension-level { color: var(--taupe); }
-.dimension-track { height: 5px; background: rgba(43,36,32,0.08); border-radius: 3px; overflow: hidden; }
-.dimension-fill { height: 100%; border-radius: 3px; background: var(--sage); }
-.dimension-fill.accent { background: var(--honey); }
-
-/* -- Reward banner -- */
-.reward-banner { background: var(--sage); padding: 44px 48px; position: relative; z-index: 1; }
-.reward-banner-inner {
-  max-width: min(1800px, 85vw); margin: 0 auto;
-  display: flex; align-items: center; gap: 28px; flex-wrap: wrap;
-}
-.reward-banner-icon {
-  width: 56px; height: 56px; border-radius: 50%; flex-shrink: 0;
-  background: var(--cream); color: var(--terracotta);
-  display: flex; align-items: center; justify-content: center;
-}
-.reward-banner-icon svg { width: 24px; height: 24px; }
-.reward-banner-text { flex: 1; min-width: 240px; }
-.reward-banner-kicker {
-  font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.16em;
-  text-transform: uppercase; color: var(--terracotta-dark); margin-bottom: 6px;
-}
-.reward-banner-body { font-size: 15px; color: var(--cream); line-height: 1.5; max-width: 460px; }
-.reward-banner-cta { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
-.reward-banner-btn {
-  background: var(--terracotta); color: var(--white);
-  padding: 12px 24px; border-radius: 999px; font-size: 14px; font-weight: 600;
-  border: none; font-family: 'DM Sans', sans-serif; cursor: pointer;
-  text-decoration: none; white-space: nowrap; transition: all 0.15s; display: inline-block;
-}
-.reward-banner-btn:hover { background: var(--terracotta-dark); transform: translateY(-1px); }
-.reward-banner-note { font-size: 11px; color: rgba(43,36,32,0.6); }
-
-/* ── Nav dropdown items ──────────────────────────────────────────────── */
-.nav-items { display: flex; gap: 4px; }
-.nav-item {
-  font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500;
-  color: var(--taupe); background: transparent; border: none;
-  padding: 8px 12px; border-radius: 8px; cursor: pointer;
-  display: inline-flex; align-items: center; gap: 5px;
-  transition: color 0.15s, background 0.15s;
-}
-.nav-item:hover { color: var(--charcoal); background: rgba(43,36,32,0.04); }
-.nav-item.active { color: var(--terracotta); background: rgba(189,90,52,0.08); }
-.nav-item-chevron { font-size: 9px; transition: transform 0.15s; }
-.nav-item.active .nav-item-chevron { transform: rotate(180deg); }
-.nav-item-cta-mobile { display: none; }
-
-.hamburger-btn {
-  display: none; align-items: center; justify-content: center;
-  width: 36px; height: 36px; border-radius: 8px;
-  background: transparent; border: none; cursor: pointer; padding: 0;
-}
-.hamburger-btn:hover { background: rgba(43,36,32,0.05); }
-.hamburger-btn img { height: 20px; width: auto; display: block; }
-
-.nav-dropdown {
-  display: none;
-  position: absolute; top: 100%; left: 0; right: 0;
-  background: rgba(242,240,232,0.98);
-  border-bottom: 1px solid var(--border);
-  padding: 32px 48px;
-}
-.nav-dropdown.open { display: block; }
-.nav-dropdown-panel { display: none; max-width: 640px; margin: 0 auto; }
-.nav-dropdown-panel.active { display: block; }
-.nav-dropdown-title {
-  font-family: 'Fraunces', serif; font-size: 22px; font-weight: 600;
-  color: var(--charcoal); margin-bottom: 8px;
-}
-.nav-dropdown-body { font-size: 14px; color: var(--taupe); line-height: 1.7; }
-
 /* Steps: flattened, rule-led rather than boxed */
 .steps { display: grid; grid-template-columns: repeat(3,1fr); gap: 40px; max-width: min(1800px, 85vw); margin: 0 auto; }
 
 .step {
+  display: flex; align-items: flex-start; gap: 18px;
   padding-top: 22px;
   border-top: 1px solid var(--border);
   transition: border-color 0.2s;
 }
+.step .step-icon { flex-shrink: 0; margin-bottom: 0; }
+.step-text { min-width: 0; padding-top: 2px; }
 .step:hover { border-top-color: var(--terracotta); }
 
 .step-num {
   font-family: 'DM Mono', monospace;
   font-size: 10px; letter-spacing: 0.12em; color: var(--terracotta);
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 }
 .step-title {
   font-family: 'Fraunces', serif;
@@ -452,71 +387,10 @@ body::after {
 .step:hover .step-title { color: var(--terracotta); }
 .step-body { font-size: 13px; color: var(--taupe); line-height: 1.65; }
 
-/* -- The experience: static 3-up preview cards -- */
-.experience-grid {
-  display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; align-items: stretch;
-}
-.experience-card {
-  display: flex; flex-direction: column;
-  background: rgba(138,154,126,0.12); border: 1px solid rgba(138,154,126,0.3);
-  border-radius: 16px; padding: 24px;
-}
-.experience-icon {
-  width: 40px; height: 40px; border-radius: 50%;
-  background: rgba(138,154,126,0.32); color: var(--charcoal);
-  display: flex; align-items: center; justify-content: center;
-  margin-bottom: 16px;
-}
-.experience-icon svg { width: 18px; height: 18px; }
-.experience-title {
-  font-family: 'Fraunces', serif; font-size: 18px; font-weight: 600;
-  color: var(--charcoal); margin-bottom: 6px;
-}
-.experience-desc { font-size: 12px; color: var(--taupe); line-height: 1.5; margin-bottom: 18px; }
-.experience-preview {
-  background: var(--cream); border-radius: 12px; padding: 16px; flex: 1;
-  display: flex; flex-direction: column;
-}
-
-.preview-q {
-  font-family: 'Fraunces', serif; font-size: 13px; font-weight: 600;
-  color: var(--charcoal); margin-bottom: 12px; line-height: 1.35;
-  min-height: 36px; display: flex; align-items: center;
-}
-.preview-opt {
-  display: flex; align-items: center; gap: 8px;
-  font-size: 11px; color: var(--charcoal);
-  padding: 8px 10px; border-radius: 8px;
-  background: rgba(43,36,32,0.04); border: 1px solid var(--border);
-  margin-bottom: 6px;
-}
-.preview-opt:last-child { margin-bottom: 0; }
-.preview-opt-dot { width: 11px; height: 11px; border-radius: 50%; border: 1.5px solid var(--border); flex-shrink: 0; }
-.preview-opt.selected { border-color: var(--terracotta); background: rgba(189,90,52,0.08); }
-.preview-opt.selected .preview-opt-dot { background: var(--terracotta); border-color: var(--terracotta); }
-
-.preview-compare-text {
-  font-size: 13px; color: var(--charcoal); line-height: 1.5; margin-bottom: 12px;
-  min-height: 36px; display: flex; align-items: center;
-}
-.preview-compare-text strong { color: var(--terracotta); font-family: 'Fraunces', serif; font-size: 15px; }
-.preview-chart { width: 100%; flex: 1; min-height: 60px; display: block; }
-
-.preview-profile-name {
-  font-family: 'Fraunces', serif; font-size: 15px; font-weight: 600;
-  color: var(--charcoal); margin-bottom: 12px;
-  min-height: 36px; display: flex; align-items: center;
-}
-.preview-dim { margin-bottom: 9px; }
-.preview-dim span { font-size: 10px; color: var(--taupe); display: block; margin-bottom: 4px; }
-.preview-dim-track { height: 4px; background: rgba(43,36,32,0.08); border-radius: 2px; overflow: hidden; }
-.preview-dim-fill { height: 100%; background: var(--sage); border-radius: 2px; }
-.preview-dim-fill.accent { background: var(--honey); }
-
-/* -- Topic breadth section: pinned note corkboard -- */
+/* -- Question bank: pinned note corkboard -- */
 .corkboard {
   display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 28px 20px;
-  padding: 8px 8px 20px;
+  padding: 8px 8px 20px; list-style: none;
 }
 .sticky-note {
   background: var(--white); border: 1px solid rgba(43,36,32,0.14);
@@ -529,87 +403,215 @@ body::after {
 }
 .sticky-pin.sage { background: var(--sage); }
 .sticky-cat {
-  font-size: 9px; letter-spacing: 0.06em; text-transform: uppercase;
+  font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase;
   color: var(--taupe); margin-bottom: 6px;
 }
 .sticky-q { font-size: 13px; color: var(--charcoal); line-height: 1.4; }
+.questions-toggle {
+  display: none;
+  margin: 8px auto 0; min-height: 44px; padding: 0 22px;
+  align-items: center; gap: 8px;
+  background: transparent; color: var(--charcoal);
+  border: 1px solid rgba(43,36,32,0.24); border-radius: 999px;
+  font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer;
+}
+.questions-toggle:hover { border-color: var(--terracotta); color: var(--terracotta); }
+.questions-toggle-chevron { width: 12px; height: 12px; transition: transform 0.2s; }
+.questions-toggle[aria-expanded="true"] .questions-toggle-chevron { transform: rotate(180deg); }
 
-/* -- Why section: flattened, rule-led -- */
-.why-grid {
-  display: grid; grid-template-columns: repeat(3,1fr); gap: 40px;
-  max-width: min(1800px, 85vw); margin: 0 auto;
+/* -- The experience: Answer, Compare, Explore preview cards -- */
+.experience-grid {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; align-items: stretch;
+  list-style: none;
 }
-.why-card {
-  padding-top: 22px;
-  border-top: 1px solid var(--border);
+.experience-card {
+  display: flex; flex-direction: column;
+  background: rgba(138,154,126,0.12); border: 1px solid rgba(138,154,126,0.3);
+  border-radius: 16px; padding: 24px;
 }
+.experience-head { display: flex; align-items: center; gap: 14px; margin-bottom: 10px; }
+.experience-icon {
+  width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
+  background: rgba(138,154,126,0.32); color: var(--charcoal);
+  display: flex; align-items: center; justify-content: center;
+}
+.experience-icon svg { width: 18px; height: 18px; }
+.experience-step {
+  font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em;
+  color: var(--terracotta); margin-bottom: 2px; text-transform: uppercase;
+}
+.experience-title {
+  font-family: 'Fraunces', serif; font-size: 18px; font-weight: 600;
+  color: var(--charcoal);
+}
+.experience-desc { font-size: 13px; color: var(--taupe); line-height: 1.5; margin-bottom: 18px; }
+.experience-preview {
+  background: var(--cream); border-radius: 14px; padding: 18px; flex: 1;
+  display: flex; flex-direction: column;
+}
+.preview-label {
+  font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--taupe); margin-bottom: 10px;
+}
+.preview-q {
+  font-family: 'Fraunces', serif; font-size: 16px; font-weight: 600;
+  color: var(--charcoal); margin-bottom: 14px; line-height: 1.3; letter-spacing: -0.01em;
+}
+.preview-q--small { font-size: 14px; margin-bottom: 12px; }
+.preview-pills { display: flex; flex-direction: column; gap: 8px; list-style: none; }
+/* Answer pills: fully rounded, unselected = ~45% warm white, selected = solid sage */
+.preview-pill {
+  display: flex; align-items: center; justify-content: center;
+  min-height: 40px; padding: 8px 16px; border-radius: 999px;
+  background: rgba(255,255,255,0.45); border: 1px solid rgba(43,36,32,0.1);
+  font-size: 15px; color: var(--charcoal); text-align: center;
+}
+.preview-pill.selected { background: var(--sage); border-color: var(--sage); color: var(--charcoal); font-weight: 600; }
+
+/* Compare: result-preview state, no numbers until real data exists */
+.preview-results { display: flex; flex-direction: column; gap: 12px; list-style: none; }
+.preview-result-row { display: flex; justify-content: space-between; align-items: baseline; font-size: 13px; color: var(--charcoal); margin-bottom: 5px; }
+.preview-you {
+  font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--charcoal); background: rgba(138,154,126,0.35);
+  padding: 2px 8px; border-radius: 999px;
+}
+.preview-track {
+  height: 10px; border-radius: 999px; overflow: hidden;
+  background: repeating-linear-gradient(135deg, rgba(43,36,32,0.07) 0 6px, rgba(43,36,32,0.03) 6px 12px);
+}
+.preview-note { margin-top: auto; padding-top: 14px; font-size: 12px; color: var(--taupe); line-height: 1.5; font-style: italic; }
+
+/* Explore: comparison filter chips */
+.preview-filter-group + .preview-filter-group { margin-top: 12px; }
+.preview-filter-label { font-size: 12px; color: var(--taupe); margin-bottom: 6px; }
+.preview-chips { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; }
+.preview-chip {
+  display: inline-flex; align-items: center; min-height: 32px; padding: 4px 12px;
+  border-radius: 999px; font-size: 13px; color: var(--charcoal);
+  background: rgba(255,255,255,0.45); border: 1px solid rgba(43,36,32,0.12);
+}
+.preview-chip.selected { background: var(--sage); border-color: var(--sage); color: var(--charcoal); font-weight: 600; }
+
+/* Compact reassurance beside the experience */
+.mirror-note {
+  margin-top: 28px; display: flex; gap: 16px; align-items: baseline; flex-wrap: wrap;
+  padding: 20px 24px; border-radius: 14px;
+  border: 1px dashed rgba(43,36,32,0.2);
+}
+.mirror-note-title { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 600; color: var(--charcoal); letter-spacing: -0.015em; }
+.mirror-note-title em { color: var(--terracotta); font-style: italic; font-weight: 400; }
+.mirror-note-body { font-size: 14px; color: var(--taupe); line-height: 1.6; flex: 1; min-width: 240px; }
+
+/* -- Why Likewise / Your data -- */
+.source-grid {
+  display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 40px;
+  list-style: none;
+}
+.source-card { padding-top: 22px; border-top: 1px solid var(--border); }
+.source-tag {
+  display: inline-block; margin-bottom: 12px;
+  font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--charcoal); background: rgba(138,154,126,0.3);
+  padding: 4px 10px; border-radius: 999px;
+}
+.source-tag.alt { background: rgba(189,90,52,0.12); color: var(--terracotta-dark); }
 .why-title {
   font-family: 'Fraunces', serif; font-size: 20px; font-weight: 600;
   color: var(--charcoal); margin-bottom: 10px;
 }
-.why-body { font-size: 13px; color: var(--taupe); line-height: 1.7; }
+.why-body { font-size: 14px; color: var(--taupe); line-height: 1.7; max-width: 560px; }
 
-/* -- Founding partner banner: soft sage, still a deliberate card -- */
-.fp-banner {
-  max-width: min(1800px, 85vw); margin: 0 auto;
-  background: rgba(138,154,126,0.12);
-  border: 1px solid rgba(138,154,126,0.3);
+.value-panel {
+  margin-top: 56px;
+  display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px;
+  background: rgba(138,154,126,0.12); border: 1px solid rgba(138,154,126,0.3);
   border-radius: 20px; padding: 40px 48px;
-  display: grid; grid-template-columns: 1fr auto;
-  gap: 32px; align-items: center;
-  position: relative; overflow: hidden;
 }
-.fp-tag {
-  font-family: 'DM Mono', monospace; font-size: 10px;
-  letter-spacing: 0.16em; text-transform: uppercase;
-  color: var(--terracotta); margin-bottom: 10px;
+.value-title {
+  font-family: 'Fraunces', serif; font-size: clamp(24px, 2.4vw, 30px); font-weight: 600;
+  color: var(--charcoal); letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 14px;
 }
-.fp-title {
-  font-family: 'Fraunces', serif; font-size: 26px; font-weight: 600;
-  color: var(--charcoal); margin-bottom: 10px; letter-spacing: -0.02em;
+.value-title em { color: var(--terracotta); font-style: italic; font-weight: 400; }
+.value-body { font-size: 15px; color: var(--taupe); line-height: 1.7; max-width: 520px; }
+.value-rewards { margin-top: 16px; font-size: 13px; color: var(--charcoal); line-height: 1.6; }
+.trust-title {
+  font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--terracotta); margin-bottom: 14px;
 }
-.fp-body { font-size: 14px; color: var(--taupe); line-height: 1.7; max-width: 500px; }
-.fp-body strong { color: var(--charcoal); }
-.fp-cta {
-  display: flex; flex-direction: column; gap: 8px; align-items: flex-end; flex-shrink: 0;
+.trust-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.trust-list li { display: flex; gap: 10px; font-size: 14px; color: var(--charcoal); line-height: 1.55; }
+.trust-list svg { width: 18px; height: 18px; flex-shrink: 0; margin-top: 2px; color: var(--taupe); }
+.trust-link {
+  display: inline-block; margin-top: 18px; font-size: 14px; font-weight: 600;
+  color: var(--terracotta-dark); text-underline-offset: 3px;
 }
-.fp-question { font-size: 13px; color: var(--charcoal); font-weight: 500; text-align: right; }
-.fp-email {
-  display: inline-flex; align-items: center; gap: 7px;
-  font-size: 14px; font-weight: 600; color: var(--terracotta);
-  text-decoration: none; transition: color 0.15s; white-space: nowrap;
+.trust-link:hover { color: var(--terracotta); }
+
+/* -- Closing sage CTA banner -- */
+.cta-banner { background: var(--sage); padding: 56px 48px; position: relative; z-index: 1; }
+.cta-banner-inner {
+  max-width: min(1800px, 85vw); margin: 0 auto;
+  display: flex; align-items: center; gap: 28px 48px; flex-wrap: wrap;
 }
-.fp-email:hover { color: var(--terracotta-dark); }
-.fp-email svg { width: 16px; height: 16px; }
+.cta-banner-text { flex: 1; min-width: 260px; }
+.cta-banner-title {
+  font-family: 'Fraunces', serif; font-size: clamp(26px, 3vw, 38px); font-weight: 600;
+  color: var(--charcoal); letter-spacing: -0.025em; line-height: 1.15; margin-bottom: 10px;
+}
+.cta-banner-body { font-size: 16px; color: var(--charcoal); line-height: 1.6; max-width: 520px; }
+.cta-banner-cta { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+.cta-banner-btn {
+  background: var(--terracotta); color: var(--white);
+  padding: 14px 28px; min-height: 48px; border-radius: 999px; font-size: 15px; font-weight: 600;
+  border: none; font-family: 'DM Sans', sans-serif; cursor: pointer;
+  text-decoration: none; white-space: nowrap; transition: all 0.15s; display: inline-block;
+}
+.cta-banner-btn:hover { background: var(--terracotta-dark); transform: translateY(-1px); }
+.cta-banner-btn:focus-visible { outline-color: var(--charcoal); }
+.cta-banner-note { font-size: 13px; color: var(--charcoal); }
 
 /* ── Footer ──────────────────────────────────────────────────────────── */
 .footer {
   border-top: 1px solid rgba(43,36,32,0.14);
   padding: 36px 48px;
-  display: flex; align-items: center; justify-content: space-between;
+  display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;
   position: relative; z-index: 1;
 }
 .footer-logo { display: flex; align-items: center; }
 .footer-logo-img { height: 32px; width: auto; display: block; }
-.footer-links { display: flex; gap: 24px; }
+.footer-links { display: flex; gap: 8px 24px; flex-wrap: wrap; }
 .footer-link {
   font-size: 12px; color: var(--taupe); text-decoration: none;
   transition: color 0.15s;
 }
 .footer-link:hover { color: var(--terracotta); }
-.footer-copy { font-size: 12px; color: rgba(43,36,32,0.5); }
+.footer-copy { font-size: 12px; color: var(--taupe); }
 
 /* ── Animations ──────────────────────────────────────────────────────── */
+/* Motion is opt-in: content is fully visible without JS or with reduced motion. */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(20px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+@media (prefers-reduced-motion: no-preference) {
+  .hero-eyebrow  { animation: fadeUp 0.7s 0.1s ease both; }
+  .hero-headline { animation: fadeUp 0.8s 0.25s ease both; }
+  .hero-sub      { animation: fadeUp 0.8s 0.4s ease both; }
+  .hero-phones   { animation: fadeUp 0.9s 0.35s ease both; }
+  .form-wrap     { animation: fadeUp 0.8s 0.55s ease both; }
+  .hero-features { animation: fadeUp 0.8s 0.7s ease both; }
 
-.reveal {
-  opacity: 0; transform: translateY(24px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
+  .js .reveal {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .js .reveal.visible { opacity: 1; transform: none; }
 }
-.reveal.visible { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
+}
 
 /* ── Vote modal ──────────────────────────────────────────────────────── */
 .vote-modal-overlay {
@@ -731,12 +733,21 @@ body::after {
 }
 .vote-confirm-sub { font-size: 14px; color: var(--taupe); line-height: 1.6; margin-bottom: 24px; }
 
+
 /* ── Responsive ───────────────────────────────────────────────────────── */
+@media (max-width: 1100px) {
+  .corkboard { grid-template-columns: repeat(3, minmax(0,1fr)); }
+  .value-panel { grid-template-columns: 1fr; gap: 32px; }
+}
+
 @media (max-width: 900px) {
   .hero-inner { grid-template-columns: 1fr; gap: 0; }
-  .hero-visual { margin-top: 24px; }
-  .hero-phones { max-width: 460px; }
-  .hero-phones::after { bottom: -10px; height: 18px; filter: blur(6px); }
+  .hero-copy { order: 1; }
+  .hero-features { order: 2; grid-template-columns: repeat(2, minmax(0,1fr)); margin-top: 32px; padding-top: 0; border-top: 0; }
+  .hero-mobile-break { order: 3; }
+  .hero-mobile-kicker { order: 4; }
+  .hero-visual { order: 5; }
+  .hero-visual { margin-top: 8px; }
   .hero-mobile-break {
     display: block; position: relative;
     margin: 40px 0 0; border-top: 1px solid rgba(43,36,32,0.16);
@@ -748,61 +759,86 @@ body::after {
     color: var(--terracotta); text-align: center;
     margin-top: 52px;
   }
+  .experience-grid { grid-template-columns: 1fr; gap: 20px; max-width: 560px; }
+}
+
+/* Narrow screens: the three-phone image becomes a sideways-scrolling strip at a
+   readable size (one phone in view at a time) instead of a tiny trio. */
+@media (max-width: 700px) {
+  .hero-scroller {
+    width: calc(100% + 48px); margin: 0 -24px; max-width: none;
+    overflow-x: auto; overflow-y: hidden;
+    scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 4px 0 12px;
+  }
+  .hero-scroller::-webkit-scrollbar { display: none; }
+  .hero-scroller:focus-visible { outline-offset: -2px; }
+  .hero-track { width: min(230vw, 1300px); }
+  .hero-snap { scroll-snap-align: center; }
+  .hero-swipe-hint {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    margin-top: 6px; font-size: 13px; color: var(--taupe); text-align: center;
+  }
+  .hero-swipe-hint svg { width: 16px; height: 16px; }
 }
 
 @media (max-width: 768px) {
   .vote-modal { padding: 24px; }
   .vote-opt { white-space: normal; }
-  .nav { padding: 16px 24px; }
-  .nav-right .nav-signin { display: none; }
+  .nav { padding: 12px 20px 12px 24px; }
+  .logo-img { height: 36px; }
   .hero, .section { padding-left: 24px; padding-right: 24px; }
-  .hero { padding-top: 96px; }
-  .hero-eyebrow { display: none; }
+  .hero { padding-top: 96px; min-height: 0; }
   .hero-headline { font-size: 40px; margin-bottom: 24px; }
   .form-row { flex-direction: column; }
   .form-wrap { margin-top: 20px; }
-  .hero-features { gap: 18px 20px; margin-top: 24px; }
+  .hero-features { gap: 18px 20px; margin-top: 28px; }
   .nav-items { display: none; }
   .nav-items.mobile-open {
     display: flex; flex-direction: column; gap: 2px;
     position: absolute; top: 100%; left: 0; right: 0;
     background: rgba(242,240,232,0.98);
     border-bottom: 1px solid var(--border);
+    box-shadow: 0 18px 30px rgba(43,36,32,0.12);
     padding: 12px 24px 20px;
   }
-  .nav-items.mobile-open .nav-item { width: 100%; justify-content: space-between; padding: 12px; }
+  .nav-items.mobile-open .nav-item { width: 100%; min-height: 48px; padding: 12px; font-size: 16px; color: var(--charcoal); }
+  .nav-items.mobile-open .nav-item-cta-mobile,
   .nav-item-cta-mobile {
-    display: block; text-align: center; margin-top: 10px;
+    display: flex; justify-content: center; text-align: center; margin-top: 10px;
     color: var(--white); background: var(--terracotta);
-    padding: 12px; border-radius: 8px; text-decoration: none; font-weight: 600;
+    padding: 14px 12px; border-radius: 999px; text-decoration: none; font-weight: 600; font-size: 16px;
   }
-  .email-input { height: auto; padding: 14px 18px 14px 42px; line-height: normal; font-size: 15px; }
+  .email-input { height: auto; padding: 14px 18px 14px 42px; line-height: normal; font-size: 16px; }
   .hamburger-btn { display: flex; }
   .nav-cta-wrap { display: none; }
   .section { padding-top: 52px; padding-bottom: 64px; }
   .steps { grid-template-columns: 1fr; gap: 28px; }
-  .experience-grid { grid-template-columns: 1fr; gap: 20px; }
-  .corkboard { grid-template-columns: repeat(2, minmax(0,1fr)); gap: 22px 14px; }
-  .corkboard .sticky-note { transform: none !important; }
-  .why-grid { grid-template-columns: 1fr; gap: 28px; }
+  .corkboard { grid-template-columns: repeat(2, minmax(0,1fr)); gap: 18px 12px; padding: 4px 0 16px; }
+  .corkboard .sticky-note { transform: none !important; padding: 14px 14px 16px; }
+  .sticky-q { font-size: 14px; }
+  .js .corkboard:not(.expanded) .q-extra { display: none; }
+  .js .questions-toggle { display: flex; }
+  .source-grid { grid-template-columns: 1fr; gap: 28px; }
+  .value-panel { padding: 28px 24px; margin-top: 40px; }
   .section-header { grid-template-columns: 1fr; gap: 16px; margin-bottom: 32px; }
   .section-header .section-sub { max-width: none; padding-top: 0; }
-  .profile-showcase { grid-template-columns: 1fr; gap: 32px; }
-  .profile-text { order: 1; }
-  .profile-panel { order: 2; grid-template-columns: 1fr; gap: 24px; padding: 24px; }
-  .profile-card { width: auto; }
-  .reward-banner { padding: 32px 24px; }
-  .reward-banner-inner { gap: 20px; }
-  .reward-banner-cta { align-items: flex-start; width: 100%; }
-  .fp-banner { grid-template-columns: 1fr; padding: 28px 24px; }
-  .fp-cta { align-items: flex-start; }
+  .mirror-note { padding: 18px 20px; }
+  .cta-banner { padding: 44px 24px; }
+  .cta-banner-cta { align-items: flex-start; width: 100%; }
   .footer { flex-direction: column; gap: 16px; padding: 28px 24px; text-align: center; }
   .footer-links { justify-content: center; }
   .section-break { max-width: calc(100% - 48px); margin: 0 24px; }
 }
 
-</style>
+@media (max-width: 380px) {
+  .hero-headline { font-size: 36px; }
+  .corkboard { grid-template-columns: 1fr; }
+  .hero-features { grid-template-columns: 1fr; }
+}
 
+</style>
 <!-- Google Analytics (GA4) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-PPEVNFY9DC"></script>
 <script>
@@ -838,22 +874,21 @@ rdt('track', 'PageVisit');
 <!-- End Reddit Pixel -->
 </head>
 <body>
+<a href="#main" class="skip-link">Skip to content</a>
 <iframe name="mc-hidden-iframe" style="display:none;" title="mailchimp-submit" aria-hidden="true"></iframe>
 
 <!-- Nav -->
-<nav class="nav">
-  <a href="#" class="logo"><img src="likewise-logo-2row-terracotta.png" alt="Likewise" class="logo-img"></a>
+<nav class="nav" aria-label="Main">
+  <a href="#top" class="logo"><img src="likewise-logo-2row-terracotta.png" alt="Likewise home" class="logo-img" width="1643" height="1012"></a>
   <div class="nav-items" id="navItems">
-    <button class="nav-item" onclick="toggleNavDropdown(this, 0)">Benchmarks <span class="nav-item-chevron">▾</span></button>
-    <button class="nav-item" onclick="toggleNavDropdown(this, 1)">Rewards <span class="nav-item-chevron">▾</span></button>
-    <button class="nav-item" onclick="toggleNavDropdown(this, 2)">Your data <span class="nav-item-chevron">▾</span></button>
-    <button class="nav-item" onclick="toggleNavDropdown(this, 3)">Independence <span class="nav-item-chevron">▾</span></button>
+    <a href="#how-it-works" class="nav-item">How it works</a>
+    <a href="#questions" class="nav-item">Questions</a>
+    <a href="#your-data" class="nav-item">Your data</a>
     <a href="#waitlist" class="nav-item nav-item-cta-mobile">Join waitlist</a>
   </div>
   <div class="nav-right">
-    <a href="#" class="nav-signin">Sign in</a>
     <div class="nav-cta-wrap">
-      <button type="button" class="nav-cta" onclick="toggleNavPopover()">Join waitlist</button>
+      <button type="button" class="nav-cta" onclick="toggleNavPopover()" aria-expanded="false" aria-controls="navEmailPopover">Join waitlist</button>
       <div class="nav-email-popover" id="navEmailPopover">
         <div class="nav-popover-form" id="navPopoverForm">
           <div class="email-field">
@@ -866,50 +901,33 @@ rdt('track', 'PageVisit');
           <div class="cf-turnstile" data-sitekey="0x4AAAAAAEX7F-FOoX8LFTfc" data-size="compact" data-callback="onNavTurnstileSuccess"></div>
           <p class="turnstile-error" id="navTurnstileError">Please complete the verification check above.</p>
           <button type="button" class="nav-popover-submit" onclick="handleNavSignup()">Join waitlist</button>
-          <p class="nav-popover-perk">Help pick our first question, plus tell us what else you want to know.</p>
-          <p class="nav-popover-note">Free to start. No credit card required.</p>
+          <p class="nav-popover-perk">Help choose our first questions.</p>
+          <p class="nav-popover-note">Free to join. Unsubscribe anytime.</p>
         </div>
         <div class="nav-popover-success" id="navPopoverSuccess">
           <strong>You're on the list.</strong> Check the pop-up to cast your vote.
         </div>
       </div>
     </div>
-    <button class="hamburger-btn" onclick="toggleMobileMenu()" aria-label="Menu">
-      <img src="likewise-bars-hamburger-charcoal.png" alt="">
+    <button type="button" class="hamburger-btn" id="menuBtn" onclick="toggleMobileMenu()" aria-label="Menu" aria-expanded="false" aria-controls="navItems">
+      <img src="likewise-bars-hamburger-charcoal.png" alt="" width="420" height="338">
     </button>
-  </div>
-  <div class="nav-dropdown" id="navDropdown">
-    <div class="nav-dropdown-panel" data-dropdown-panel="0">
-      <div class="nav-dropdown-title">See exactly where you stand</div>
-      <div class="nav-dropdown-body">Not a national average. Real answers from Canadians matched to your age, city, income range, and household type, so the comparison actually means something.</div>
-    </div>
-    <div class="nav-dropdown-panel" data-dropdown-panel="1">
-      <div class="nav-dropdown-title">Get rewarded for showing up</div>
-      <div class="nav-dropdown-body">Every answer earns entries in a weekly reward draw, funded by Canadian sponsors. Answer consistently and multiply your chances up to 10×.</div>
-    </div>
-    <div class="nav-dropdown-panel" data-dropdown-panel="2">
-      <div class="nav-dropdown-title">Build a financial identity you actually own</div>
-      <div class="nav-dropdown-body">Over time, your answers become a Financial Health Profile, richer than a credit score, and yours to share, keep, or delete whenever you want.</div>
-    </div>
-    <div class="nav-dropdown-panel" data-dropdown-panel="3">
-      <div class="nav-dropdown-title">No bank telling you what to think</div>
-      <div class="nav-dropdown-body">Likewise isn't owned by a bank or broker. We only recommend something when you ask, and we always tell you when it's sponsored.</div>
-    </div>
   </div>
 </nav>
 
+<main id="main">
 <!-- Hero -->
-<section class="hero" id="top">
+<section class="hero" id="top" aria-labelledby="heroTitle">
   <div class="hero-inner">
     <div class="hero-copy">
-    <div class="hero-eyebrow">Decisions shape your future</div>
-    <h1 class="hero-headline">
+    <p class="hero-eyebrow">A new question. A different perspective.</p>
+    <h1 class="hero-headline" id="heroTitle">
       How do you<br>
       compare to<br>
       <em>people like you?</em>
     </h1>
     <p class="hero-sub">
-      Likewise helps you compare choices with clarity, so you can move forward with confidence.
+      Discover how Canadians like you think, feel and live, one question at a time.
     </p>
 
     <div class="form-wrap" id="waitlist">
@@ -943,62 +961,11 @@ rdt('track', 'PageVisit');
           <strong>You're on the list.</strong> We'll reach out before launch with your founding member access.
         </span>
       </div>
-      <p class="form-perk">Help pick our first question, plus tell us what else you want to know.</p>
-      <p class="form-note">Free to start. No credit card required.</p>
+      <p class="form-perk">Help choose our first questions.</p>
+      <p class="form-note">Free to join. Unsubscribe anytime.</p>
     </div>
     <iframe name="mc-hidden-iframe" style="display:none;" title="signup"></iframe>
 
-    <div class="hero-features">
-      <div class="hero-feature">
-        <span class="hero-feature-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none">
-            <rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.6"/>
-            <path d="M8 15v-3M12 15V9M16 15v-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-          </svg>
-        </span>
-        <div class="hero-feature-text">
-          <div class="hero-feature-title">Backed by data</div>
-          <div class="hero-feature-sub">Real numbers, not guesswork</div>
-        </div>
-      </div>
-      <div class="hero-feature">
-        <span class="hero-feature-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none">
-            <rect x="5" y="11" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.6"/>
-            <path d="M8 11V7a4 4 0 0 1 8 0v4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-          </svg>
-        </span>
-        <div class="hero-feature-text">
-          <div class="hero-feature-title">Private by design</div>
-          <div class="hero-feature-sub">Your data stays yours</div>
-        </div>
-      </div>
-      <div class="hero-feature">
-        <span class="hero-feature-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none">
-            <circle cx="9" cy="8" r="3" stroke="currentColor" stroke-width="1.6"/>
-            <path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-            <circle cx="17.5" cy="9" r="2.5" stroke="currentColor" stroke-width="1.6"/>
-            <path d="M14.8 14.3c.55-.13 1.1-.2 1.7-.2 2.76 0 5 2.24 5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-          </svg>
-        </span>
-        <div class="hero-feature-text">
-          <div class="hero-feature-title">Built for real life</div>
-          <div class="hero-feature-sub">For every decision, big or small</div>
-        </div>
-      </div>
-      <div class="hero-feature">
-        <span class="hero-feature-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none">
-            <path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-          </svg>
-        </span>
-        <div class="hero-feature-text">
-          <div class="hero-feature-title">Independent</div>
-          <div class="hero-feature-sub">No bank behind this</div>
-        </div>
-      </div>
-    </div>
     </div>
 
     <div class="hero-mobile-break" aria-hidden="true">
@@ -1010,11 +977,76 @@ rdt('track', 'PageVisit');
         </svg>
       </span>
     </div>
-    <div class="hero-mobile-kicker">See it in action</div>
+    <p class="hero-mobile-kicker" aria-hidden="true">See the concept</p>
 
     <div class="hero-visual">
-      <img src="3-Phone-MockUp.png" alt="The Likewise app showing a daily comparison question, a peer benchmark result, and a decision profile screen" class="hero-phones">
+      <!-- On narrow screens this becomes a horizontal, snap-scrolling strip so each phone is readable. -->
+      <div class="hero-scroller" id="heroScroller" tabindex="0" role="region" aria-label="Likewise concept screens">
+        <div class="hero-track">
+          <img src="likewise-hero-phones.webp" width="1536" height="1024" fetchpriority="high" decoding="async"
+               alt="Likewise concept screens showing a life satisfaction question, a comparison preview and topics to explore."
+               class="hero-phones">
+          <span class="hero-snap" style="left:18.5%" aria-hidden="true"></span>
+          <span class="hero-snap" style="left:50%" aria-hidden="true"></span>
+          <span class="hero-snap" style="left:81.5%" aria-hidden="true"></span>
+        </div>
+      </div>
+      <p class="hero-swipe-hint" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M15 7l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Swipe to see all three screens
+      </p>
     </div>
+    <ul class="hero-features" aria-label="Why Likewise">
+      <li class="hero-feature">
+        <span class="hero-feature-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M8 15v-3M12 15V9M16 15v-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <div class="hero-feature-text">
+          <div class="hero-feature-title">Comparisons with context</div>
+          <div class="hero-feature-sub">Understand who and what you're comparing.</div>
+        </div>
+      </li>
+      <li class="hero-feature">
+        <span class="hero-feature-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <rect x="5" y="11" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M8 11V7a4 4 0 0 1 8 0v4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <div class="hero-feature-text">
+          <div class="hero-feature-title">Private by design</div>
+          <div class="hero-feature-sub">We don't sell your information.</div>
+        </div>
+      </li>
+      <li class="hero-feature">
+        <span class="hero-feature-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <circle cx="9" cy="8" r="3" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            <circle cx="17.5" cy="9" r="2.5" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M14.8 14.3c.55-.13 1.1-.2 1.7-.2 2.76 0 5 2.24 5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <div class="hero-feature-text">
+          <div class="hero-feature-title">Built for real life</div>
+          <div class="hero-feature-sub">From everyday habits to life's bigger questions.</div>
+        </div>
+      </li>
+      <li class="hero-feature">
+        <span class="hero-feature-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <div class="hero-feature-text">
+          <div class="hero-feature-title">Independent</div>
+          <div class="hero-feature-sub">Built to give you context.</div>
+        </div>
+      </li>
+    </ul>
   </div>
 </section>
 
@@ -1028,16 +1060,12 @@ rdt('track', 'PageVisit');
   </span>
 </div>
 
-<!-- How it works -->
-<section class="section">
+<!-- How it works (owner-requested: layout and copy preserved, opening sentence updated) -->
+<section class="section" id="how-it-works" aria-labelledby="howTitle">
   <div class="section-inner">
-  <div class="section-header section-header--align-end">
-    <div>
-      <div class="section-kicker">How it works</div>
-      <h2 class="section-title reveal">One scenario.<br>A clearer picture of you.</h2>
-    </div>
-    <p class="section-sub reveal">Each day, Likewise gives you a short real-life scenario. Your answers reveal how you make decisions, how you compare with others, and how your Decision Profile is evolving.</p>
-  </div>
+  <div class="section-kicker">How it works</div>
+  <h2 class="section-title reveal" id="howTitle">One scenario.<br>A clearer picture of you.</h2>
+  <p class="section-sub section-sub--tight reveal">Likewise brings you recurring real-life questions and scenarios. Your answers reveal how you make decisions, how you compare with others, and how your Decision Profile is evolving.</p>
 
   <div class="steps">
     <div class="step reveal">
@@ -1046,9 +1074,11 @@ rdt('track', 'PageVisit');
           <path d="M4 5h16v11H9l-4 4v-4H4V5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
         </svg>
       </div>
-      <div class="step-num">01 &middot; Answer</div>
-      <div class="step-title">Make the decision</div>
-      <div class="step-body">Choose what you would actually do in a real-life financial or lifestyle situation.</div>
+      <div class="step-text">
+        <div class="step-num">01</div>
+        <h3 class="step-title">Make the decision</h3>
+        <div class="step-body">Choose what you would actually do in a real-life situation.</div>
+      </div>
     </div>
     <div class="step reveal" style="transition-delay:0.1s">
       <div class="step-icon" aria-hidden="true">
@@ -1056,9 +1086,11 @@ rdt('track', 'PageVisit');
           <path d="M5 19V11M12 19V5M19 19v-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
         </svg>
       </div>
-      <div class="step-num">02 &middot; Compare</div>
-      <div class="step-title">See where you stand</div>
-      <div class="step-body">See national context and, when enough Likewise members have answered, comparisons with people in a similar situation.</div>
+      <div class="step-text">
+        <div class="step-num">02</div>
+        <h3 class="step-title">See where you stand</h3>
+        <div class="step-body">See national context and, when enough Likewise members have answered, comparisons with people in a similar situation.</div>
+      </div>
     </div>
     <div class="step reveal" style="transition-delay:0.2s">
       <div class="step-icon" aria-hidden="true">
@@ -1067,9 +1099,11 @@ rdt('track', 'PageVisit');
           <path d="M5 20c0-3.9 3.1-7 7-7s7 3.1 7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
         </svg>
       </div>
-      <div class="step-num">03 &middot; Build</div>
-      <div class="step-title">Watch your profile evolve</div>
-      <div class="step-body">Your answers gradually build a Decision Profile that reflects how you approach money, trade-offs and everyday decisions.</div>
+      <div class="step-text">
+        <div class="step-num">03</div>
+        <h3 class="step-title">Watch your profile evolve</h3>
+        <div class="step-body">Your answers gradually build a Decision Profile that reflects how you approach trade-offs and everyday decisions.</div>
+      </div>
     </div>
   </div>
   </div>
@@ -1085,27 +1119,32 @@ rdt('track', 'PageVisit');
   </span>
 </div>
 
-<!-- Topic breadth -->
-<section class="section">
+<!-- Question bank. Examples are plain list items so they can be swapped without touching layout;
+     on mobile the last six (.q-extra) collapse behind a toggle. -->
+<section class="section" id="questions" aria-labelledby="questionsTitle">
   <div class="section-inner">
   <div class="section-kicker">What we ask</div>
-  <h2 class="section-title reveal">Questions you've probably wondered<br>but never had anyone to ask.</h2>
-  <p class="section-sub reveal">Six categories, one question a day. Here's a small sample of what real Canadians weigh in on.</p>
+  <h2 class="section-title reveal" id="questionsTitle">Things you've wondered about <em>other people.</em></h2>
+  <p class="section-sub reveal">Explore recurring questions about Canadian lives, opinions, habits and choices.</p>
 
-  <div class="corkboard">
-    <div class="sticky-note" style="transform:rotate(-2deg)"><div class="sticky-pin"></div><div class="sticky-cat">Everyday Life</div><div class="sticky-q">Do you rent or own your home?</div></div>
-    <div class="sticky-note" style="transform:rotate(1.5deg)"><div class="sticky-pin sage"></div><div class="sticky-cat">Money & Spending</div><div class="sticky-q">Do you live paycheque to paycheque?</div></div>
-    <div class="sticky-note" style="transform:rotate(-1deg)"><div class="sticky-pin"></div><div class="sticky-cat">Investing & Wealth</div><div class="sticky-q">Have you maxed your TFSA this year?</div></div>
-    <div class="sticky-note" style="transform:rotate(2deg)"><div class="sticky-pin sage"></div><div class="sticky-cat">Health & Wellbeing</div><div class="sticky-q">Do you have critical illness coverage?</div></div>
-    <div class="sticky-note" style="transform:rotate(-1.5deg)"><div class="sticky-pin"></div><div class="sticky-cat">Everyday Life</div><div class="sticky-q">Fixed or variable mortgage rate?</div></div>
-    <div class="sticky-note" style="transform:rotate(1deg)"><div class="sticky-pin sage"></div><div class="sticky-cat">Work & Career</div><div class="sticky-q">Are you on track to retire when you want?</div></div>
-    <div class="sticky-note" style="transform:rotate(-2.2deg)"><div class="sticky-pin"></div><div class="sticky-cat">Investing & Wealth</div><div class="sticky-q">Have you ever bought a stock, ETF, or crypto?</div></div>
-    <div class="sticky-note" style="transform:rotate(1.8deg)"><div class="sticky-pin sage"></div><div class="sticky-cat">Money & Spending</div><div class="sticky-q">How much credit card debt are you carrying?</div></div>
-    <div class="sticky-note" style="transform:rotate(-1.2deg)"><div class="sticky-pin"></div><div class="sticky-cat">Relationships & Family</div><div class="sticky-q">Have you hidden a purchase from your partner?</div></div>
-    <div class="sticky-note" style="transform:rotate(2.3deg)"><div class="sticky-pin sage"></div><div class="sticky-cat">Health & Wellbeing</div><div class="sticky-q">What do you pay for dental work out of pocket?</div></div>
-    <div class="sticky-note" style="transform:rotate(-0.8deg)"><div class="sticky-pin"></div><div class="sticky-cat">Relationships & Family</div><div class="sticky-q">What do people spend on rings and weddings?</div></div>
-    <div class="sticky-note" style="transform:rotate(1.6deg)"><div class="sticky-pin sage"></div><div class="sticky-cat">Work & Career</div><div class="sticky-q">Do you have a side hustle or secondary income?</div></div>
-  </div>
+  <ul class="corkboard" id="questionGrid">
+    <li class="sticky-note" style="transform:rotate(-2deg)"><div class="sticky-pin" aria-hidden="true"></div><div class="sticky-cat">Life &amp; Happiness</div><div class="sticky-q">How satisfied are you with your life these days?</div></li>
+    <li class="sticky-note" style="transform:rotate(1.5deg)"><div class="sticky-pin sage" aria-hidden="true"></div><div class="sticky-cat">Money &amp; Housing</div><div class="sticky-q">Do you feel financially comfortable, stretched or somewhere in between?</div></li>
+    <li class="sticky-note" style="transform:rotate(-1deg)"><div class="sticky-pin" aria-hidden="true"></div><div class="sticky-cat">Work &amp; Ambition</div><div class="sticky-q">If you could start again, would you choose the same career?</div></li>
+    <li class="sticky-note" style="transform:rotate(2deg)"><div class="sticky-pin sage" aria-hidden="true"></div><div class="sticky-cat">Health &amp; Habits</div><div class="sticky-q">What time do you usually go to bed?</div></li>
+    <li class="sticky-note" style="transform:rotate(-1.5deg)"><div class="sticky-pin" aria-hidden="true"></div><div class="sticky-cat">Money &amp; Housing</div><div class="sticky-q">Does owning a home where you want to live feel within reach?</div></li>
+    <li class="sticky-note" style="transform:rotate(1deg)"><div class="sticky-pin sage" aria-hidden="true"></div><div class="sticky-cat">Work &amp; Ambition</div><div class="sticky-q">How satisfied are you with your job?</div></li>
+    <li class="sticky-note q-extra" style="transform:rotate(-2.2deg)"><div class="sticky-pin" aria-hidden="true"></div><div class="sticky-cat">Opinions &amp; Values</div><div class="sticky-q">Are you optimistic about your future?</div></li>
+    <li class="sticky-note q-extra" style="transform:rotate(1.8deg)"><div class="sticky-pin sage" aria-hidden="true"></div><div class="sticky-cat">Life &amp; Happiness</div><div class="sticky-q">Is your life where you expected it to be at this age?</div></li>
+    <li class="sticky-note q-extra" style="transform:rotate(-1.2deg)"><div class="sticky-pin" aria-hidden="true"></div><div class="sticky-cat">Relationships &amp; Family</div><div class="sticky-q">Do you feel household responsibilities are shared fairly?</div></li>
+    <li class="sticky-note q-extra" style="transform:rotate(2.3deg)"><div class="sticky-pin sage" aria-hidden="true"></div><div class="sticky-cat">Health &amp; Habits</div><div class="sticky-q">How often do you feel stressed?</div></li>
+    <li class="sticky-note q-extra" style="transform:rotate(-0.8deg)"><div class="sticky-pin" aria-hidden="true"></div><div class="sticky-cat">Opinions &amp; Values</div><div class="sticky-q">Do you feel pressure to keep up with other people's lifestyles?</div></li>
+    <li class="sticky-note q-extra" style="transform:rotate(1.6deg)"><div class="sticky-pin sage" aria-hidden="true"></div><div class="sticky-cat">Work &amp; Ambition</div><div class="sticky-q">Would you accept a 10% pay cut for a four-day workweek?</div></li>
+  </ul>
+  <button type="button" class="questions-toggle" id="questionsToggle" aria-expanded="false" aria-controls="questionGrid">
+    <span class="questions-toggle-label">Show 6 more questions</span>
+    <svg class="questions-toggle-chevron" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 4.5L6 8l3.5-3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
   </div>
 </section>
 
@@ -1119,75 +1158,115 @@ rdt('track', 'PageVisit');
   </span>
 </div>
 
-<!-- Question demo -->
-<section class="section">
+<!-- The experience: one concrete question carried through Answer, Compare, Explore.
+     Illustrative preview only: no results are shown until real member data exists. -->
+<section class="section" id="experience" aria-labelledby="experienceTitle">
   <div class="section-inner">
-  <div class="section-header section-header--align-end">
-    <div>
-      <div class="section-kicker">The experience</div>
-      <h2 class="section-title reveal">Answer. Compare.<br>Discover yourself.</h2>
-    </div>
-    <p class="section-sub reveal">Each session adds another piece of the picture. What you choose, how your peers respond, and the patterns that emerge over time.</p>
-  </div>
+  <div class="section-kicker">The experience</div>
+  <h2 class="section-title reveal" id="experienceTitle">Answer. Compare.<br>See another <em>perspective.</em></h2>
+  <p class="section-sub section-sub--tight reveal">Share your answer, explore how others respond, and discover what you have in common.</p>
 
-  <div class="experience-grid">
-    <div class="experience-card reveal">
-      <div class="experience-icon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none">
-          <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.6"/>
-          <path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M18.4 5.6L17 7M7 17l-1.4 1.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-        </svg>
+  <ol class="experience-grid">
+    <li class="experience-card reveal">
+      <div class="experience-head">
+        <div class="experience-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M4 5h16v11H9l-4 4v-4H4V5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <div class="experience-step">01</div>
+          <h3 class="experience-title">Answer</h3>
+        </div>
       </div>
-      <div class="experience-title">Answer</div>
-      <div class="experience-desc">Quick, real-life scenarios that spark honest answers.</div>
+      <p class="experience-desc">Choose the answer that fits you best.</p>
       <div class="experience-preview">
-        <div class="preview-q">Would you take a pay cut for a four-day work week?</div>
-        <div class="preview-opt selected"><span class="preview-opt-dot"></span>Yes, absolutely</div>
-        <div class="preview-opt"><span class="preview-opt-dot"></span>Maybe, depends how much</div>
-        <div class="preview-opt"><span class="preview-opt-dot"></span>No, not worth it</div>
+        <div class="preview-label">Illustrative preview</div>
+        <p class="preview-q">Would you accept a 10% pay cut for a four-day workweek?</p>
+        <ul class="preview-pills">
+          <li class="preview-pill selected">Yes<span class="sr-only"> (selected)</span></li>
+          <li class="preview-pill">No</li>
+          <li class="preview-pill">Not sure</li>
+        </ul>
       </div>
-    </div>
+    </li>
 
-    <div class="experience-card reveal" style="transition-delay:0.1s">
-      <div class="experience-icon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none">
-          <circle cx="9" cy="8" r="3" stroke="currentColor" stroke-width="1.6"/>
-          <path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-          <circle cx="17.5" cy="9" r="2.5" stroke="currentColor" stroke-width="1.6"/>
-          <path d="M14.8 14.3c.55-.13 1.1-.2 1.7-.2 2.76 0 5 2.24 5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-        </svg>
+    <li class="experience-card reveal" style="transition-delay:0.1s">
+      <div class="experience-head">
+        <div class="experience-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M5 19V11M12 19V5M19 19v-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div>
+          <div class="experience-step">02</div>
+          <h3 class="experience-title">Compare</h3>
+        </div>
       </div>
-      <div class="experience-title">Compare</div>
-      <div class="experience-desc">See how you stack up with Canadians like you.</div>
+      <p class="experience-desc">See how others answered the same question.</p>
       <div class="experience-preview">
-        <div class="preview-compare-text"><span>You're more future-focused than <strong>78%</strong> of peers.</span></div>
-        <svg class="preview-chart" viewBox="0 0 200 70" preserveAspectRatio="none" aria-hidden="true">
-          <defs>
-            <clipPath id="compareTailClip">
-              <rect x="148" y="0" width="52" height="70"/>
-            </clipPath>
-          </defs>
-          <path d="M0,65 C40,65 55,5 100,5 C145,5 160,65 200,65 Z" fill="rgba(138,154,126,0.4)" stroke="none"/>
-          <path d="M0,65 C40,65 55,5 100,5 C145,5 160,65 200,65 Z" fill="rgba(189,90,52,0.6)" stroke="none" clip-path="url(#compareTailClip)"/>
-        </svg>
+        <div class="preview-label">Illustrative preview</div>
+        <p class="preview-q preview-q--small">Would you accept a 10% pay cut for a four-day workweek?</p>
+        <ul class="preview-results">
+          <li>
+            <div class="preview-result-row"><span>Yes</span><span class="preview-you">Your answer</span></div>
+            <div class="preview-track" aria-hidden="true"></div>
+          </li>
+          <li>
+            <div class="preview-result-row"><span>No</span></div>
+            <div class="preview-track" aria-hidden="true"></div>
+          </li>
+          <li>
+            <div class="preview-result-row"><span>Not sure</span></div>
+            <div class="preview-track" aria-hidden="true"></div>
+          </li>
+        </ul>
+        <p class="preview-note">Results appear here once enough people have answered.</p>
       </div>
-    </div>
+    </li>
 
-    <div class="experience-card reveal" style="transition-delay:0.2s">
-      <div class="experience-icon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none">
-          <path d="M3 18l6-9 4 5 2-3 6 7H3z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>
-        </svg>
+    <li class="experience-card reveal" style="transition-delay:0.2s">
+      <div class="experience-head">
+        <div class="experience-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <circle cx="11" cy="11" r="6" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M20 20l-4.5-4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div>
+          <div class="experience-step">03</div>
+          <h3 class="experience-title">Explore</h3>
+        </div>
       </div>
-      <div class="experience-title">Profile</div>
-      <div class="experience-desc">See your patterns across six key dimensions.</div>
+      <p class="experience-desc">Change who you compare with and see another perspective.</p>
       <div class="experience-preview">
-        <div class="preview-profile-name">Strategic Builder</div>
-        <div class="preview-dim"><span>Risk Orientation</span><div class="preview-dim-track"><div class="preview-dim-fill" style="width:82%"></div></div></div>
-        <div class="preview-dim"><span>Time Horizon</span><div class="preview-dim-track"><div class="preview-dim-fill" style="width:85%"></div></div></div>
-        <div class="preview-dim"><span>Debt Philosophy</span><div class="preview-dim-track"><div class="preview-dim-fill accent" style="width:50%"></div></div></div>
+        <div class="preview-label">Illustrative preview</div>
+        <p class="preview-q preview-q--small">Compare with</p>
+        <div class="preview-filter-group">
+          <div class="preview-filter-label">Where</div>
+          <ul class="preview-chips">
+            <li class="preview-chip selected">All of Canada<span class="sr-only"> (selected)</span></li>
+            <li class="preview-chip">Your province</li>
+          </ul>
+        </div>
+        <div class="preview-filter-group">
+          <div class="preview-filter-label">Age group</div>
+          <ul class="preview-chips">
+            <li class="preview-chip">18–34</li>
+            <li class="preview-chip selected">35–44<span class="sr-only"> (selected)</span></li>
+            <li class="preview-chip">45–54</li>
+            <li class="preview-chip">55–64</li>
+            <li class="preview-chip">65+</li>
+          </ul>
+        </div>
+        <p class="preview-note">More comparison groups open up as more people take part.</p>
       </div>
-    </div>
+    </li>
+  </ol>
+
+  <div class="mirror-note reveal">
+    <p class="mirror-note-title">A mirror, <em>not a report card.</em></p>
+    <p class="mirror-note-body">There's no right answer. Likewise gives you context for your experiences, opinions and choices.</p>
   </div>
   </div>
 </section>
@@ -1202,157 +1281,79 @@ rdt('track', 'PageVisit');
   </span>
 </div>
 
-<!-- Decision Profile -->
-<section class="section">
-  <div class="section-inner">
-  <div class="profile-showcase">
-    <div class="profile-panel reveal">
-      <div class="profile-card">
-        <svg class="profile-avatar" viewBox="0 0 40 40" aria-hidden="true">
-          <circle cx="20" cy="20" r="20" fill="#8A9A7E"/>
-          <circle cx="26" cy="13" r="3" fill="#F0D18F"/>
-          <path d="M4 28l9-13 7 9 3-4 9 8H4z" fill="#5F6E56" opacity="0.85"/>
-        </svg>
-        <div class="profile-kicker">Your archetype</div>
-        <div class="profile-name">Strategic Builder</div>
-        <p class="profile-desc">Future-focused. You plan ahead and make confident decisions when it comes to what matters.</p>
-        <div class="profile-illustrative">Illustrative profile</div>
-      </div>
-      <div class="profile-dimensions">
-        <div>
-          <div class="dimension-row"><span class="dimension-label">Risk Orientation</span><span class="dimension-level">High</span></div>
-          <div class="dimension-track"><div class="dimension-fill" style="width:82%"></div></div>
-        </div>
-        <div>
-          <div class="dimension-row"><span class="dimension-label">Time Horizon</span><span class="dimension-level">High</span></div>
-          <div class="dimension-track"><div class="dimension-fill" style="width:85%"></div></div>
-        </div>
-        <div>
-          <div class="dimension-row"><span class="dimension-label">Debt Philosophy</span><span class="dimension-level">Medium</span></div>
-          <div class="dimension-track"><div class="dimension-fill accent" style="width:50%"></div></div>
-        </div>
-        <div>
-          <div class="dimension-row"><span class="dimension-label">Financial Confidence</span><span class="dimension-level">High</span></div>
-          <div class="dimension-track"><div class="dimension-fill" style="width:80%"></div></div>
-        </div>
-        <div>
-          <div class="dimension-row"><span class="dimension-label">Wealth Visibility</span><span class="dimension-level">Medium</span></div>
-          <div class="dimension-track"><div class="dimension-fill" style="width:55%"></div></div>
-        </div>
-        <div>
-          <div class="dimension-row"><span class="dimension-label">Stress Resilience</span><span class="dimension-level">High</span></div>
-          <div class="dimension-track"><div class="dimension-fill" style="width:85%"></div></div>
-        </div>
-      </div>
-    </div>
-    <div class="profile-text">
-      <div class="section-kicker">Your Decision Profile</div>
-      <h2 class="section-title reveal">A mirror,<br>not a report card.</h2>
-      <p class="section-sub reveal" style="margin-bottom:0">There is no perfect financial personality. Likewise looks for patterns in how you make decisions and shows what those patterns reveal over time.</p>
-    </div>
-  </div>
-  </div>
-</section>
-
-<div class="section-break">
-  <span class="section-break-mark" aria-hidden="true">
-    <svg viewBox="0 0 24 16" fill="none">
-      <rect x="1" y="7" width="4" height="9" rx="1" fill="currentColor"/>
-      <rect x="10" y="3" width="4" height="13" rx="1" fill="currentColor"/>
-      <rect x="19" y="0" width="4" height="16" rx="1" fill="currentColor"/>
-    </svg>
-  </span>
-</div>
-
-<!-- Why section -->
-<section class="section">
+<!-- Why Likewise / Your data -->
+<section class="section" id="your-data" aria-labelledby="dataTitle">
   <div class="section-inner">
   <div class="section-kicker">Why Likewise</div>
-  <h2 class="section-title reveal">Your data should<br><em>work for you.</em></h2>
-  <p class="section-sub reveal">Every company you interact with uses your financial behaviour to make decisions. Likewise gives you something back.</p>
+  <h2 class="section-title reveal" id="dataTitle">Comparisons <em>with context.</em></h2>
+  <p class="section-sub reveal">An answer means more when you understand the people and experiences behind it.</p>
 
-  <div class="why-grid">
-    <div class="why-card reveal">
-      <div class="why-title">Honest peer benchmarks</div>
-      <div class="why-body">Not national averages. Not editorial estimates. Real answers from Canadians matched to your actual demographic situation, by age, city, income range, and household type. The more people who join, the sharper that comparison gets.</div>
-    </div>
-    <div class="why-card reveal" style="transition-delay:0.05s">
-      <div class="why-title">Your financial identity, owned by you</div>
-      <div class="why-body">Over time, Likewise builds you a Financial Health Profile, a real record of your financial behaviour that you own, control, and can share with lenders on your own terms. Richer than a credit score. Yours to keep or delete.</div>
-    </div>
-    <div class="why-card reveal" style="transition-delay:0.15s">
-      <div class="why-title">Independent. No bank behind this.</div>
-      <div class="why-body">Likewise is not owned by a bank, a broker, or a financial product company. We don't recommend products unless you ask for help, and when we do, we tell you it's sponsored. No hidden agenda. No algorithmic nudges.</div>
-    </div>
-  </div>
-  </div>
-</section>
+  <ul class="source-grid">
+    <li class="source-card reveal">
+      <span class="source-tag">Published research</span>
+      <h3 class="why-title">Canadian research, with the source named</h3>
+      <p class="why-body">Where reliable published research exists, such as national surveys, we show it alongside your answer and tell you where it comes from. It's a useful reference point for how Canadians as a whole respond.</p>
+    </li>
+    <li class="source-card reveal" style="transition-delay:0.1s">
+      <span class="source-tag alt">Likewise members</span>
+      <h3 class="why-title">Comparisons that grow with participation</h3>
+      <p class="why-body">As more people take part, you'll also be able to compare with other Likewise members. Member results reflect the people who answered, not all Canadians, and narrower groups open up only when enough people have answered.</p>
+    </li>
+  </ul>
 
-<div class="section-break">
-  <span class="section-break-mark" aria-hidden="true">
-    <svg viewBox="0 0 24 16" fill="none">
-      <rect x="1" y="7" width="4" height="9" rx="1" fill="currentColor"/>
-      <rect x="10" y="3" width="4" height="13" rx="1" fill="currentColor"/>
-      <rect x="19" y="0" width="4" height="16" rx="1" fill="currentColor"/>
-    </svg>
-  </span>
-</div>
-
-<!-- Reward banner -->
-<section class="reward-banner">
-  <div class="reward-banner-inner">
-    <div class="reward-banner-icon" aria-hidden="true">
-      <svg viewBox="0 0 24 24" fill="none">
-        <rect x="4" y="9" width="16" height="11" rx="1.5" stroke="currentColor" stroke-width="1.6"/>
-        <path d="M4 9h16v3.5H4z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-        <path d="M12 9v11" stroke="currentColor" stroke-width="1.6"/>
-        <path d="M12 9c0-2.2-1.8-4-4-4-1.1 0-2 .9-2 2s.9 2 2 2h4z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-        <path d="M12 9c0-2.2 1.8-4 4-4 1.1 0 2 .9 2 2s-.9 2-2 2h-4z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-      </svg>
-    </div>
-    <div class="reward-banner-text">
-      <div class="reward-banner-kicker">Get rewarded for participating</div>
-      <p class="reward-banner-body">Consistent participation can earn additional entries in sponsor-funded reward draws.</p>
-    </div>
-    <div class="reward-banner-cta">
-      <button type="button" class="reward-banner-btn" onclick="openNavPopover()">Join the waitlist</button>
-      <div class="reward-banner-note">Free to join. Unsubscribe anytime.</div>
-    </div>
-  </div>
-</section>
-
-<!-- Founding partner -->
-<section class="section">
-  <div class="fp-banner reveal">
+  <div class="value-panel reveal">
     <div>
-      <div class="fp-tag">Founding partner</div>
-      <div class="fp-title">Building Likewise together.</div>
-      <div class="fp-body">
-        We're proud to be backed by like-minded organisations who believe in better decisions, better context, and a better way forward.
-      </div>
+      <h3 class="value-title">Your data should <em>work for you.</em></h3>
+      <p class="value-body">Companies learn from the information you share. Likewise is built to give you something back: comparisons with context, insights from your answers, and opportunities to take part in rewards.</p>
+      <p class="value-rewards">Participation may offer opportunities to enter sponsor-funded reward draws.</p>
     </div>
-    <div class="fp-cta">
-      <div class="fp-question">Interested in becoming a partner?</div>
-      <a href="mailto:hello@joinlikewise.ca?subject=Founding Partner inquiry" class="fp-email">
-        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <rect x="3" y="5" width="18" height="14" rx="2.5" stroke="currentColor" stroke-width="1.6"/>
-          <path d="M4 6.5L12 13l8-6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        hello@joinlikewise.ca
-      </a>
+    <div>
+      <div class="trust-title">Privacy and independence</div>
+      <ul class="trust-list">
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M8 11V7a4 4 0 0 1 8 0v4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          <span>We don't sell your information.</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>You can ask us to delete your waitlist information at any time.</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          <span>Built to give you context, with sources named.</span>
+        </li>
+      </ul>
+      <a href="privacy.html" class="trust-link">Read our privacy policy</a>
+    </div>
+  </div>
+  </div>
+</section>
+
+<!-- Closing sage CTA -->
+<section class="cta-banner" aria-labelledby="ctaTitle">
+  <div class="cta-banner-inner">
+    <div class="cta-banner-text">
+      <h2 class="cta-banner-title" id="ctaTitle">What have you always wanted to ask?</h2>
+      <p class="cta-banner-body">Join the waitlist and help choose the questions Likewise explores.</p>
+    </div>
+    <div class="cta-banner-cta">
+      <button type="button" class="cta-banner-btn" onclick="openWaitlist()">Join the waitlist</button>
+      <div class="cta-banner-note">Free to join. Unsubscribe anytime.</div>
     </div>
   </div>
 </section>
+</main>
 
 <!-- Footer -->
 <footer class="footer">
-  <div class="footer-logo"><img src="likewise-logo-2row-terracotta.png" alt="Likewise" class="footer-logo-img"></div>
-  <div class="footer-links">
+  <div class="footer-logo"><img src="likewise-logo-2row-terracotta.png" alt="Likewise" class="footer-logo-img" width="1643" height="1012"></div>
+  <nav class="footer-links" aria-label="Footer">
     <a href="mailto:hello@joinlikewise.ca" class="footer-link">hello@joinlikewise.ca</a>
     <a href="privacy.html" class="footer-link">Privacy</a>
+    <a href="mailto:hello@joinlikewise.ca?subject=Founding%20Partner%20inquiry" class="footer-link">Interested in partnering?</a>
     <a href="#waitlist" class="footer-link">Join waitlist</a>
-  </div>
-  <div class="footer-copy">© 2025 Likewise · joinlikewise.ca · Canada</div>
+  </nav>
+  <div class="footer-copy">© 2026 Likewise · joinlikewise.ca · Canada</div>
 </footer>
 
 <!-- Vote modal -->
@@ -1366,12 +1367,12 @@ rdt('track', 'PageVisit');
       <p class="vote-modal-sub">Help pick the very first question we ask at launch.</p>
 
       <div class="vote-opt-list" id="voteOptList">
-        <div class="vote-opt" onclick="selectVoteOption(this)"><span class="vote-opt-dot"></span>Have you saved enough for your age?</div>
-        <div class="vote-opt" onclick="selectVoteOption(this)"><span class="vote-opt-dot"></span>Do you carry credit card debt?</div>
-        <div class="vote-opt" onclick="selectVoteOption(this)"><span class="vote-opt-dot"></span>Will your next mortgage be fixed or variable?</div>
-        <div class="vote-opt" onclick="selectVoteOption(this)"><span class="vote-opt-dot"></span>How often do you buy lunch?</div>
-        <div class="vote-opt" onclick="selectVoteOption(this)"><span class="vote-opt-dot"></span>Do you regularly invest or contribute to a TFSA, RRSP, or FHSA?</div>
-        <div class="vote-opt" onclick="selectVoteOption(this)"><span class="vote-opt-dot"></span>How much should you give for a standard wedding gift?</div>
+        <div class="vote-opt" onclick="selectVoteOption(this)"><span class="vote-opt-dot"></span>How satisfied are you with your life these days?</div>
+        <div class="vote-opt" onclick="selectVoteOption(this)"><span class="vote-opt-dot"></span>Do you feel financially comfortable, stretched or somewhere in between?</div>
+        <div class="vote-opt" onclick="selectVoteOption(this)"><span class="vote-opt-dot"></span>If you could start again, would you choose the same career?</div>
+        <div class="vote-opt" onclick="selectVoteOption(this)"><span class="vote-opt-dot"></span>Does owning a home where you want to live feel within reach?</div>
+        <div class="vote-opt" onclick="selectVoteOption(this)"><span class="vote-opt-dot"></span>Are you optimistic about your future?</div>
+        <div class="vote-opt" onclick="selectVoteOption(this)"><span class="vote-opt-dot"></span>Would you accept a 10% pay cut for a four-day workweek?</div>
         <div class="vote-opt vote-opt-other" onclick="selectVoteOption(this)">
           <div class="vote-opt-other-row"><span class="vote-opt-dot"></span>Other, write your own</div>
           <input type="text" class="vote-opt-other-input" id="voteOtherInput" placeholder="Type your question" maxlength="140" onclick="event.stopPropagation()" oninput="document.getElementById('voteModalError').classList.remove('show')">
@@ -1407,7 +1408,7 @@ rdt('track', 'PageVisit');
     <div id="suggestModalForm">
       <div class="vote-modal-kicker">One more thing</div>
       <h3 class="vote-modal-title">Got a question you wish we'd ask?</h3>
-      <p class="vote-modal-sub">Tell us about any financial or lifestyle question you've always wondered how you compare on.</p>
+      <p class="vote-modal-sub">Tell us about any question you've always wondered how you compare on.</p>
 
       <textarea class="suggest-textarea" id="suggestInput" placeholder="Type your idea here&hellip;" maxlength="500"></textarea>
 
@@ -1426,6 +1427,103 @@ rdt('track', 'PageVisit');
   </div>
 </div>
 
+<script>
+// ── Page UI (no network dependencies) ───────────────────────────────
+// Scroll reveal: content is only hidden once the observer is running, and falls
+// back to fully visible if IntersectionObserver is unavailable.
+(function () {
+  const items = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window)) {
+    items.forEach(el => el.classList.add('visible'));
+    return;
+  }
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  items.forEach(el => obs.observe(el));
+})();
+
+// Mobile menu: hamburger toggles the section links; Escape, outside clicks and
+// choosing a link close it again.
+function toggleMobileMenu(force) {
+  const items = document.getElementById('navItems');
+  const btn = document.getElementById('menuBtn');
+  const open = typeof force === 'boolean' ? force : !items.classList.contains('mobile-open');
+  items.classList.toggle('mobile-open', open);
+  btn.setAttribute('aria-expanded', String(open));
+  if (open) {
+    const first = items.querySelector('a');
+    if (first) first.focus();
+  }
+}
+
+document.getElementById('navItems').addEventListener('click', e => {
+  if (e.target.closest('a')) toggleMobileMenu(false);
+});
+
+document.addEventListener('click', e => {
+  const navItems = document.getElementById('navItems');
+  if (navItems.classList.contains('mobile-open') && !e.target.closest('.nav-items') && !e.target.closest('.hamburger-btn')) {
+    toggleMobileMenu(false);
+  }
+  const popover = document.getElementById('navEmailPopover');
+  if (popover.classList.contains('show') && !e.target.closest('.nav-cta-wrap') && !e.target.closest('.cta-banner-btn')
+      && typeof closeNavPopover === 'function') {
+    closeNavPopover();
+  }
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Escape') return;
+  const navItems = document.getElementById('navItems');
+  if (navItems.classList.contains('mobile-open')) {
+    toggleMobileMenu(false);
+    document.getElementById('menuBtn').focus();
+  }
+  const popover = document.getElementById('navEmailPopover');
+  if (popover.classList.contains('show') && typeof closeNavPopover === 'function') {
+    closeNavPopover();
+    document.querySelector('.nav-cta').focus();
+  }
+});
+
+// Closing CTA: opens the nav sign-up popover where it is visible (desktop);
+// otherwise scrolls to the hero form and focuses the email field.
+function openWaitlist() {
+  const wrap = document.querySelector('.nav-cta-wrap');
+  if (wrap && getComputedStyle(wrap).display !== 'none' && typeof openNavPopover === 'function') {
+    openNavPopover();
+    return;
+  }
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.getElementById('waitlist').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+  const input = document.getElementById('emailInput');
+  if (input && input.offsetParent !== null) setTimeout(() => input.focus({ preventScroll: true }), reduce ? 0 : 500);
+}
+
+// Hero phone strip (narrow screens): start on the middle phone so neighbours peek in on both sides.
+(function () {
+  const sc = document.getElementById('heroScroller');
+  if (!sc) return;
+  const centre = () => { if (sc.scrollWidth > sc.clientWidth + 1) sc.scrollLeft = (sc.scrollWidth - sc.clientWidth) / 2; };
+  const img = sc.querySelector('img');
+  if (img && !img.complete) img.addEventListener('load', centre, { once: true }); else centre();
+})();
+
+// Question bank: on mobile the last six examples sit behind this toggle.
+(function () {
+  const toggle = document.getElementById('questionsToggle');
+  const grid = document.getElementById('questionGrid');
+  if (!toggle || !grid) return;
+  toggle.addEventListener('click', () => {
+    const open = grid.classList.toggle('expanded');
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.querySelector('.questions-toggle-label').textContent = open ? 'Show fewer questions' : 'Show 6 more questions';
+  });
+})();
+</script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 <script>
@@ -1448,49 +1546,8 @@ function onNavTurnstileSuccess(token) {
   document.getElementById('navTurnstileError').classList.remove('show');
 }
 
-// ── Scroll reveal ─────────────────────────────────────────────────────
-const obs = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.12 });
-document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-
-// ── Value pillar tabs ────────────────────────────────────────────────
-function toggleNavDropdown(el, index) {
-  const dropdown = document.getElementById('navDropdown');
-  const wasActiveIndex = el.classList.contains('active');
-
-  document.querySelectorAll('.nav-item').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.nav-dropdown-panel').forEach(p => p.classList.remove('active'));
-
-  if (wasActiveIndex) {
-    dropdown.classList.remove('open');
-    return;
-  }
-
-  el.classList.add('active');
-  document.querySelector('.nav-dropdown-panel[data-dropdown-panel="' + index + '"]').classList.add('active');
-  dropdown.classList.add('open');
-}
-
-function toggleMobileMenu() {
-  document.getElementById('navItems').classList.toggle('mobile-open');
-}
-
-document.addEventListener('click', e => {
-  const dropdown = document.getElementById('navDropdown');
-  const navItems = document.getElementById('navItems');
-  if (navItems.classList.contains('mobile-open') && !e.target.closest('.nav-items') && !e.target.closest('.hamburger-btn')) {
-    navItems.classList.remove('mobile-open');
-  }
-  if (dropdown.classList.contains('open') && !e.target.closest('.nav-dropdown') && !e.target.closest('.nav-items')) {
-    dropdown.classList.remove('open');
-    document.querySelectorAll('.nav-item').forEach(t => t.classList.remove('active'));
-  }
-  const popover = document.getElementById('navEmailPopover');
-  if (popover.classList.contains('show') && !e.target.closest('.nav-cta-wrap') && !e.target.closest('.reward-banner-btn')) {
-    closeNavPopover();
-  }
-});
+// Scroll reveal, navigation menu and the question toggle live in the page-UI script
+// above, so they keep working even if the Supabase or Turnstile scripts fail to load.
 
 // ── Waitlist form ─────────────────────────────────────────────────────
 async function handleSignup() {
@@ -1574,10 +1631,12 @@ async function performSignup(email, turnstileToken) {
 // ── Nav email popover ────────────────────────────────────────────────
 function openNavPopover() {
   document.getElementById('navEmailPopover').classList.add('show');
+  document.querySelector('.nav-cta').setAttribute('aria-expanded', 'true');
   document.getElementById('navEmailInput').focus();
 }
 function closeNavPopover() {
   document.getElementById('navEmailPopover').classList.remove('show');
+  document.querySelector('.nav-cta').setAttribute('aria-expanded', 'false');
 }
 function toggleNavPopover() {
   const popover = document.getElementById('navEmailPopover');
