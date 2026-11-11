@@ -466,7 +466,7 @@ body::after {
   background: rgba(255,255,255,0.45); border: 1px solid rgba(43,36,32,0.1);
   font-size: 15px; color: var(--charcoal); text-align: center;
 }
-.preview-pill.selected { background: var(--sage); border-color: var(--sage); color: var(--white); font-weight: 600; }
+.preview-pill.selected { background: var(--sage); border-color: var(--sage); color: var(--charcoal); font-weight: 600; }
 
 /* Compare: result-preview state, no numbers until real data exists */
 .preview-results { display: flex; flex-direction: column; gap: 12px; list-style: none; }
@@ -491,7 +491,7 @@ body::after {
   border-radius: 999px; font-size: 13px; color: var(--charcoal);
   background: rgba(255,255,255,0.45); border: 1px solid rgba(43,36,32,0.12);
 }
-.preview-chip.selected { background: var(--sage); border-color: var(--sage); color: var(--white); font-weight: 600; }
+.preview-chip.selected { background: var(--sage); border-color: var(--sage); color: var(--charcoal); font-weight: 600; }
 
 /* Compact reassurance beside the experience */
 .mirror-note {
@@ -1043,7 +1043,7 @@ rdt('track', 'PageVisit');
         </span>
         <div class="hero-feature-text">
           <div class="hero-feature-title">Independent</div>
-          <div class="hero-feature-sub">Context first, not product pitches.</div>
+          <div class="hero-feature-sub">Built to give you context.</div>
         </div>
       </li>
     </ul>
@@ -1077,7 +1077,7 @@ rdt('track', 'PageVisit');
       <div class="step-text">
         <div class="step-num">01</div>
         <h3 class="step-title">Make the decision</h3>
-        <div class="step-body">Choose what you would actually do in a real-life financial or lifestyle situation.</div>
+        <div class="step-body">Choose what you would actually do in a real-life situation.</div>
       </div>
     </div>
     <div class="step reveal" style="transition-delay:0.1s">
@@ -1102,7 +1102,7 @@ rdt('track', 'PageVisit');
       <div class="step-text">
         <div class="step-num">03</div>
         <h3 class="step-title">Watch your profile evolve</h3>
-        <div class="step-body">Your answers gradually build a Decision Profile that reflects how you approach money, trade-offs and everyday decisions.</div>
+        <div class="step-body">Your answers gradually build a Decision Profile that reflects how you approach trade-offs and everyday decisions.</div>
       </div>
     </div>
   </div>
@@ -1320,7 +1320,7 @@ rdt('track', 'PageVisit');
         </li>
         <li>
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
-          <span>Independent. If something is sponsored, we'll say so.</span>
+          <span>Built to give you context, with sources named.</span>
         </li>
       </ul>
       <a href="privacy.html" class="trust-link">Read our privacy policy</a>
@@ -1367,12 +1367,12 @@ rdt('track', 'PageVisit');
       <p class="vote-modal-sub">Help pick the very first question we ask at launch.</p>
 
       <div class="vote-opt-list" id="voteOptList">
-        <div class="vote-opt" onclick="selectVoteOption(this)"><span class="vote-opt-dot"></span>Have you saved enough for your age?</div>
-        <div class="vote-opt" onclick="selectVoteOption(this)"><span class="vote-opt-dot"></span>Do you carry credit card debt?</div>
-        <div class="vote-opt" onclick="selectVoteOption(this)"><span class="vote-opt-dot"></span>Will your next mortgage be fixed or variable?</div>
-        <div class="vote-opt" onclick="selectVoteOption(this)"><span class="vote-opt-dot"></span>How often do you buy lunch?</div>
-        <div class="vote-opt" onclick="selectVoteOption(this)"><span class="vote-opt-dot"></span>Do you regularly invest or contribute to a TFSA, RRSP, or FHSA?</div>
-        <div class="vote-opt" onclick="selectVoteOption(this)"><span class="vote-opt-dot"></span>How much should you give for a standard wedding gift?</div>
+        <div class="vote-opt" onclick="selectVoteOption(this)"><span class="vote-opt-dot"></span>How satisfied are you with your life these days?</div>
+        <div class="vote-opt" onclick="selectVoteOption(this)"><span class="vote-opt-dot"></span>Do you feel financially comfortable, stretched or somewhere in between?</div>
+        <div class="vote-opt" onclick="selectVoteOption(this)"><span class="vote-opt-dot"></span>If you could start again, would you choose the same career?</div>
+        <div class="vote-opt" onclick="selectVoteOption(this)"><span class="vote-opt-dot"></span>Does owning a home where you want to live feel within reach?</div>
+        <div class="vote-opt" onclick="selectVoteOption(this)"><span class="vote-opt-dot"></span>Are you optimistic about your future?</div>
+        <div class="vote-opt" onclick="selectVoteOption(this)"><span class="vote-opt-dot"></span>Would you accept a 10% pay cut for a four-day workweek?</div>
         <div class="vote-opt vote-opt-other" onclick="selectVoteOption(this)">
           <div class="vote-opt-other-row"><span class="vote-opt-dot"></span>Other, write your own</div>
           <input type="text" class="vote-opt-other-input" id="voteOtherInput" placeholder="Type your question" maxlength="140" onclick="event.stopPropagation()" oninput="document.getElementById('voteModalError').classList.remove('show')">
@@ -1408,7 +1408,7 @@ rdt('track', 'PageVisit');
     <div id="suggestModalForm">
       <div class="vote-modal-kicker">One more thing</div>
       <h3 class="vote-modal-title">Got a question you wish we'd ask?</h3>
-      <p class="vote-modal-sub">Tell us about any financial or lifestyle question you've always wondered how you compare on.</p>
+      <p class="vote-modal-sub">Tell us about any question you've always wondered how you compare on.</p>
 
       <textarea class="suggest-textarea" id="suggestInput" placeholder="Type your idea here&hellip;" maxlength="500"></textarea>
 
