@@ -159,25 +159,19 @@ body::after {
 
 /* ── Hero ─────────────────────────────────────────────────────────────── */
 .hero {
-  min-height: 80vh;
   display: flex; flex-direction: column; justify-content: center;
-  padding: 120px 48px 56px;
+  padding: 104px 48px 48px;
   position: relative; overflow: hidden;
 }
 
 .hero-inner {
   max-width: min(1800px, 85vw); width: 100%; margin: 0 auto; align-self: center;
   position: relative; z-index: 1;
-  display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 40px; align-items: center;
+  display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 0 40px; align-items: center;
 }
 
 .hero-copy { min-width: 0; }
 
-.hero-eyebrow {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
-  color: var(--terracotta); margin-bottom: 16px;
-}
 
 .hero-headline {
   font-family: 'Fraunces', serif;
@@ -210,7 +204,7 @@ body::after {
   display: flex; flex-direction: column; align-items: center; justify-content: center;
 }
 /* Mobile-only divider + label between the hero copy and the phone image. Hidden on desktop. */
-.hero-mobile-break, .hero-mobile-kicker, .hero-swipe-hint { display: none; }
+.hero-mobile-break, .hero-swipe-hint { display: none; }
 .hero-scroller { width: 100%; max-width: 1020px; }
 .hero-track { position: relative; }
 .hero-phones {
@@ -287,7 +281,7 @@ body::after {
 .hero-features {
   grid-column: 1 / -1;
   display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 24px 40px;
-  margin-top: 48px; padding-top: 28px; list-style: none;
+  margin-top: 32px; padding-top: 20px; list-style: none;
   border-top: 1px solid rgba(43,36,32,0.1);
 }
 .hero-feature { display: flex; align-items: flex-start; gap: 10px; min-width: 0; }
@@ -306,11 +300,6 @@ body::after {
 
 .section-inner { max-width: min(1800px, 85vw); margin: 0 auto; }
 
-.section-kicker {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
-  color: var(--terracotta); margin-bottom: 16px;
-}
 
 .section-title {
   font-family: 'Fraunces', serif;
@@ -403,7 +392,7 @@ body::after {
 }
 .sticky-pin.sage { background: var(--sage); }
 .sticky-cat {
-  font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase;
+  font-size: 12px; font-weight: 500;
   color: var(--taupe); margin-bottom: 6px;
 }
 .sticky-q { font-size: 13px; color: var(--charcoal); line-height: 1.4; }
@@ -438,7 +427,7 @@ body::after {
 .experience-icon svg { width: 18px; height: 18px; }
 .experience-step {
   font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em;
-  color: var(--terracotta); margin-bottom: 2px; text-transform: uppercase;
+  color: var(--terracotta); margin-bottom: 2px;
 }
 .experience-title {
   font-family: 'Fraunces', serif; font-size: 18px; font-weight: 600;
@@ -450,8 +439,8 @@ body::after {
   display: flex; flex-direction: column;
 }
 .preview-label {
-  font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.14em;
-  text-transform: uppercase; color: var(--taupe); margin-bottom: 10px;
+  font-size: 12px; font-style: italic;
+  color: var(--taupe); margin-bottom: 8px;
 }
 .preview-q {
   font-family: 'Fraunces', serif; font-size: 16px; font-weight: 600;
@@ -472,7 +461,7 @@ body::after {
 .preview-results { display: flex; flex-direction: column; gap: 12px; list-style: none; }
 .preview-result-row { display: flex; justify-content: space-between; align-items: baseline; font-size: 13px; color: var(--charcoal); margin-bottom: 5px; }
 .preview-you {
-  font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
+  font-size: 12px; font-weight: 500;
   color: var(--charcoal); background: rgba(138,154,126,0.35);
   padding: 2px 8px; border-radius: 999px;
 }
@@ -511,7 +500,7 @@ body::after {
 .source-card { padding-top: 22px; border-top: 1px solid var(--border); }
 .source-tag {
   display: inline-block; margin-bottom: 12px;
-  font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+  font-size: 12px; font-weight: 500;
   color: var(--charcoal); background: rgba(138,154,126,0.3);
   padding: 4px 10px; border-radius: 999px;
 }
@@ -536,8 +525,8 @@ body::after {
 .value-body { font-size: 15px; color: var(--taupe); line-height: 1.7; max-width: 520px; }
 .value-rewards { margin-top: 16px; font-size: 13px; color: var(--charcoal); line-height: 1.6; }
 .trust-title {
-  font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
-  color: var(--terracotta); margin-bottom: 14px;
+  font-size: 15px; font-weight: 600;
+  color: var(--charcoal); margin-bottom: 14px;
 }
 .trust-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
 .trust-list li { display: flex; gap: 10px; font-size: 14px; color: var(--charcoal); line-height: 1.55; }
@@ -595,7 +584,6 @@ body::after {
   to   { opacity: 1; transform: translateY(0); }
 }
 @media (prefers-reduced-motion: no-preference) {
-  .hero-eyebrow  { animation: fadeUp 0.7s 0.1s ease both; }
   .hero-headline { animation: fadeUp 0.8s 0.25s ease both; }
   .hero-sub      { animation: fadeUp 0.8s 0.4s ease both; }
   .hero-phones   { animation: fadeUp 0.9s 0.35s ease both; }
@@ -638,10 +626,6 @@ body::after {
   transition: background 0.15s;
 }
 .vote-modal-x:hover { background: rgba(43,36,32,0.06); }
-.vote-modal-kicker {
-  font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.18em;
-  text-transform: uppercase; color: var(--terracotta); margin-bottom: 10px;
-}
 .vote-modal-title {
   font-family: 'Fraunces', serif; font-size: 22px; font-weight: 600;
   color: var(--charcoal); line-height: 1.25; letter-spacing: -0.02em; margin-bottom: 8px;
@@ -743,21 +727,13 @@ body::after {
 @media (max-width: 900px) {
   .hero-inner { grid-template-columns: 1fr; gap: 0; }
   .hero-copy { order: 1; }
-  .hero-features { order: 2; grid-template-columns: repeat(2, minmax(0,1fr)); margin-top: 32px; padding-top: 0; border-top: 0; }
+  .hero-features { order: 2; grid-template-columns: repeat(2, minmax(0,1fr)); margin-top: 20px; padding-top: 0; border-top: 0; }
   .hero-mobile-break { order: 3; }
-  .hero-mobile-kicker { order: 4; }
   .hero-visual { order: 5; }
   .hero-visual { margin-top: 8px; }
   .hero-mobile-break {
     display: block; position: relative;
-    margin: 40px 0 0; border-top: 1px solid rgba(43,36,32,0.16);
-  }
-  .hero-mobile-kicker {
-    display: block;
-    font-family: 'DM Mono', monospace;
-    font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
-    color: var(--terracotta); text-align: center;
-    margin-top: 52px;
+    margin: 32px 0 28px; border-top: 1px solid rgba(43,36,32,0.16);
   }
   .experience-grid { grid-template-columns: 1fr; gap: 20px; max-width: 560px; }
 }
@@ -789,11 +765,11 @@ body::after {
   .nav { padding: 12px 20px 12px 24px; }
   .logo-img { height: 36px; }
   .hero, .section { padding-left: 24px; padding-right: 24px; }
-  .hero { padding-top: 96px; min-height: 0; }
+  .hero { padding-top: 88px; }
   .hero-headline { font-size: 40px; margin-bottom: 24px; }
   .form-row { flex-direction: column; }
   .form-wrap { margin-top: 20px; }
-  .hero-features { gap: 18px 20px; margin-top: 28px; }
+  .hero-features { gap: 18px 20px; margin-top: 20px; }
   .nav-items { display: none; }
   .nav-items.mobile-open {
     display: flex; flex-direction: column; gap: 2px;
@@ -920,7 +896,6 @@ rdt('track', 'PageVisit');
 <section class="hero" id="top" aria-labelledby="heroTitle">
   <div class="hero-inner">
     <div class="hero-copy">
-    <p class="hero-eyebrow">A new question. A different perspective.</p>
     <h1 class="hero-headline" id="heroTitle">
       How do you<br>
       compare to<br>
@@ -977,7 +952,6 @@ rdt('track', 'PageVisit');
         </svg>
       </span>
     </div>
-    <p class="hero-mobile-kicker" aria-hidden="true">See the concept</p>
 
     <div class="hero-visual">
       <!-- On narrow screens this becomes a horizontal, snap-scrolling strip so each phone is readable. -->
@@ -1063,7 +1037,6 @@ rdt('track', 'PageVisit');
 <!-- How it works (owner-requested: layout and copy preserved, opening sentence updated) -->
 <section class="section" id="how-it-works" aria-labelledby="howTitle">
   <div class="section-inner">
-  <div class="section-kicker">How it works</div>
   <h2 class="section-title reveal" id="howTitle">One scenario.<br>A clearer picture of you.</h2>
   <p class="section-sub section-sub--tight reveal">Likewise brings you recurring real-life questions and scenarios. Your answers reveal how you make decisions, how you compare with others, and how your Decision Profile is evolving.</p>
 
@@ -1123,7 +1096,6 @@ rdt('track', 'PageVisit');
      on mobile the last six (.q-extra) collapse behind a toggle. -->
 <section class="section" id="questions" aria-labelledby="questionsTitle">
   <div class="section-inner">
-  <div class="section-kicker">What we ask</div>
   <h2 class="section-title reveal" id="questionsTitle">Things you've wondered about <em>other people.</em></h2>
   <p class="section-sub reveal">Explore recurring questions about Canadian lives, opinions, habits and choices.</p>
 
@@ -1162,7 +1134,6 @@ rdt('track', 'PageVisit');
      Illustrative preview only: no results are shown until real member data exists. -->
 <section class="section" id="experience" aria-labelledby="experienceTitle">
   <div class="section-inner">
-  <div class="section-kicker">The experience</div>
   <h2 class="section-title reveal" id="experienceTitle">Answer. Compare.<br>See another <em>perspective.</em></h2>
   <p class="section-sub section-sub--tight reveal">Share your answer, explore how others respond, and discover what you have in common.</p>
 
@@ -1284,7 +1255,6 @@ rdt('track', 'PageVisit');
 <!-- Why Likewise / Your data -->
 <section class="section" id="your-data" aria-labelledby="dataTitle">
   <div class="section-inner">
-  <div class="section-kicker">Why Likewise</div>
   <h2 class="section-title reveal" id="dataTitle">Comparisons <em>with context.</em></h2>
   <p class="section-sub reveal">An answer means more when you understand the people and experiences behind it.</p>
 
@@ -1362,7 +1332,6 @@ rdt('track', 'PageVisit');
     <button type="button" class="vote-modal-x" onclick="closeVoteModal()" aria-label="Close">&times;</button>
 
     <div id="voteModalForm">
-      <div class="vote-modal-kicker">You're in</div>
       <h3 class="vote-modal-title">Which question should Likewise ask first?</h3>
       <p class="vote-modal-sub">Help pick the very first question we ask at launch.</p>
 
@@ -1406,7 +1375,6 @@ rdt('track', 'PageVisit');
     <button type="button" class="vote-modal-x" onclick="closeSuggestModal()" aria-label="Close">&times;</button>
 
     <div id="suggestModalForm">
-      <div class="vote-modal-kicker">One more thing</div>
       <h3 class="vote-modal-title">Got a question you wish we'd ask?</h3>
       <p class="vote-modal-sub">Tell us about any question you've always wondered how you compare on.</p>
 
