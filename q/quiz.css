@@ -72,7 +72,7 @@ body::after {
 }
 
 .quiz-question {
-  font-family: 'Fraunces', serif;
+  font-family: 'Vollkorn', serif;
   font-size: clamp(28px, 7.5vw, 36px); font-weight: 600; line-height: 1.12;
   letter-spacing: -0.025em; color: var(--charcoal);
   margin-bottom: 28px; text-wrap: balance; outline: none;
@@ -117,7 +117,7 @@ body::after {
   border-radius: 20px; padding: 24px 22px; margin-bottom: 28px;
 }
 .quiz-stat {
-  font-family: 'Fraunces', serif;
+  font-family: 'Vollkorn', serif;
   font-size: clamp(24px, 6.4vw, 30px); font-weight: 600; line-height: 1.2;
   letter-spacing: -0.02em; color: var(--charcoal);
   margin-bottom: 18px; text-wrap: pretty;
@@ -143,7 +143,7 @@ body::after {
   font-variant-numeric: tabular-nums; letter-spacing: -0.02em;
   color: var(--terracotta);
 }
-/* Numerals: Fraunces never sets numbers. quiz.js wraps figures in Fraunces text in .figure. */
+/* Numerals: Vollkorn never sets numbers. quiz.js wraps figures in Vollkorn text in .figure. */
 .figure {
   font-family: 'DM Sans', sans-serif; font-weight: 500;
   font-variant-numeric: tabular-nums; letter-spacing: -0.02em;
@@ -151,14 +151,14 @@ body::after {
 
 /* ── Signup block ────────────────────────────────────────────────────── */
 .quiz-signup-title {
-  font-family: 'Fraunces', serif;
+  font-family: 'Vollkorn', serif;
   font-size: 22px; font-weight: 600; line-height: 1.25;
   letter-spacing: -0.02em; margin-bottom: 16px; text-wrap: balance;
 }
 .quiz-signup-title em {
   font-style: normal; font-weight: 600; color: var(--charcoal);
-  padding: 0 0.08em 0.1em; margin: 0 -0.02em;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='0' y='4%25' width='100%25' height='92%25' rx='4' fill='%23F0D18F' style='transform:rotate(-0.7deg);transform-origin:center;transform-box:fill-box'/%3E%3C/svg%3E") no-repeat 0 0.16em / 100% calc(100% - 0.16em);
+  padding: 0 0.08em; margin: 0 -0.02em;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='0' y='4%25' width='100%25' height='92%25' rx='4' fill='%23F0D18F' style='transform:rotate(-0.7deg);transform-origin:center;transform-box:fill-box'/%3E%3C/svg%3E") no-repeat 0 0.155em / 100% calc(100% - 0.24em);
   -webkit-box-decoration-break: clone; box-decoration-break: clone;
 }
 .quiz-form { display: flex; flex-direction: column; gap: 10px; }
@@ -248,7 +248,7 @@ body::after {
   text-transform: uppercase; color: var(--terracotta); margin-bottom: 10px;
 }
 .vote-modal-title {
-  font-family: 'Fraunces', serif; font-size: 22px; font-weight: 600;
+  font-family: 'Vollkorn', serif; font-size: 22px; font-weight: 600;
   color: var(--charcoal); line-height: 1.25; letter-spacing: -0.02em; margin-bottom: 8px;
   padding-right: 28px;
 }
@@ -320,7 +320,7 @@ body::after {
 .vote-loading-bars span:nth-child(3) { animation: barPulse 0.9s ease-in-out infinite 0.3s; }
 .vote-loading-text { font-size: 13px; color: var(--taupe); }
 .vote-confirm-title {
-  font-family: 'Fraunces', serif; font-size: 22px; font-weight: 600;
+  font-family: 'Vollkorn', serif; font-size: 22px; font-weight: 600;
   color: var(--charcoal); margin-bottom: 8px;
 }
 .vote-confirm-sub { font-size: 14px; color: var(--taupe); line-height: 1.6; margin-bottom: 24px; }

@@ -47,8 +47,8 @@ function esc(text) {
   return String(text).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 }
 
-// Fraunces never sets numerals: escape the text, then wrap each figure (15%, 8, 1,200, $40)
-// so it renders in DM Sans with tabular figures. Use for any string shown in a Fraunces style.
+// Vollkorn never sets numerals: escape the text, then wrap each figure (15%, 8, 1,200, $40)
+// so it renders in DM Sans with tabular figures. Use for any string shown in a Vollkorn style.
 function escFigures(text) {
   return esc(text).replace(/\$?\d+(?:[.,]\d+)*%?/g, m => `<span class="figure">${m}</span>`);
 }
