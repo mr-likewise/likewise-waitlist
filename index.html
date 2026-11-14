@@ -22,7 +22,7 @@
 <link rel="icon" type="image/png" href="likewise-favicon.png">
 <link rel="apple-touch-icon" href="likewise-favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400;1,9..144,600&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600;9..144,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <!-- Marks the page as scripted so reveal effects and the mobile question toggle only
      hide content when JavaScript is actually running. -->
 <script>document.documentElement.classList.add('js');</script>
@@ -180,15 +180,27 @@ body::after {
   color: var(--charcoal); letter-spacing: -0.03em;
   margin-bottom: 40px;
 }
+/* Emphasis device: a honey highlighter swipe behind upright Fraunces 600 (the italic is retired).
+   One per screen, on the subject of the sentence. The <em> stays for semantics.
+   The swipe is the element's own background rather than a ::before, so with
+   box-decoration-break: clone each wrapped line gets its own swipe instead of one bar
+   stretched across both lines. The SVG has no viewBox, so rx="4" stays 4px at any size;
+   the rect is inset 4% top and bottom so its -0.7deg tilt never clips. The swipe starts
+   ~0.2em below the top of the line box and runs ~0.07em past Fraunces' descenders
+   (0.245em below the baseline), so p, y and ? sit fully on honey even where the tilt
+   lifts the right end. The bottom padding extends the paint area only; inline vertical
+   padding doesn't move the layout. */
 .hero-headline em {
-  position: relative; display: inline-block;
-  color: var(--terracotta); font-style: italic; font-weight: 400;
+  font-style: normal; font-weight: 600; color: var(--charcoal);
+  padding: 0 0.08em 0.1em; margin: 0 -0.02em;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='0' y='4%25' width='100%25' height='92%25' rx='4' fill='%23F0D18F' style='transform:rotate(-0.7deg);transform-origin:center;transform-box:fill-box'/%3E%3C/svg%3E") no-repeat 0 0.16em / 100% calc(100% - 0.16em);
+  -webkit-box-decoration-break: clone; box-decoration-break: clone;
 }
-.hero-headline em::after {
-  content: '';
-  position: absolute; left: -3%; right: -3%; bottom: -16px;
-  height: 18px;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 24'%3E%3Cdefs%3E%3ClinearGradient id='fade' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0%25' stop-color='%23BD5A34' stop-opacity='0.55'/%3E%3Cstop offset='75%25' stop-color='%23BD5A34' stop-opacity='0.2'/%3E%3Cstop offset='100%25' stop-color='%23BD5A34' stop-opacity='0'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M4,20 C70,4 230,4 296,20' fill='none' stroke='url(%23fade)' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center / 100% 100%;
+
+/* Numerals: Fraunces never sets numbers. A figure inside Fraunces text is wrapped in .figure. */
+.figure {
+  font-family: 'DM Sans', sans-serif; font-weight: 500;
+  font-variant-numeric: tabular-nums; letter-spacing: -0.02em;
 }
 
 .hero-sub {
@@ -307,7 +319,7 @@ body::after {
   color: var(--charcoal); letter-spacing: -0.025em;
   line-height: 1.15; margin-bottom: 16px;
 }
-.section-title em { color: var(--terracotta); font-style: italic; font-weight: 400; }
+.section-title em { color: var(--terracotta); font-style: normal; font-weight: 600; }
 
 .section-sub {
   font-size: 15px; color: var(--taupe); max-width: 620px;
@@ -365,8 +377,8 @@ body::after {
 
 .step-num {
   font-family: 'DM Mono', monospace;
-  font-size: 10px; letter-spacing: 0.12em; color: var(--terracotta);
-  margin-bottom: 4px;
+  font-size: 10px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--terracotta); margin-bottom: 4px;
 }
 .step-title {
   font-family: 'Fraunces', serif;
@@ -426,7 +438,8 @@ body::after {
 }
 .experience-icon svg { width: 18px; height: 18px; }
 .experience-step {
-  font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em;
+  font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 500;
+  letter-spacing: 0.08em; text-transform: uppercase;
   color: var(--terracotta); margin-bottom: 2px;
 }
 .experience-title {
@@ -439,7 +452,8 @@ body::after {
   display: flex; flex-direction: column;
 }
 .preview-label {
-  font-size: 12px; font-style: italic;
+  font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 500;
+  letter-spacing: 0.08em; text-transform: uppercase;
   color: var(--taupe); margin-bottom: 8px;
 }
 .preview-q {
@@ -469,7 +483,7 @@ body::after {
   height: 10px; border-radius: 999px; overflow: hidden;
   background: repeating-linear-gradient(135deg, rgba(43,36,32,0.07) 0 6px, rgba(43,36,32,0.03) 6px 12px);
 }
-.preview-note { margin-top: auto; padding-top: 14px; font-size: 12px; color: var(--taupe); line-height: 1.5; font-style: italic; }
+.preview-note { margin-top: auto; padding-top: 14px; font-size: 12px; color: var(--taupe); line-height: 1.5; }
 
 /* Explore: comparison filter chips */
 .preview-filter-group + .preview-filter-group { margin-top: 12px; }
@@ -489,7 +503,7 @@ body::after {
   border: 1px dashed rgba(43,36,32,0.2);
 }
 .mirror-note-title { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 600; color: var(--charcoal); letter-spacing: -0.015em; }
-.mirror-note-title em { color: var(--terracotta); font-style: italic; font-weight: 400; }
+.mirror-note-title em { color: var(--terracotta); font-style: normal; font-weight: 600; }
 .mirror-note-body { font-size: 14px; color: var(--taupe); line-height: 1.6; flex: 1; min-width: 240px; }
 
 /* -- Why Likewise / Your data -- */
@@ -521,7 +535,7 @@ body::after {
   font-family: 'Fraunces', serif; font-size: clamp(24px, 2.4vw, 30px); font-weight: 600;
   color: var(--charcoal); letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 14px;
 }
-.value-title em { color: var(--terracotta); font-style: italic; font-weight: 400; }
+.value-title em { color: var(--terracotta); font-style: normal; font-weight: 600; }
 .value-body { font-size: 15px; color: var(--taupe); line-height: 1.7; max-width: 520px; }
 .value-rewards { margin-top: 16px; font-size: 13px; color: var(--charcoal); line-height: 1.6; }
 .trust-title {
@@ -1153,7 +1167,7 @@ rdt('track', 'PageVisit');
       <p class="experience-desc">Choose the answer that fits you best.</p>
       <div class="experience-preview">
         <div class="preview-label">Illustrative preview</div>
-        <p class="preview-q">Would you accept a 10% pay cut for a four-day workweek?</p>
+        <p class="preview-q">Would you accept a <span class="figure">10%</span> pay cut for a four-day workweek?</p>
         <ul class="preview-pills">
           <li class="preview-pill selected">Yes<span class="sr-only"> (selected)</span></li>
           <li class="preview-pill">No</li>
@@ -1177,7 +1191,7 @@ rdt('track', 'PageVisit');
       <p class="experience-desc">See how others answered the same question.</p>
       <div class="experience-preview">
         <div class="preview-label">Illustrative preview</div>
-        <p class="preview-q preview-q--small">Would you accept a 10% pay cut for a four-day workweek?</p>
+        <p class="preview-q preview-q--small">Would you accept a <span class="figure">10%</span> pay cut for a four-day workweek?</p>
         <ul class="preview-results">
           <li>
             <div class="preview-result-row"><span>Yes</span><span class="preview-you">Your answer</span></div>
