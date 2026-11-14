@@ -176,7 +176,10 @@ body::after {
 .hero-headline {
   font-family: 'Fraunces', serif;
   font-size: clamp(44px, 5.2vw, 72px);
-  font-weight: 600; line-height: 1.04;
+  /* 1.22, not 1.04: the highlight swipe on <em> needs vertical room. At 1.04 the
+     lines sit ~55px apart while the swipe is ~71px tall, so on a wrapped phrase the
+     bars overlap by ~15px and read as one solid block instead of two swipes. */
+  font-weight: 600; line-height: 1.22;
   color: var(--charcoal); letter-spacing: -0.03em;
   margin-bottom: 40px;
 }
@@ -184,16 +187,27 @@ body::after {
    One per screen, on the subject of the sentence. The <em> stays for semantics.
    The swipe is the element's own background rather than a ::before, so with
    box-decoration-break: clone each wrapped line gets its own swipe instead of one bar
-   stretched across both lines. The SVG has no viewBox, so rx="4" stays 4px at any size;
-   the rect is inset 4% top and bottom so its -0.7deg tilt never clips. The swipe starts
-   ~0.2em below the top of the line box and runs ~0.07em past Fraunces' descenders
-   (0.245em below the baseline), so p, y and ? sit fully on honey even where the tilt
-   lifts the right end. The bottom padding extends the paint area only; inline vertical
-   padding doesn't move the layout. */
+   stretched across both lines. (A ::before cannot do this: it renders once for the
+   whole inline, so a wrapped phrase would get a single stretched bar.)
+
+   The swipe is sized in em, against the font, rather than in % against the inline box.
+   The inline box is ~1.33em tall for Fraunces regardless of line-height, so a
+   %-based height produced a bar taller than the line spacing and the bars collided
+   on a wrapped phrase. 0.95em tall at 0.20em down sits behind the x-height and lets
+   p, y and ? descend just past the bottom edge, the way a real highlighter does.
+   Verified at 1-, 2- and 3-line wraps.
+
+   No rotation: a slight tilt reads well on a single line but stacks badly on wrapped
+   lines, and it was not rendering from inside the SVG background anyway. If a
+   breakpoint guarantees one line, a transform can be reintroduced there only. */
 .hero-headline em {
   font-style: normal; font-weight: 600; color: var(--charcoal);
-  padding: 0 0.08em 0.1em; margin: 0 -0.02em;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='0' y='4%25' width='100%25' height='92%25' rx='4' fill='%23F0D18F' style='transform:rotate(-0.7deg);transform-origin:center;transform-box:fill-box'/%3E%3C/svg%3E") no-repeat 0 0.16em / 100% calc(100% - 0.16em);
+  padding: 0 0.08em; margin: 0 -0.02em;
+  background-image: linear-gradient(var(--honey), var(--honey));
+  background-repeat: no-repeat;
+  background-size: 100% 0.95em;
+  background-position: 0 0.20em;
+  border-radius: 4px;
   -webkit-box-decoration-break: clone; box-decoration-break: clone;
 }
 
