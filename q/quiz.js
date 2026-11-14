@@ -47,6 +47,12 @@ function esc(text) {
   return String(text).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 }
 
+// Fraunces never sets numerals: escape the text, then wrap each figure (15%, 8, 1,200, $40)
+// so it renders in DM Sans with tabular figures. Use for any string shown in a Fraunces style.
+function escFigures(text) {
+  return esc(text).replace(/\$?\d+(?:[.,]\d+)*%?/g, m => `<span class="figure">${m}</span>`);
+}
+
 // The response id is made here, not by Supabase, so the page can link it to a signup later
 // without anonymous visitors ever being allowed to read the table back.
 function makeUuid() {
@@ -94,7 +100,7 @@ function showQuestion(i) {
   const total = quiz.questions.length;
   showScreen(`
     <p class="quiz-kicker">${esc(quiz.kicker)} &middot; ${i + 1} of ${total}</p>
-    <h1 class="quiz-question" tabindex="-1">${esc(q.text)}</h1>
+    <h1 class="quiz-question" tabindex="-1">${escFigures(q.text)}</h1>
     <div class="quiz-answers">
       ${q.answers.map((a, j) => `<button type="button" class="quiz-answer" data-answer="${j}">${esc(a)}</button>`).join('')}
     </div>
@@ -137,7 +143,7 @@ function showResult() {
   showScreen(`
     <p class="quiz-kicker">How you compare</p>
     <div class="quiz-result">
-      <p class="quiz-stat${isPlaceholder ? ' is-placeholder' : ''}">${esc(result.stat)}</p>
+      <p class="quiz-stat${isPlaceholder ? ' is-placeholder' : ''}">${isPlaceholder ? esc(result.stat) : escFigures(result.stat)}</p>
       ${result.source && !isPlaceholder ? `<p class="quiz-source">Source: ${esc(result.source)}</p>` : ''}
       <p class="quiz-you">You said <strong>${esc(yours)}</strong></p>
     </div>
