@@ -143,6 +143,8 @@ body::after {
   font-variant-numeric: tabular-nums; letter-spacing: -0.02em;
   color: var(--terracotta);
 }
+/* Vollkorn's "?" sits too far from the word before it; see .qmark in index.html. */
+.qmark { margin-left: -0.07em; }
 /* Numerals: Vollkorn never sets numbers. quiz.js wraps figures in Vollkorn text in .figure. */
 .figure {
   font-family: 'DM Sans', sans-serif; font-weight: 500;

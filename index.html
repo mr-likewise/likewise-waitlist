@@ -214,6 +214,11 @@ body::after {
   -webkit-box-decoration-break: clone; box-decoration-break: clone;
 }
 
+/* Vollkorn's "?" carries 0.116em of left sidebearing and the font has no kerning for it,
+   so "you?" reads as "you ?". Each "?" in Vollkorn text is wrapped in .qmark (markup here,
+   escSerif() in q/quiz.js) and pulled in to roughly the spacing a period gets. */
+.qmark { margin-left: -0.07em; }
+
 /* Numerals: Vollkorn never sets numbers. A figure inside Vollkorn text is wrapped in .figure. */
 .figure {
   font-family: 'DM Sans', sans-serif; font-weight: 500;
@@ -930,7 +935,7 @@ rdt('track', 'PageVisit');
     <h1 class="hero-headline" id="heroTitle">
       How do you<br>
       compare to<br>
-      <em>people like you?</em>
+      <em>people like you<span class="qmark">?</span></em>
     </h1>
     <p class="hero-sub">
       Discover how Canadians like you think, feel and live, one question at a time.
@@ -1184,7 +1189,7 @@ rdt('track', 'PageVisit');
       <p class="experience-desc">Choose the answer that fits you best.</p>
       <div class="experience-preview">
         <div class="preview-label">Illustrative preview</div>
-        <p class="preview-q">Would you accept a <span class="figure">10%</span> pay cut for a four-day workweek?</p>
+        <p class="preview-q">Would you accept a <span class="figure">10%</span> pay cut for a four-day workweek<span class="qmark">?</span></p>
         <ul class="preview-pills">
           <li class="preview-pill selected">Yes<span class="sr-only"> (selected)</span></li>
           <li class="preview-pill">No</li>
@@ -1208,7 +1213,7 @@ rdt('track', 'PageVisit');
       <p class="experience-desc">See how others answered the same question.</p>
       <div class="experience-preview">
         <div class="preview-label">Illustrative preview</div>
-        <p class="preview-q preview-q--small">Would you accept a <span class="figure">10%</span> pay cut for a four-day workweek?</p>
+        <p class="preview-q preview-q--small">Would you accept a <span class="figure">10%</span> pay cut for a four-day workweek<span class="qmark">?</span></p>
         <ul class="preview-results">
           <li>
             <div class="preview-result-row"><span>Yes</span><span class="preview-you">Your answer</span></div>
@@ -1334,7 +1339,7 @@ rdt('track', 'PageVisit');
 <section class="cta-banner" aria-labelledby="ctaTitle">
   <div class="cta-banner-inner">
     <div class="cta-banner-text">
-      <h2 class="cta-banner-title" id="ctaTitle">What have you always wanted to ask?</h2>
+      <h2 class="cta-banner-title" id="ctaTitle">What have you always wanted to ask<span class="qmark">?</span></h2>
       <p class="cta-banner-body">Join the waitlist and help choose the questions Likewise explores.</p>
     </div>
     <div class="cta-banner-cta">
@@ -1363,7 +1368,7 @@ rdt('track', 'PageVisit');
     <button type="button" class="vote-modal-x" onclick="closeVoteModal()" aria-label="Close">&times;</button>
 
     <div id="voteModalForm">
-      <h3 class="vote-modal-title">Which question should Likewise ask first?</h3>
+      <h3 class="vote-modal-title">Which question should Likewise ask first<span class="qmark">?</span></h3>
       <p class="vote-modal-sub">Help pick the very first question we ask at launch.</p>
 
       <div class="vote-opt-list" id="voteOptList">
@@ -1406,7 +1411,7 @@ rdt('track', 'PageVisit');
     <button type="button" class="vote-modal-x" onclick="closeSuggestModal()" aria-label="Close">&times;</button>
 
     <div id="suggestModalForm">
-      <h3 class="vote-modal-title">Got a question you wish we'd ask?</h3>
+      <h3 class="vote-modal-title">Got a question you wish we'd ask<span class="qmark">?</span></h3>
       <p class="vote-modal-sub">Tell us about any question you've always wondered how you compare on.</p>
 
       <textarea class="suggest-textarea" id="suggestInput" placeholder="Type your idea here&hellip;" maxlength="500"></textarea>
