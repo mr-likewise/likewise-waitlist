@@ -47,10 +47,14 @@ function esc(text) {
   return String(text).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 }
 
-// Vollkorn never sets numerals: escape the text, then wrap each figure (15%, 8, 1,200, $40)
-// so it renders in DM Sans with tabular figures. Use for any string shown in a Vollkorn style.
-function escFigures(text) {
-  return esc(text).replace(/\$?\d+(?:[.,]\d+)*%?/g, m => `<span class="figure">${m}</span>`);
+// Escape text shown in a Vollkorn style, then:
+// - wrap each figure (15%, 8, 1,200, $40) in .figure, since Vollkorn never sets numerals
+//   (it renders in DM Sans with tabular figures);
+// - wrap each "?" in .qmark, which pulls in Vollkorn's loosely spaced question mark.
+function escSerif(text) {
+  return esc(text)
+    .replace(/\$?\d+(?:[.,]\d+)*%?/g, m => `<span class="figure">${m}</span>`)
+    .replace(/\?/g, '<span class="qmark">?</span>');
 }
 
 // The response id is made here, not by Supabase, so the page can link it to a signup later
@@ -100,7 +104,7 @@ function showQuestion(i) {
   const total = quiz.questions.length;
   showScreen(`
     <p class="quiz-kicker">${esc(quiz.kicker)} &middot; ${i + 1} of ${total}</p>
-    <h1 class="quiz-question" tabindex="-1">${escFigures(q.text)}</h1>
+    <h1 class="quiz-question" tabindex="-1">${escSerif(q.text)}</h1>
     <div class="quiz-answers">
       ${q.answers.map((a, j) => `<button type="button" class="quiz-answer" data-answer="${j}">${esc(a)}</button>`).join('')}
     </div>
@@ -143,7 +147,7 @@ function showResult() {
   showScreen(`
     <p class="quiz-kicker">How you compare</p>
     <div class="quiz-result">
-      <p class="quiz-stat${isPlaceholder ? ' is-placeholder' : ''}">${isPlaceholder ? esc(result.stat) : escFigures(result.stat)}</p>
+      <p class="quiz-stat${isPlaceholder ? ' is-placeholder' : ''}">${isPlaceholder ? esc(result.stat) : escSerif(result.stat)}</p>
       ${result.source && !isPlaceholder ? `<p class="quiz-source">Source: ${esc(result.source)}</p>` : ''}
       <p class="quiz-you">You said <strong>${esc(yours)}</strong></p>
     </div>
@@ -379,7 +383,7 @@ const MODALS_HTML = `
     <button type="button" class="vote-modal-x" data-action="close-vote" aria-label="Close">&times;</button>
     <div id="voteModalForm">
       <div class="vote-modal-kicker">You're in</div>
-      <h3 class="vote-modal-title" id="voteModalTitle">Which question should Likewise ask first?</h3>
+      <h3 class="vote-modal-title" id="voteModalTitle">Which question should Likewise ask first<span class="qmark">?</span></h3>
       <p class="vote-modal-sub">Help pick the very first question we ask at launch.</p>
       <div class="vote-opt-list" id="voteOptList">
         ${VOTE_OPTIONS.map(o => `<div class="vote-opt" data-action="select-vote"><span class="vote-opt-dot"></span>${esc(o)}</div>`).join('')}
@@ -409,7 +413,7 @@ const MODALS_HTML = `
     <button type="button" class="vote-modal-x" data-action="close-suggest" aria-label="Close">&times;</button>
     <div id="suggestModalForm">
       <div class="vote-modal-kicker">One more thing</div>
-      <h3 class="vote-modal-title" id="suggestModalTitle">Got a question you wish we'd ask?</h3>
+      <h3 class="vote-modal-title" id="suggestModalTitle">Got a question you wish we'd ask<span class="qmark">?</span></h3>
       <p class="vote-modal-sub">Tell us about any financial or lifestyle question you've always wondered how you compare on.</p>
       <textarea class="suggest-textarea" id="suggestInput" placeholder="Type your idea here&hellip;" maxlength="500"></textarea>
       <button type="button" class="vote-modal-submit" data-action="submit-suggest">Send it in</button>
