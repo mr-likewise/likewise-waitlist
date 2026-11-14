@@ -155,10 +155,17 @@ body::after {
   font-size: 22px; font-weight: 600; line-height: 1.25;
   letter-spacing: -0.02em; margin-bottom: 16px; text-wrap: balance;
 }
+/* Same highlight swipe as the homepage hero (.hero-headline em in index.html, where the
+   reasoning is documented): sized in em against the font, not in % against the inline
+   box, so wrapped lines get separate bars. No rotation. */
 .quiz-signup-title em {
   font-style: normal; font-weight: 600; color: var(--charcoal);
   padding: 0 0.08em; margin: 0 -0.02em;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='0' y='4%25' width='100%25' height='92%25' rx='4' fill='%23F0D18F' style='transform:rotate(-0.7deg);transform-origin:center;transform-box:fill-box'/%3E%3C/svg%3E") no-repeat 0 0.155em / 100% calc(100% - 0.24em);
+  background-image: linear-gradient(var(--honey), var(--honey));
+  background-repeat: no-repeat;
+  background-size: 100% 0.95em;
+  background-position: 0 0.20em;
+  border-radius: 4px;
   -webkit-box-decoration-break: clone; box-decoration-break: clone;
 }
 .quiz-form { display: flex; flex-direction: column; gap: 10px; }
