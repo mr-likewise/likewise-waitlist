@@ -1022,9 +1022,9 @@ if(chapterNotch){
 
 <!-- Post-signup: pick the launch question, then offer one of your own. -->
 <svg width="0" height="0" aria-hidden="true" style="position:absolute"><defs>
-<clipPath id="vm-bar-0"><rect x="500" y="0" width="155" height="580"/></clipPath>
-<clipPath id="vm-bar-1"><rect x="675" y="0" width="155" height="580"/></clipPath>
-<clipPath id="vm-bar-2"><rect x="850" y="0" width="150" height="580"/></clipPath>
+<linearGradient id="vm-gold" gradientUnits="userSpaceOnUse" x1="500" y1="0" x2="720" y2="580">
+<stop offset="0" stop-color="#f2d494"/><stop offset="1" stop-color="#dfb165"/>
+</linearGradient>
 </defs></svg>
 <div class="vm-overlay" id="voteModal" hidden>
  <div class="vm-card is-wide" role="dialog" aria-modal="true" aria-labelledby="voteTitle" tabindex="-1">
@@ -1047,11 +1047,11 @@ if(chapterNotch){
    <p class="vm-error" id="voteError" role="status" hidden></p>
   </div>
   <div class="vm-step vm-step-centred" data-vm-step="loading" hidden>
-   <svg class="vm-mark" viewBox="500 0 500 580" role="img" aria-label="Likewise"><g class="logo-bar logo-bar-0"><image href="logo.png" width="1643" height="1012" clip-path="url(#vm-bar-0)"/></g><g class="logo-bar logo-bar-1"><image href="logo.png" width="1643" height="1012" clip-path="url(#vm-bar-1)"/></g><g class="logo-bar logo-bar-2"><image href="logo.png" width="1643" height="1012" clip-path="url(#vm-bar-2)"/></g></svg>
+   <svg class="vm-mark" viewBox="500 0 500 580" role="img" aria-label="Likewise"><g class="logo-bar logo-bar-0"><path d="M513 559.0V79.5A64.5 64.5 0 0 1 642 79.5V559.0Z" fill="url(#vm-gold)"/></g><g class="logo-bar logo-bar-1"><path d="M688 559.0V177.5A64.5 64.5 0 0 1 817 177.5V559.0Z" fill="url(#vm-gold)"/></g><g class="logo-bar logo-bar-2"><path d="M861 559.0V80.5A65.5 65.5 0 0 1 992 80.5V559.0Z" fill="url(#vm-gold)"/></g></svg>
    <p class="vm-status">Casting your vote&hellip;</p>
   </div>
   <div class="vm-step vm-step-centred" data-vm-step="done" hidden>
-   <svg class="vm-mark is-still" viewBox="500 0 500 580" role="img" aria-label="Likewise"><g class="logo-bar logo-bar-0"><image href="logo.png" width="1643" height="1012" clip-path="url(#vm-bar-0)"/></g><g class="logo-bar logo-bar-1"><image href="logo.png" width="1643" height="1012" clip-path="url(#vm-bar-1)"/></g><g class="logo-bar logo-bar-2"><image href="logo.png" width="1643" height="1012" clip-path="url(#vm-bar-2)"/></g></svg>
+   <svg class="vm-mark is-still" viewBox="500 0 500 580" role="img" aria-label="Likewise"><g class="logo-bar logo-bar-0"><path d="M513 559.0V79.5A64.5 64.5 0 0 1 642 79.5V559.0Z" fill="url(#vm-gold)"/></g><g class="logo-bar logo-bar-1"><path d="M688 559.0V177.5A64.5 64.5 0 0 1 817 177.5V559.0Z" fill="url(#vm-gold)"/></g><g class="logo-bar logo-bar-2"><path d="M861 559.0V80.5A65.5 65.5 0 0 1 992 80.5V559.0Z" fill="url(#vm-gold)"/></g></svg>
    <h3 class="vm-title">Thanks &mdash; your vote&rsquo;s in.</h3>
    <p class="vm-sub">We&rsquo;ll let you know which question wins when Likewise launches.</p>
    <button type="button" class="vm-submit" data-vm-dismiss>Done</button>
@@ -1070,7 +1070,7 @@ if(chapterNotch){
    <button type="button" class="vm-skip" data-vm-dismiss>Skip for now</button>
   </div>
   <div class="vm-step vm-step-centred" data-vm-step="done" hidden>
-   <svg class="vm-mark is-still" viewBox="500 0 500 580" role="img" aria-label="Likewise"><g class="logo-bar logo-bar-0"><image href="logo.png" width="1643" height="1012" clip-path="url(#vm-bar-0)"/></g><g class="logo-bar logo-bar-1"><image href="logo.png" width="1643" height="1012" clip-path="url(#vm-bar-1)"/></g><g class="logo-bar logo-bar-2"><image href="logo.png" width="1643" height="1012" clip-path="url(#vm-bar-2)"/></g></svg>
+   <svg class="vm-mark is-still" viewBox="500 0 500 580" role="img" aria-label="Likewise"><g class="logo-bar logo-bar-0"><path d="M513 559.0V79.5A64.5 64.5 0 0 1 642 79.5V559.0Z" fill="url(#vm-gold)"/></g><g class="logo-bar logo-bar-1"><path d="M688 559.0V177.5A64.5 64.5 0 0 1 817 177.5V559.0Z" fill="url(#vm-gold)"/></g><g class="logo-bar logo-bar-2"><path d="M861 559.0V80.5A65.5 65.5 0 0 1 992 80.5V559.0Z" fill="url(#vm-gold)"/></g></svg>
    <h3 class="vm-title">Thanks for sharing.</h3>
    <p class="vm-sub">We read every idea that comes in.</p>
    <button type="button" class="vm-submit" data-vm-dismiss>Done</button>
