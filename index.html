@@ -604,7 +604,8 @@ rdt('track', 'PageVisit');
 /* Post-signup modals — same job as the old homepage's, drawn in this page's language. */
 .vm-overlay[hidden]{display:none}
 .vm-overlay{position:fixed;inset:0;z-index:80;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(40,45,51,.46);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);animation:vm-fade .22s ease-out}
-.vm-card{position:relative;width:min(100%,468px);max-height:calc(100svh - 40px);overflow:auto;background:#fff;border:1px solid rgba(55,48,43,.16);border-radius:22px;box-shadow:0 24px 60px -28px rgba(32,28,24,.55);padding:clamp(26px,4vw,38px);animation:vm-rise .26s cubic-bezier(.2,.7,.25,1)}
+.vm-card{position:relative;width:min(100%,472px);max-height:calc(100svh - 40px);overflow:auto;background:#fff;border:1px solid rgba(55,48,43,.16);border-radius:22px;box-shadow:0 24px 60px -28px rgba(32,28,24,.55);padding:clamp(26px,4vw,38px);animation:vm-rise .26s cubic-bezier(.2,.7,.25,1)}
+.vm-card.is-wide{width:min(100%,680px)}
 .vm-card:focus{outline:none}
 @keyframes vm-fade{from{opacity:0}to{opacity:1}}
 @keyframes vm-rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
@@ -633,18 +634,8 @@ rdt('track', 'PageVisit');
 .vm-step[hidden]{display:none}
 .vm-step-centred{text-align:center;padding:8px 0 2px}
 .vm-step-centred .vm-title{margin-right:0}
-.vm-bars{display:flex;align-items:flex-end;justify-content:center;gap:6px;height:46px;margin-bottom:19px}
-.vm-bars span{width:13px;border-radius:4px 4px 2px 2px}
-.vm-bars span:nth-child(1){height:46%;background:#cfaaa3}
-.vm-bars span:nth-child(2){height:100%;background:#e0b953}
-.vm-bars span:nth-child(3){height:68%;background:#9eb3a5}
-@media(prefers-reduced-motion:no-preference){
-.vm-bars.is-working span{animation:vm-pulse 1.05s ease-in-out infinite}
-.vm-bars.is-working span:nth-child(2){animation-delay:.14s}
-.vm-bars.is-working span:nth-child(3){animation-delay:.28s}
-}
-@keyframes vm-pulse{0%,100%{transform:scaleY(.55);opacity:.7}50%{transform:scaleY(1);opacity:1}}
-.vm-bars span{transform-origin:bottom}
+.vm-mark{display:block;width:54px;height:auto;margin:0 auto 20px}
+.vm-mark.is-still .logo-bar{animation:none}
 .vm-status{font-size:14px;color:#62615e;margin:0}
 .vm-textarea{width:100%;min-height:116px;margin:19px 0 0;padding:13px 14px;border:1px solid #d7d4cc;border-radius:15px;font:inherit;font-size:14px;line-height:1.5;color:#343432;background:#fffefa;resize:vertical}
 .vm-textarea:focus{outline:2px solid #816329;outline-offset:1px}
@@ -1030,8 +1021,13 @@ if(chapterNotch){
 </script>
 
 <!-- Post-signup: pick the launch question, then offer one of your own. -->
+<svg width="0" height="0" aria-hidden="true" style="position:absolute"><defs>
+<clipPath id="vm-bar-0"><rect x="500" y="0" width="155" height="580"/></clipPath>
+<clipPath id="vm-bar-1"><rect x="675" y="0" width="155" height="580"/></clipPath>
+<clipPath id="vm-bar-2"><rect x="850" y="0" width="150" height="580"/></clipPath>
+</defs></svg>
 <div class="vm-overlay" id="voteModal" hidden>
- <div class="vm-card" role="dialog" aria-modal="true" aria-labelledby="voteTitle" tabindex="-1">
+ <div class="vm-card is-wide" role="dialog" aria-modal="true" aria-labelledby="voteTitle" tabindex="-1">
   <button type="button" class="vm-close" data-vm-dismiss aria-label="Close">&times;</button>
   <div class="vm-step" data-vm-step="form">
    <h3 class="vm-title" id="voteTitle">Which question should we ask first<span>?</span></h3>
@@ -1051,11 +1047,11 @@ if(chapterNotch){
    <p class="vm-error" id="voteError" role="status" hidden></p>
   </div>
   <div class="vm-step vm-step-centred" data-vm-step="loading" hidden>
-   <div class="vm-bars is-working" aria-hidden="true"><span></span><span></span><span></span></div>
+   <svg class="vm-mark" viewBox="500 0 500 580" role="img" aria-label="Likewise"><g class="logo-bar logo-bar-0"><image href="logo.png" width="1643" height="1012" clip-path="url(#vm-bar-0)"/></g><g class="logo-bar logo-bar-1"><image href="logo.png" width="1643" height="1012" clip-path="url(#vm-bar-1)"/></g><g class="logo-bar logo-bar-2"><image href="logo.png" width="1643" height="1012" clip-path="url(#vm-bar-2)"/></g></svg>
    <p class="vm-status">Casting your vote&hellip;</p>
   </div>
   <div class="vm-step vm-step-centred" data-vm-step="done" hidden>
-   <div class="vm-bars" aria-hidden="true"><span></span><span></span><span></span></div>
+   <svg class="vm-mark is-still" viewBox="500 0 500 580" role="img" aria-label="Likewise"><g class="logo-bar logo-bar-0"><image href="logo.png" width="1643" height="1012" clip-path="url(#vm-bar-0)"/></g><g class="logo-bar logo-bar-1"><image href="logo.png" width="1643" height="1012" clip-path="url(#vm-bar-1)"/></g><g class="logo-bar logo-bar-2"><image href="logo.png" width="1643" height="1012" clip-path="url(#vm-bar-2)"/></g></svg>
    <h3 class="vm-title">Thanks &mdash; your vote&rsquo;s in.</h3>
    <p class="vm-sub">We&rsquo;ll let you know which question wins when Likewise launches.</p>
    <button type="button" class="vm-submit" data-vm-dismiss>Done</button>
@@ -1074,7 +1070,7 @@ if(chapterNotch){
    <button type="button" class="vm-skip" data-vm-dismiss>Skip for now</button>
   </div>
   <div class="vm-step vm-step-centred" data-vm-step="done" hidden>
-   <div class="vm-bars" aria-hidden="true"><span></span><span></span><span></span></div>
+   <svg class="vm-mark is-still" viewBox="500 0 500 580" role="img" aria-label="Likewise"><g class="logo-bar logo-bar-0"><image href="logo.png" width="1643" height="1012" clip-path="url(#vm-bar-0)"/></g><g class="logo-bar logo-bar-1"><image href="logo.png" width="1643" height="1012" clip-path="url(#vm-bar-1)"/></g><g class="logo-bar logo-bar-2"><image href="logo.png" width="1643" height="1012" clip-path="url(#vm-bar-2)"/></g></svg>
    <h3 class="vm-title">Thanks for sharing.</h3>
    <p class="vm-sub">We read every idea that comes in.</p>
    <button type="button" class="vm-submit" data-vm-dismiss>Done</button>
