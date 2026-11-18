@@ -609,12 +609,13 @@ const facts=[
  {number:'38%',text:'Feel good about life.',lon:-95,lat:61,left:.73,top:.2},
  {number:'27%',text:'Feel financially comfortable.',lon:-73,lat:51,left:.72,top:.43}
 ];
-let globeFrame=0,globeVisible=false,globeTime=0,globePrevious=0,shownFact=-1;
+let globeFrame=0,globeVisible=false,globeTime=0,globePrevious=0,shownFact=-1,globeRetry=0;
 function drawGlobe(now=performance.now()){
  const dt=globePrevious?Math.min(Math.max(now-globePrevious,0),50):0;
  globePrevious=now;
  if(!reduced.matches)globeTime+=dt;
  const w=globe.clientWidth,h=globe.clientHeight,dpr=Math.min(devicePixelRatio||1,2);
+ if(!(w>0&&h>0)){if(globeRetry++<180)globeFrame=requestAnimationFrame(drawGlobe);return}
  if(globe.width!==Math.round(w*dpr)||globe.height!==Math.round(h*dpr)){globe.width=Math.round(w*dpr);globe.height=Math.round(h*dpr)}
  ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);
  const cx=w*.5;
